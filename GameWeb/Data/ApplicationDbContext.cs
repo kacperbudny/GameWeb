@@ -15,5 +15,6 @@ namespace GameWeb.Data
 
         }
         public DbSet<ApplicationUser> ApplicationUser { get; set; }
+        public DbSet<Game> Game { get; set; }
     }
 }
