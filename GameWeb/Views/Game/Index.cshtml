@@ -1,0 +1,25 @@
+﻿@model IEnumerable<Game>
+
+@if (Model.Count() > 0)
+{
+    @foreach (var obj in Model)
+    {
+        <div class="game-card">
+            <img src="~/images/GameCovers/@obj.Image" class="game-image" />
+            <div class="game-card-info">
+                <div class="game-name-date-container">
+                    <h3>@obj.Name</h3>
+                    <p class="release-date">@obj.ReleaseDate.Year</p>
+                </div>
+                <p class="publisher">@obj.Publisher</p>
+                <p class="description">@obj.Description</p>
+                <p class="genre"><strong>Gatunek:</strong> @obj.Genre</p>
+                <p class="platforms"><strong>Platformy:</strong> @obj.Platform</p>
+            </div>
+        </div>
+    }
+}
+else
+{
+    <p>Brak gier.</p>
+}
