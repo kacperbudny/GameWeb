@@ -10,9 +10,6 @@ namespace GameWeb.ViewModels
     public class RegistrationViewModel
     {
         [Required]
-        public string UserName { get; set; }
-
-        [Required]
         [EmailAddress]
         public string Email { get; set; }
 

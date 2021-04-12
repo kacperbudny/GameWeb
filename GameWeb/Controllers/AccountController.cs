@@ -46,7 +46,7 @@ namespace GameWeb.Controllers
                 }
             }
 
-            return View();
+            return View(model);
         }
     }
 }
