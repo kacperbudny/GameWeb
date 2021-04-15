@@ -40,7 +40,7 @@ namespace GameWeb.Data
                     Platform = "PC, Xbox, PlayStation",
                     Publisher = "Ubisoft",
                     Description = "Lorem ipsum",
-                    Image = "1.jpg",
+                    Image = "2.jpg",
                     Genre = "Platformówki"
                 },
                 new Game
