@@ -15,21 +15,36 @@
         <nav>
             <div class="header-left">
                 <a class="logo" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/images/logo-50px.png" alt="Site logo" />GameWeb</a>
-                <ul>
-                    <li>
-                        <a asp-area="" asp-controller="Home" asp-action="Index">Strona główna</a>
-                    </li>
-                    <li>
-                        <a  class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Game" ? "active" : "")" asp-area="" asp-controller="Game" asp-action="Index">Gry</a>
-                    </li>
-                </ul>
-            </div>
+                    <ul>
+                        <li>
+                            <a asp-area="" asp-controller="Home" asp-action="Index">Strona główna</a>
+                        </li>
+                        <li>
+                            <a class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Game" ? "active" : "")" asp-area="" asp-controller="Game" asp-action="Index">Gry</a>
+                        </li>
+                    </ul>
+                </div>
             <div class="header-right">
+                @if (User.Identity.IsAuthenticated) {
                 <ul>
-                    <li>
-                        <a asp-controller="Account" asp-action="Register">Rejestracja</a>
-                    </li>
-                </ul>
+                        <li>
+                            <a asp-controller="Account" asp-action="Logout">Wyloguj</a>
+                        </li>
+                    </ul>
+                }
+                else
+                {
+                    <ul>
+                        <li>
+                            <a asp-controller="Account" asp-action="Login">Logowanie</a>
+                        </li>
+                        <li>
+                            <a asp-controller="Account" asp-action="Register">Rejestracja</a>
+                        </li>
+                    </ul>
+                }
+                </div>
+                </div>
             </div>
         </nav>
     </header>

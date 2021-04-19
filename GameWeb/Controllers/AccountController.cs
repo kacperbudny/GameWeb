@@ -25,6 +25,12 @@ namespace GameWeb.Controllers
         {
             return View();
         }
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
 
         [HttpPost]
         public async Task <IActionResult> Register(RegistrationViewModel model)
@@ -47,6 +53,32 @@ namespace GameWeb.Controllers
             }
 
             return View(model);
+        }
+
+        [HttpPost]
+        public async Task <IActionResult> Login(LoginViewModel user)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await signInManager.PasswordSignInAsync(user.Email, user.Password, user.RememberMe, false);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+
+                ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
+
+            }
+
+            return View(user);
+        }
+
+        public async Task<IActionResult> Logout()
+        {
+            await signInManager.SignOutAsync();
+
+            return RedirectToAction("Login");
         }
     }
 }
