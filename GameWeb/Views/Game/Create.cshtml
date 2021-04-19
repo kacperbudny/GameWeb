@@ -1,0 +1,94 @@
+﻿@model GameWeb.ViewModels.GameViewModel
+
+<form method="post" asp-action="Create" enctype="multipart/form-data">
+    <div>
+        <div asp-validation-summary="ModelOnly"></div>
+        <div>
+            <h2>Dodaj grę</h2>
+        </div>
+        <div>
+            <div>
+                <div>
+                    <label asp-for="Name"></label>
+                </div>
+                <div>
+                    <input asp-for="Name" />
+                    <span asp-validation-for="Name" />
+                </div>
+            </div>
+            <div>
+                <div>
+                    <label asp-for="ReleaseDate"></label>
+                </div>
+                <div>
+                    <input asp-for="ReleaseDate" type="date" />
+                    <span asp-validation-for="ReleaseDate" />
+                </div>
+            </div>
+            <div>
+                <div>
+                    <label asp-for="Platform"></label>
+                </div>
+                <div>
+                    <input asp-for="Platform" />
+                    <span asp-validation-for="Platform" />
+                </div>
+            </div>
+            <div>
+                <div>
+                    <label asp-for="Publisher"></label>
+                </div>
+                <div>
+                    <input asp-for="Publisher" />
+                    <span asp-validation-for="Publisher" />
+                </div>
+            </div>
+            <div>
+                <div>
+                    <label asp-for="Genre"></label>
+                </div>
+                <div>
+                    <input asp-for="Genre" />
+                    <span asp-validation-for="Genre" />
+                </div>
+            </div>
+            <div>
+                <div>
+                    <label asp-for="Description"></label>
+                </div>
+                <div>
+                    <input asp-for="Description" />
+                    <span asp-validation-for="Description" />
+                </div>
+            </div>
+            <div>
+                <div>
+                    <label asp-for="ImageFile"></label>
+                </div>
+                <div>
+                    <input asp-for="ImageFile" id="customFile" class="custom-file-input" />
+                    <label for="customFile">Wybierz plik</label>
+                    <span asp-validation-for="ImageFile" />
+                </div>
+            </div>
+        </div>
+        <div>
+            <input type="submit" value="Dodaj" />
+            <a asp-action="Index">Anuluj</a>
+        </div>
+    </div>
+</form>
+
+@section Scripts{
+
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+
+    <script type="text/javascript">
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+    </script>
+}

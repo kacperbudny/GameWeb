@@ -1,41 +1,37 @@
+ï»¿using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 
-namespace GameWeb.Models
+namespace GameWeb.ViewModels
 {
-    public class Game
+    public class GameViewModel
     {
-        [Key]
-        public int Id { get; set; }
-        [Required(ErrorMessage = "Proszê wprowadziæ nazwê.")]
+        [Required(ErrorMessage = "ProszÄ™ wprowadziÄ‡ nazwÄ™.")]
         [DisplayName("Nazwa")]
         public string Name { get; set; }
-        [Required(ErrorMessage = "Proszê wprowadziæ datê.")]
+        [Required(ErrorMessage = "ProszÄ™ wprowadziÄ‡ datÄ™.")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DisplayName("Data wydania")]
         public DateTime ReleaseDate { get; set; }
-        [Required(ErrorMessage = "Proszê wprowadziæ platformy.")]
+        [Required(ErrorMessage = "ProszÄ™ wprowadziÄ‡ platformy.")]
         [DisplayName("Platformy")]
         public string Platform { get; set; }
-        [Required(ErrorMessage = "Proszê wprowadziæ wydawcê.")]
+        [Required(ErrorMessage = "ProszÄ™ wprowadziÄ‡ wydawcÄ™.")]
         [DisplayName("Wydawca")]
         public string Publisher { get; set; }
-        [Required(ErrorMessage = "Proszê wprowadziæ gatunek.")]
+        [Required(ErrorMessage = "ProszÄ™ wprowadziÄ‡ gatunek.")]
         [DisplayName("Gatunek")]
         public string Genre { get; set; }
-        [Required(ErrorMessage = "Proszê wprowadziæ opis.")]
+        [Required(ErrorMessage = "ProszÄ™ wprowadziÄ‡ opis.")]
         [DisplayName("Opis")]
         public string Description { get; set; }
-        [Required(ErrorMessage = "Proszê umieœciæ zdjêcie.")]
-        [DisplayName("Zdjêcie")]
-        public string Image { get; set; }
-
+        [Required(ErrorMessage = "ProszÄ™ umieÅ›ciÄ‡ zdjÄ™cie.")]
+        [DisplayName("ZdjÄ™cie")]
+        public IFormFile ImageFile { get; set; }
     }
 }
