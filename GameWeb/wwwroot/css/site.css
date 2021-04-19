@@ -15,13 +15,28 @@ a {
     }
 
 /* HEADER */
+#menu-overlay {
+    display: none;
+    position: fixed;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    top: 0;
+    left: 0;
+}
+
 header {
     background-color: #444444;
-    height: 80px;
-    font-size: 20px;
+    height: 65px;
+    font-size: 16px;
     box-shadow: 0 3px 6px 0 rgba(0,0,0,0.2);
     margin-bottom: 20px;
 }
+
+    header i {
+        padding-right: 6px;
+    }
 
     header a {
         color: white;
@@ -29,11 +44,11 @@ header {
 
 .logo {
     font-family: 'Blinker', sans-serif;
-    font-size: 40px;
+    font-size: 36px;
     margin: 0;
     padding: 0;
     line-height: 0;
-    margin-right: 50px;
+    margin-right: 40px;
 }
 
     .logo:hover {
@@ -45,7 +60,7 @@ header {
     }
 
     .logo img {
-        margin-right: 10px;
+        margin-right: 8px;
     }
 
 nav {
@@ -66,6 +81,45 @@ nav {
     align-items: center;
     height: 100%;
 }
+
+.dropdown-container {
+    position: relative;
+}
+
+.dropdown-active {
+    display: block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    margin-top: 2px;
+    background-color: rgb(40,40,40);
+    min-width: 200px;
+    box-shadow: 0 0 16px 0 rgba(0,0,0,0.3);
+    z-index: 1;
+    padding: 8px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.dropdown-menu-flex {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+    .dropdown-menu-flex li {
+        width: 100%;
+        padding: 4px;
+        border-radius: 8px;
+        text-align: center;
+    }
+
+        .dropdown-menu-flex li:hover {
+            background: rgba(0,0,0,0.2);
+        }
 
 header ul {
     display: flex;
@@ -88,9 +142,26 @@ header li {
         display: block;
         background: white;
         width: 100%;
-        height: 10px;
-        top: 42px;
+        height: 6px;
+        top: 36px;
     }
+
+.user-hello {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    cursor: pointer;
+}
+
+    .user-hello:hover {
+        color: lightgray;
+    }
+
+.user-icon {
+    margin-right: 0;
+    margin-left: 8px;
+    font-size: 30px;
+}
 
 /* FOOTER */
 html {
@@ -158,7 +229,6 @@ label {
         content: "Wybierz";
     }
 
-
 .custom-file-label {
     background: rgba(0,0,0,0.5);
     box-shadow: 0 0 8px rgba(0,0,0,0.5);
@@ -181,6 +251,43 @@ label {
     margin: 30px 0;
     grid-gap: 15px;
 }
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    margin-top: 20px;
+}
+
+    .checkbox-container label {
+        display: inline-block;
+        vertical-align: middle;
+        margin: 0;
+    }
+
+.regular-checkbox {
+    -webkit-appearance: none;
+    background-color: rgba(0,0,0,0.5);
+    border: 1px solid grey;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.5);
+    width: 16px;
+    height: 16px;
+    border-radius: 3px;
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    margin-right: 8px;
+}
+
+    .regular-checkbox:checked:after {
+        content: '\2714';
+        font-size: 12px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+    }
 
 /* GENERAL STYLES */
 .upper-row {

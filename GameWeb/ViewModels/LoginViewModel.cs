@@ -12,11 +12,13 @@ namespace GameWeb.ViewModels
         [Required]
         [EmailAddress]
         public string Email { get; set; }
+
         [Required]
         [DataType(DataType.Password)]
+        [Display(Name = "Has³o")]
         public string Password { get; set; }
 
-        [Display(Name = "Remember Me")]
+        [Display(Name = "Zapamiêtaj mnie")]
         public bool RememberMe { get; set; }
     }
 }
