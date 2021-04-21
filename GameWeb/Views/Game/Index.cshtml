@@ -20,6 +20,7 @@
                     <p class="description">@obj.Description</p>
                     <p class="genre"><strong>Gatunek:</strong> @obj.Genre</p>
                     <p class="platforms"><strong>Platformy:</strong> @obj.Platform</p>
+                    <p> <button asp-page-handler="Delete" asp-route-id="@obj.Id" onclick="return confirm('Czy na pewno chcesz usunąć?')" class="btn btn-danger btn-sm" >Delete</button> </p>
                 </div>
             </div>
         }
