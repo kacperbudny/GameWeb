@@ -1,19 +1,16 @@
-﻿@model GameWeb.ViewModels.GameViewModel
+﻿@model GameWeb.Models.Game
 
 <form method="post" asp-action="DeletePost" enctype="multipart/form-data">
+    <input asp-for="Id" hidden/>
     <div>
         <div asp-validation-summary="ModelOnly"></div>
-        <div>
-            <h2>Dodaj grę</h2>
-        </div>
         <div>
             <div>
                 <div>
                     <label asp-for="Name"></label>
                 </div>
                 <div>
-                    <input asp-for="Name" />
-                    <span asp-validation-for="Name" />
+                    <input asp-for="Name" disabled/>
                 </div>
             </div>
             <div>
@@ -21,8 +18,7 @@
                     <label asp-for="ReleaseDate"></label>
                 </div>
                 <div>
-                    <input asp-for="ReleaseDate" type="date" />
-                    <span asp-validation-for="ReleaseDate" />
+                    <input asp-for="ReleaseDate" type="date" disabled/>
                 </div>
             </div>
             <div>
@@ -30,8 +26,7 @@
                     <label asp-for="Platform"></label>
                 </div>
                 <div>
-                    <input asp-for="Platform" />
-                    <span asp-validation-for="Platform" />
+                    <input asp-for="Platform" disabled/>
                 </div>
             </div>
             <div>
@@ -39,8 +34,7 @@
                     <label asp-for="Publisher"></label>
                 </div>
                 <div>
-                    <input asp-for="Publisher" />
-                    <span asp-validation-for="Publisher" />
+                    <input asp-for="Publisher" disabled/>
                 </div>
             </div>
             <div>
@@ -48,8 +42,7 @@
                     <label asp-for="Genre"></label>
                 </div>
                 <div>
-                    <input asp-for="Genre" />
-                    <span asp-validation-for="Genre" />
+                    <input asp-for="Genre" disabled/>
                 </div>
             </div>
             <div>
@@ -57,23 +50,21 @@
                     <label asp-for="Description"></label>
                 </div>
                 <div>
-                    <input asp-for="Description" />
-                    <span asp-validation-for="Description" />
+                    <input asp-for="Description" disabled/>
                 </div>
             </div>
             <div>
                 <div>
-                    <label asp-for="ImageFile"></label>
+                    <label asp-for="Image"></label>
                 </div>
                 <div>
-                    <input asp-for="ImageFile" id="customFile" class="custom-file-input" />
+                    <input asp-for="Image" id="customFile" disabled class="custom-file-input" />
                     <label for="customFile">Wybierz plik</label>
-                    <span asp-validation-for="ImageFile" />
                 </div>
             </div>
         </div>
         <div>
-            <input type="submit" value="Dodaj" />
+            <input type="submit" value="Delete" />
             <a asp-action="Index">Anuluj</a>
         </div>
     </div>
