@@ -1,6 +1,8 @@
 ﻿using GameWeb.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,13 +23,25 @@ namespace GameWeb.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Register()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             return View();
         }
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Login()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             return View();
         }
 
@@ -37,7 +51,7 @@ namespace GameWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = model.Email, Email = model.Email };
+                var user = new IdentityUser { UserName = model.UserName, Email = model.Email };
                 var result = await userManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
@@ -78,7 +92,7 @@ namespace GameWeb.Controllers
         {
             await signInManager.SignOutAsync();
 
-            return RedirectToAction("Login");
+            return RedirectToAction("index", "home");
         }
     }
 }

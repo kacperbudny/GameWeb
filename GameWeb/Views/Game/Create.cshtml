@@ -1,81 +1,56 @@
 ﻿@model GameWeb.ViewModels.GameViewModel
+@{
+    ViewData["Title"] = "Dodaj grę";
+}
 
 <form method="post" asp-action="Create" enctype="multipart/form-data">
-    <div>
-        <div asp-validation-summary="ModelOnly"></div>
-        <div>
-            <h2>Dodaj grę</h2>
+    <div asp-validation-summary="ModelOnly"></div>
+    <div class="upper-row">
+        <h2>Dodaj grę</h2>
+    </div>
+    <div class="default-form">
+        <div class="form-input-set">
+            <label asp-for="Name"></label>
+            <input class="text-input" asp-for="Name" />
+            <span class="validation-error-span" asp-validation-for="Name" />
         </div>
-        <div>
-            <div>
-                <div>
-                    <label asp-for="Name"></label>
-                </div>
-                <div>
-                    <input asp-for="Name" />
-                    <span asp-validation-for="Name" />
-                </div>
-            </div>
-            <div>
-                <div>
-                    <label asp-for="ReleaseDate"></label>
-                </div>
-                <div>
-                    <input asp-for="ReleaseDate" type="date" />
-                    <span asp-validation-for="ReleaseDate" />
-                </div>
-            </div>
-            <div>
-                <div>
-                    <label asp-for="Platform"></label>
-                </div>
-                <div>
-                    <input asp-for="Platform" />
-                    <span asp-validation-for="Platform" />
-                </div>
-            </div>
-            <div>
-                <div>
-                    <label asp-for="Publisher"></label>
-                </div>
-                <div>
-                    <input asp-for="Publisher" />
-                    <span asp-validation-for="Publisher" />
-                </div>
-            </div>
-            <div>
-                <div>
-                    <label asp-for="Genre"></label>
-                </div>
-                <div>
-                    <input asp-for="Genre" />
-                    <span asp-validation-for="Genre" />
-                </div>
-            </div>
-            <div>
-                <div>
-                    <label asp-for="Description"></label>
-                </div>
-                <div>
-                    <input asp-for="Description" />
-                    <span asp-validation-for="Description" />
-                </div>
-            </div>
-            <div>
-                <div>
-                    <label asp-for="ImageFile"></label>
-                </div>
-                <div>
-                    <input asp-for="ImageFile" id="customFile" class="custom-file-input" />
-                    <label for="customFile">Wybierz plik</label>
-                    <span asp-validation-for="ImageFile" />
-                </div>
-            </div>
+        <div class="form-input-set">
+            <label asp-for="ReleaseDate"></label>
+            <input class="text-input" asp-for="ReleaseDate" type="date" />
+            <span class="validation-error-span" asp-validation-for="ReleaseDate" />
         </div>
-        <div>
-            <input type="submit" value="Dodaj" />
-            <a asp-action="Index">Anuluj</a>
+        <div class="form-input-set">
+            <label asp-for="Platform"></label>
+            <input class="text-input" asp-for="Platform" />
+            <span class="validation-error-span" asp-validation-for="Platform" />
         </div>
+        <div class="form-input-set">
+            <label asp-for="Publisher"></label>
+            <input class="text-input" asp-for="Publisher" />
+            <span class="validation-error-span" asp-validation-for="Publisher" />
+        </div>
+        <div class="form-input-set">
+            <label asp-for="Genre"></label>
+            <input class="text-input" asp-for="Genre" />
+            <span class="validation-error-span" asp-validation-for="Genre" />
+        </div>
+        <div class="form-input-set">
+            <label asp-for="Description"></label>
+            <input class="text-input" asp-for="Description" />
+            <span class="validation-error-span" asp-validation-for="Description" />
+        </div>
+        <div class="form-input-set">
+            <label asp-for="ImageFile"></label>
+            <div class="custom-file">
+                <input asp-for="ImageFile" id="customFile" class="custom-file-input" />
+                <label for="customFile" class="custom-file-label">Wybierz plik</label>
+            </div>
+            <span class="validation-error-span" asp-validation-for="ImageFile" />
+        </div>
+    </div>
+    <div class="form-buttons-row">
+        <input type="submit" value="Dodaj" class="action-button add-button" />
+        <a asp-action="Index" class="action-button cancel-button">Anuluj</a>
     </div>
 </form>
 

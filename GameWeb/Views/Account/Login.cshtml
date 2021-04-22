@@ -1,28 +1,38 @@
 @model LoginViewModel
 @{
-    ViewBag.Title = "User Login";
+    ViewBag.Title = "Logowanie";
 }
-<h1>Logowanie</h1>
 
-    <div class="row">
-        <div class="col-md-12">
-            <form method="post">
-        <div asp-validation-summary="All" class="text-danger"></div>
-        <div class="form-group">
-                <label asp-for="Email"></label>
-                <input asp-for="Email" class="form-control"/>
-            <span asp-validation-for="Email" class="text-danger"></span>
+<form method="post">
+    <div asp-validation-summary="ModelOnly" class="validation-error-span"></div>
+    <div class="upper-row">
+        <h2>Logowanie</h2>
+    </div>
+    <div class="form-input-set">
+        <label asp-for="Email"></label>
+        <input asp-for="Email" class="text-input"/>
+        <span asp-validation-for="Email" class="validation-error-span"></span>
+    </div>
+    <div class="form-input-set">
+        <label asp-for="Password"></label>
+        <input asp-for="Password" class="text-input"/>
+        <span asp-validation-for="Password" class="validation-error-span"></span>
+    </div>
+    <div class="form-input-set">
+        <div class="checkbox-container">
+            <input asp-for="RememberMe" type="checkbox" id="remember-checkbox" class="regular-checkbox">
+            <label asp-for="RememberMe" for="remember-checkbox">@Html.DisplayNameFor(m => m.RememberMe)</label>
         </div>
-        <div class="form-group">
-                <label asp-for="Password"></label>
-                <input asp-for="Password" class="form-control"/>
-            <span asp-validation-for="Password" class="text-danger"></span>
-        </div>
-         <div class="form-group">
-                <div class="custom-control custom-checkbox">
-                    <input asp-for="RememberMe" type="checkbox" class="custom-control-input">
-                    <label class="custom-control-label" asp-for="RememberMe">@Html.DisplayNameFor(m => m.RememberMe)</label>
-        </div>
-        <button type="submit" class="btn btn-primary">Log in</button>
-    </form>
-</div>
+    </div>
+    <div class="form-buttons-row">
+        <button type="submit" class="action-button add-button">Zaloguj</button>
+    </div>
+</form>
+
+@section Scripts{
+
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+
+}

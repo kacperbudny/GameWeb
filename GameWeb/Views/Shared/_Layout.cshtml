@@ -4,48 +4,50 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - GameWeb</title>
-    <link rel="stylesheet" href="~/css/style.css" type="text/css" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Blinker:wght@200&family=Montserrat&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/4bcc385cef.js" crossorigin="anonymous"></script>
 </head>
 <body>
+    <div id="menu-overlay"></div>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">GameWeb</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-@if (User.Identity.IsAuthenticated)
+        <nav>
+            <div class="header-left">
+                <a class="logo" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/images/logo-45px.png" alt="Site logo" />GameWeb</a>
+                <ul>
+                    <li>
+                        <a asp-area="" asp-controller="Home" asp-action="Index">Strona główna</a>
+                    </li>
+                    <li>
+                        <a class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Game" ? "active" : "")" asp-area="" asp-controller="Game" asp-action="Index">Gry</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="header-right">
+                @if (User.Identity.IsAuthenticated)
                 {
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Strona główna</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Game" asp-action="Index">Gry</a>
-                        </li>
-                    </ul>
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Account" asp-action="Logout">Wyloguj</a>
-                        </li>
-                    </ul>
-                }
-                else
-                {
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Account" asp-action="Register">Rejestracja</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Account" asp-action="Login">Logowanie</a>
-                        </li>
-                    </ul>
-                }
-                </div>
+    <div class="dropdown-container">
+        <div class="user-hello"><i class="fas fa-angle-down"></i> Witaj, @User.Identity.Name! <i class="fas fa-user-circle user-icon"></i></div>
+        <div class="dropdown-content">
+            <ul class="dropdown-menu-flex">
+                <li>
+                    <a asp-controller="Account" asp-action="Logout"><i class="fas fa-sign-out-alt"></i> Wyloguj</a>
+                </li>
+            </ul>
+        </div>
+    </div>}
+else
+{
+<ul>
+    <li>
+        <a asp-controller="Account" asp-action="Login">Logowanie</a>
+    </li>
+    <li>
+        <a asp-controller="Account" asp-action="Register">Rejestracja</a>
+    </li>
+</ul>}
             </div>
         </nav>
     </header>
@@ -55,14 +57,15 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2021 - GameWeb - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <footer class="footer">
+        <div class="text-center small">
+            &copy; 2021 GameWeb
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/dropdown-menu.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

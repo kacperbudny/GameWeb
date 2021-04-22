@@ -65,7 +65,7 @@ namespace GameWeb.Controllers
 
             if (model.ImageFile != null)
             {
-                string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "images", "GameCovers", "UserUploaded");
+                string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "images", "GameCovers");
                 uniqueFileName = Guid.NewGuid().ToString() + "_" + model.ImageFile.FileName;
                 string filePath = Path.Combine(uploadsFolder, uniqueFileName);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
