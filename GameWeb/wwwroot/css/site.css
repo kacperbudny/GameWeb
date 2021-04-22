@@ -1,71 +1,395 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. */
-
-a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+﻿body {
+    box-sizing: border-box;
+    background-color: #242424;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
 }
 
-/* Provide sufficient contrast against white background */
 a {
-  color: #0366d6;
+    color: darkgray;
 }
 
-.btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    a:hover {
+        color: lightgray;
+        text-decoration: none;
+    }
+
+/* HEADER */
+#menu-overlay {
+    display: none;
+    position: fixed;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    top: 0;
+    left: 0;
 }
 
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
-}
-
-/* Sticky footer styles
--------------------------------------------------- */
-html {
-  font-size: 14px;
-}
-@media (min-width: 768px) {
-  html {
+header {
+    background-color: #444444;
+    height: 65px;
     font-size: 16px;
-  }
+    box-shadow: 0 3px 6px 0 rgba(0,0,0,0.2);
+    margin-bottom: 20px;
 }
 
-.border-top {
-  border-top: 1px solid #e5e5e5;
-}
-.border-bottom {
-  border-bottom: 1px solid #e5e5e5;
+    header i {
+        padding-right: 6px;
+    }
+
+    header a {
+        color: white;
+    }
+
+.logo {
+    font-family: 'Blinker', sans-serif;
+    font-size: 36px;
+    margin: 0;
+    padding: 0;
+    line-height: 0;
+    margin-right: 40px;
 }
 
-.box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+    .logo:hover {
+        opacity: 0.8;
+    }
+
+    .logo a:hover {
+        color: white;
+    }
+
+    .logo img {
+        margin-right: 8px;
+    }
+
+nav {
+    margin: 0 40px;
+    display: flex;
+    height: 100%;
+    justify-content: space-between;
 }
 
-button.accept-policy {
-  font-size: 1rem;
-  line-height: inherit;
+.header-left {
+    display: flex;
+    align-items: center;
+    height: 100%;
 }
 
-/* Sticky footer styles
--------------------------------------------------- */
+.header-right {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.dropdown-container {
+    position: relative;
+}
+
+.dropdown-active {
+    display: block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    margin-top: 2px;
+    background-color: rgb(40,40,40);
+    min-width: 200px;
+    box-shadow: 0 0 16px 0 rgba(0,0,0,0.3);
+    z-index: 1;
+    padding: 8px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.dropdown-menu-flex {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+    .dropdown-menu-flex li {
+        width: 100%;
+        padding: 4px;
+        border-radius: 8px;
+        text-align: center;
+    }
+
+        .dropdown-menu-flex li:hover {
+            background: rgba(0,0,0,0.2);
+        }
+
+header ul {
+    display: flex;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+header li {
+    padding-right: 20px;
+}
+
+.active {
+    position: relative;
+}
+
+    .active:after {
+        position: absolute;
+        content: '';
+        display: block;
+        background: white;
+        width: 100%;
+        height: 6px;
+        top: 36px;
+    }
+
+.user-hello {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    cursor: pointer;
+}
+
+    .user-hello:hover {
+        color: lightgray;
+    }
+
+.user-icon {
+    margin-right: 0;
+    margin-left: 8px;
+    font-size: 30px;
+}
+
+/* FOOTER */
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+    margin-bottom: 60px;
 }
+
 .footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px; /* Vertically center the text there */
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px;
+}
+
+
+/* FORMS */
+.default-form {
+    width: 100%;
+}
+
+label {
+    font-size: 0.9em;
+}
+
+.text-input {
+    background: rgba(0,0,0,0.5);
+    width: 100%;
+    box-shadow: 0 0 8px rgba(0,0,0,0.5);
+    border: none;
+    border-radius: 8px;
+    padding: 6px;
+    color: white;
+}
+
+    .text-input:hover {
+        background: rgba(0,0,0,0.3);
+    }
+
+.form-input-set {
+    margin-bottom: 10px;
+}
+
+.validation-error-span {
+    color: red;
+    font-size: 0.8em;
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 0;
+}
+
+::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
+
+.custom-file-input {
+    cursor: pointer;
+}
+
+    .custom-file-input:lang(en) ~ .custom-file-label::after {
+        content: "Wybierz";
+    }
+
+.custom-file-label {
+    background: rgba(0,0,0,0.5);
+    box-shadow: 0 0 8px rgba(0,0,0,0.5);
+    color: white;
+    border: none;
+    border-radius: 8px;
+}
+
+    .custom-file-label::after {
+        color: white;
+        content: "Wybierz";
+        background-color: rgba(255,255,255,0.1);
+        border-radius: 0 8px 8px 0;
+    }
+
+.form-buttons-row {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: 30px 0;
+    grid-gap: 15px;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    margin-top: 20px;
+}
+
+    .checkbox-container label {
+        display: inline-block;
+        vertical-align: middle;
+        margin: 0;
+    }
+
+.regular-checkbox {
+    -webkit-appearance: none;
+    background-color: rgba(0,0,0,0.5);
+    border: 1px solid grey;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.5);
+    width: 16px;
+    height: 16px;
+    border-radius: 3px;
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    margin-right: 8px;
+}
+
+    .regular-checkbox:checked:after {
+        content: '\2714';
+        font-size: 12px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+    }
+
+/* GENERAL STYLES */
+.upper-row {
+    margin: 20px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.action-button {
+    border: 2px solid white;
+    padding: 12px;
+    box-shadow: 0 0 16px rgba(0,0,0,0.7);
+    border-radius: 8px;
+    color: white;
+    transition: 0.3s all;
+}
+
+    .action-button:hover {
+        background: rgba(0,0,0,0.1);
+        border-color: rgba(0,0,0,0);
+    }
+
+.add-button {
+    background: green;
+    border: none;
+    transition: none;
+}
+
+    .add-button:hover {
+        background-color: darkgreen;
+    }
+
+.cancel-button {
+    background: red;
+    border: none;
+    transition: none;
+}
+
+    .cancel-button:hover {
+        background-color: darkred;
+    }
+
+/* GAME LIST */
+.game-card {
+    width: 100%;
+    border: none;
+    display: flex;
+    margin-bottom: 30px;
+    padding: 0;
+    box-shadow: 0 0 16px rgba(0,0,0,0.7);
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+}
+
+    .game-card:hover {
+        background: rgba(0,0,0,0.1);
+    }
+
+.game-image {
+    width: 150px;
+    height: 200px;
+    object-fit: cover;
+    margin: 0;
+    padding: 0;
+}
+
+.game-card-info {
+    padding: 10px 20px;
+    margin: 0;
+}
+
+    .game-card-info p {
+        margin: 0;
+        font-size: 0.9rem;
+    }
+
+    .game-card-info h3 {
+        font-size: 1.5rem;
+        margin: 0;
+    }
+
+    .game-card-info .description {
+        margin: 0.5rem 0;
+    }
+
+    .game-card-info .release-date::before {
+        content: '\00B7';
+        margin: 0 6px;
+        color: grey;
+    }
+
+.game-name-date-container {
+    display: flex;
+    align-items: center;
+    line-height: 0;
+}
+
+.game-card-after-description {
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 10px;
 }

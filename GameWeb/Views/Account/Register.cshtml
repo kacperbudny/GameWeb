@@ -1,29 +1,42 @@
 ﻿@model RegistrationViewModel
 @{
-    ViewBag.Title = "User Registration";
+    ViewBag.Title = "Rejestracja";
 }
-<h1>Rejestracja</h1>
 
-    <div class="row">
-        <div class="col-md-12">
-            <form method="post">
-                <div asp-validation-summary="All" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="Email"></label>
-                    <input asp-for="Email" class="form-control" />
-                    <span asp-validation-for="Email" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Password"></label>
-                    <input asp-for="Password" class="form-control" />
-                    <span asp-validation-for="Password" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="ConfirmPassword"></label>
-                    <input asp-for="ConfirmPassword" class="form-control" />
-                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-                </div>
-                <button type="submit" class="btn btn-primary">Register</button>
-            </form>
-        </div>
+<form method="post">
+    <div asp-validation-summary="ModelOnly" class="validation-error-span"></div>
+    <div class="upper-row">
+        <h2>Rejestracja</h2>
     </div>
+    <div class="form-input-set">
+        <label asp-for="UserName"></label>
+        <input asp-for="UserName" class="text-input" />
+        <span asp-validation-for="UserName" class="validation-error-span"></span>
+    </div>
+    <div class="form-input-set">
+        <label asp-for="Email"></label>
+        <input asp-for="Email" class="text-input" />
+        <span asp-validation-for="Email" class="validation-error-span"></span>
+    </div>
+    <div class="form-input-set">
+        <label asp-for="Password"></label>
+        <input asp-for="Password" class="text-input" />
+        <span asp-validation-for="Password" class="validation-error-span"></span>
+    </div>
+    <div class="form-input-set">
+        <label asp-for="ConfirmPassword"></label>
+        <input asp-for="ConfirmPassword" class="text-input" />
+        <span asp-validation-for="ConfirmPassword" class="validation-error-span"></span>
+    </div>
+    <div class="form-buttons-row">
+        <button type="submit" class="action-button add-button">Zarejestruj</button>
+    </div>
+</form>
+
+@section Scripts{
+
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+
+}
