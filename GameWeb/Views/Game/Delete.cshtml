@@ -1,0 +1,85 @@
+﻿@model GameWeb.Models.Game
+
+<form method="post" asp-action="DeletePost" enctype="multipart/form-data">
+    <input asp-for="Id" hidden/>
+    <div>
+        <div asp-validation-summary="ModelOnly"></div>
+        <div>
+            <div>
+                <div>
+                    <label asp-for="Name"></label>
+                </div>
+                <div>
+                    <input asp-for="Name" disabled/>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <label asp-for="ReleaseDate"></label>
+                </div>
+                <div>
+                    <input asp-for="ReleaseDate" type="date" disabled/>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <label asp-for="Platform"></label>
+                </div>
+                <div>
+                    <input asp-for="Platform" disabled/>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <label asp-for="Publisher"></label>
+                </div>
+                <div>
+                    <input asp-for="Publisher" disabled/>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <label asp-for="Genre"></label>
+                </div>
+                <div>
+                    <input asp-for="Genre" disabled/>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <label asp-for="Description"></label>
+                </div>
+                <div>
+                    <input asp-for="Description" disabled/>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <label asp-for="Image"></label>
+                </div>
+                <div>
+                    <input asp-for="Image" id="customFile" disabled class="custom-file-input" />
+                    <label for="customFile">Wybierz plik</label>
+                </div>
+            </div>
+        </div>
+        <div>
+            <input type="submit" value="Delete" />
+            <a asp-action="Index">Anuluj</a>
+        </div>
+    </div>
+</form>
+
+@section Scripts{
+
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+
+    <script type="text/javascript">
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+    </script>
+}
