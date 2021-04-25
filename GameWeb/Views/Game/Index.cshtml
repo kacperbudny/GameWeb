@@ -17,7 +17,7 @@
                 <img src="~/images/GameCovers/@obj.Image" class="game-image" />
                 <div class="game-card-info">
                     <div class="game-name-date-container">
-                        <h3>@obj.Name</h3>
+                        <a asp-controller="Game" asp-route-id="@obj.Id" asp-action="Details"><h3>@obj.Name</h3></a>
                         <p class="release-date">@obj.ReleaseDate.Year</p>
                     </div>
                     <p class="publisher">@obj.Publisher</p>

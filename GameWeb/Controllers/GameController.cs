@@ -59,6 +59,13 @@ namespace GameWeb.Controllers
             return View(obj);
         }
 
+        public IActionResult Details(int id)
+        {
+            var obj = _db.Game.Find(id);
+            ViewData["Title"] = obj.Name;
+            return View("Details", obj);
+        }
+
         private string UploadedFile(GameViewModel model)
         {
             string uniqueFileName = null;
