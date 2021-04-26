@@ -1,3 +1,93 @@
 ﻿@model GameWeb.Models.Game
 
-<h1>@Model.Name</h1>
+<div class="game-page">
+    <div class="game-header">
+        <img src="~/images/GameCovers/@Model.Image"/>
+        <div class="game-header-info">
+            <div class="game-name-date-container game-header-container">
+                <h2>@Model.Name</h2>
+                <p>@Model.ReleaseDate.Year</p>
+            </div>
+            <p>@Model.Description</p>
+        </div>
+    </div>
+    <hr class="game-divider"/>
+    <div class="game-main-info">
+        <div class="game-section">
+            <h3>Główne informacje</h3>
+            <div class="game-info-grid">
+                <div>
+                    <strong>Wydawca</strong>
+                    <p>@Model.Publisher</p>
+                </div>
+                <div>
+                    <strong>Deweloper</strong>
+                    <p>-</p>
+                </div>
+                <div>
+                    <strong>Gatunek</strong>
+                    <p>@Model.Genre</p>
+                </div>
+            </div>
+        </div>
+        <div class="game-section">
+            <h3>Platformy</h3>
+            <div>
+                <p>@Model.Platform</p>
+            </div>
+        </div>
+        <div class="game-section">
+            <h3>Wymagania sprzętowe</h3>
+            <div>
+                <h4>Minimalne</h4>
+                <div class="game-info-grid">
+                    <div>
+                        <strong>Procesor</strong>
+                        <p>-</p>
+                    </div>
+                    <div>
+                        <strong>Pamięć RAM</strong>
+                        <p>-</p>
+                    </div>
+                    <div>
+                        <strong>Karta graficzna</strong>
+                        <p>-</p>
+                    </div>
+                    <div>
+                        <strong>Dysk twardy</strong>
+                        <p>-</p>
+                    </div>
+                    <div>
+                        <strong>System operacyjny</strong>
+                        <p>-</p>
+                    </div>
+                </div>
+            </div>
+            <div class="game-section">
+                <h4>Rekomendowane</h4>
+                <div class="game-info-grid">
+                    <div>
+                        <strong>Procesor</strong>
+                        <p>-</p>
+                    </div>
+                    <div>
+                        <strong>Pamięć RAM</strong>
+                        <p>-</p>
+                    </div>
+                    <div>
+                        <strong>Karta graficzna</strong>
+                        <p>-</p>
+                    </div>
+                    <div>
+                        <strong>Dysk twardy</strong>
+                        <p>-</p>
+                    </div>
+                    <div>
+                        <strong>System operacyjny</strong>
+                        <p>-</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
