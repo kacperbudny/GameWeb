@@ -1,8 +1,17 @@
 ﻿@model GameWeb.Models.Game
 
+<div id="cover-overlay">
+    <div class="overlay-content">
+        <a href="~/images/GameCovers/@Model.Image">
+            <img src="~/images/GameCovers/@Model.Image" />
+        </a>
+    </div>
+</div>
 <div class="game-page">
     <div class="game-header">
-        <img src="~/images/GameCovers/@Model.Image"/>
+        <div class="cover-container">
+            <img src="~/images/GameCovers/@Model.Image" />
+        </div>
         <div class="game-header-info">
             <div class="game-name-date-container game-header-container">
                 <h2>@Model.Name</h2>
@@ -11,8 +20,8 @@
             <p>@Model.Description</p>
         </div>
     </div>
-    <hr class="game-divider"/>
-    <div class="game-main-info">
+    <hr class="game-divider" />
+    <div class="game-details">
         <div class="game-section">
             <h3>Główne informacje</h3>
             <div class="game-info-grid">
@@ -32,7 +41,7 @@
         </div>
         <div class="game-section">
             <h3>Platformy</h3>
-            <div>
+            <div class="platform-icons">
                 <p>@Model.Platform</p>
             </div>
         </div>
@@ -91,3 +100,15 @@
         </div>
     </div>
 </div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $('.cover-container').on("click", function () {
+            $("#cover-overlay").show();
+        });
+
+        $("#cover-overlay").on("click", function () {
+            $("#cover-overlay").hide();
+        });
+    </script>
+}

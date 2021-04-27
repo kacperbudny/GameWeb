@@ -1,4 +1,8 @@
-﻿body {
+﻿:root {
+    --Blinker-font: 'Blinker', sans-serif;
+}
+
+body {
     box-sizing: border-box;
     background-color: #242424;
     color: white;
@@ -43,7 +47,8 @@ header {
     }
 
 .logo {
-    font-family: 'Blinker', sans-serif;
+    font-family: var(--Blinker-font);
+    font-weight: 200;
     font-size: 36px;
     margin: 0;
     padding: 0;
@@ -409,15 +414,27 @@ label {
     grid-gap: 30px;
 }
 
-    .game-header img {
-        width: max(200px, 30vw);
-        max-height: 400px;
+.cover-container {
+    width: max(200px, 30vw);
+    max-height: 400px;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    border-radius: 16px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.7);
+}
+
+    .cover-container img {
         object-fit: cover;
-        margin: 0;
-        padding: 0;
-        border-radius: 16px;
-        box-shadow: 0 8px 16px rgba(0,0,0,0.7);
+        width: 100%;
+        height: 100%;
+        transition: transform .5s ease;
+        cursor: pointer;
     }
+
+        .cover-container img:hover {
+            transform: scale(1.1);
+        }
 
 .game-header-info {
     display: flex;
@@ -428,15 +445,76 @@ label {
     .game-header-info h2 {
         font-size: 2.8rem;
         margin-right: 10px;
-        font-family: 'Blinker', sans-serif;
-        font-weight: bold;
+        font-family: var(--Blinker-font);
     }
 
 .game-header-container {
     margin-bottom: 6px;
 }
 
-.game-header-container p {
-    font-size: 1.4rem;
-    color: lightgray;
+    .game-header-container p {
+        font-size: 1.4rem;
+        color: lightgray;
+    }
+
+.game-page hr {
+    border-top: 1px solid white;
+    width: 40vw;
+    margin: 50px auto;
 }
+
+.game-details {
+    width: 90%;
+    margin: auto;
+}
+
+.game-section {
+    margin-bottom: 20px;
+}
+
+.game-details h3 {
+    margin-top: 0;
+    font-family: var(--Blinker-font);
+    margin-bottom: 20px;
+}
+
+.game-info-grid {
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.game-section h4 {
+    font-size: 1.1rem;
+    color: lightgrey;
+}
+
+#cover-overlay {
+    z-index: 10;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.2);
+    position: fixed;
+    left: 0;
+    top: 0;
+    display: none;
+}
+
+.overlay-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+    .overlay-content a {
+        height: 80%;
+    }
+
+    .overlay-content img {
+        max-height: 100%;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.7);
+        border-radius: 8px;
+    }
