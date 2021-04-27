@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@model IEnumerable<ApplicationUser>
+    
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -32,9 +34,16 @@
         <div class="user-hello"><i class="fas fa-angle-down"></i> Witaj, @User.Identity.Name! <i class="fas fa-user-circle user-icon"></i></div>
         <div class="dropdown-content">
             <ul class="dropdown-menu-flex">
+                foreach (var users in Model)
+                {
                 <li>
                     <a asp-controller="Account" asp-action="Logout"><i class="fas fa-sign-out-alt"></i> Wyloguj</a>
                 </li>
+
+                <li>
+                    <a asp-controller="Account" asp-action="DeleteUser" asp-route-id="@users.id"><i class="fas fa-sign-out-alt"></i>Usuń konto</a>
+                </li>
+                }
             </ul>
         </div>
     </div>}
