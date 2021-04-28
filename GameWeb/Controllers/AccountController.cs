@@ -23,6 +23,13 @@ namespace GameWeb.Controllers
         }
 
         [HttpGet]
+        public IActionResult ListUsers()
+        {
+            var users = userManager.Users;
+            return View(users);
+        }
+
+        [HttpGet]
         [AllowAnonymous]
         public IActionResult Register()
         {
@@ -93,6 +100,32 @@ namespace GameWeb.Controllers
             await signInManager.SignOutAsync();
 
             return RedirectToAction("index", "home");
+        }
+        [HttpPost]
+        public async Task<IActionResult> DeleteUser(string id)
+        {
+            var user = await userManager.FindByIdAsync(id);
+
+            if (user == null)
+            {
+                ModelState.AddModelError("", "User Not Found");
+                return View();
+            }
+            else
+            {
+                var result = await userManager.DeleteAsync(user);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("index", "home");
+                }
+
+                foreach(var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+            }
+        return RedirectToAction("Index", "Home");
         }
     }
 }
