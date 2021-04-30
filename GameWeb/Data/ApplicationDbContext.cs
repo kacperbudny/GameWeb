@@ -30,7 +30,8 @@ namespace GameWeb.Data
                     Publisher = "Mojang",
                     Description = "Lorem ipsum",
                     Image = "1.jpg",
-                    Genre = "Sandbox"
+                    Genre = "Sandbox",
+                    Developer = "Mojang"
                 },
                 new Game
                 {
@@ -41,7 +42,8 @@ namespace GameWeb.Data
                     Publisher = "Ubisoft",
                     Description = "Lorem ipsum",
                     Image = "2.jpg",
-                    Genre = "Platformówki"
+                    Genre = "Platformówki",
+                    Developer = "Ubisoft"
                 },
                 new Game
                 {
@@ -52,7 +54,8 @@ namespace GameWeb.Data
                     Publisher = "Empire Interactive",
                     Description = "Lorem ipsum",
                     Image = "3.jpg",
-                    Genre = "Wyœcigi"
+                    Genre = "Wyœcigi",
+                    Developer = "Bugbear Entertainment"
                 }
                 );
         }

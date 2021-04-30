@@ -17,7 +17,7 @@
                 <h2>@Model.Name</h2>
                 <p>@Model.ReleaseDate.Year</p>
             </div>
-            <p>@Model.Description</p>
+            <p class="full-description">@Model.Description</p>
         </div>
     </div>
     <hr class="game-divider" />
@@ -31,7 +31,7 @@
                 </div>
                 <div>
                     <strong>Deweloper</strong>
-                    <p>-</p>
+                    <p>@Model.Developer</p>
                 </div>
                 <div>
                     <strong>Gatunek</strong>
