@@ -39,6 +39,9 @@ namespace GameWeb.Models
         [Required(ErrorMessage = "Proszê umieœciæ zdjêcie.")]
         [DisplayName("Zdjêcie")]
         public string Image { get; set; }
-
+        public int MinimalRequirementsId { get; set; }
+        public Requirement MinimalRequirements { get; set; }
+        public int RecommendedRequirementsId { get; set; }
+        public Requirement RecommendedRequirements { get; set; }
     }
 }
