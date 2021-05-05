@@ -14,7 +14,9 @@
         @foreach (var obj in Model)
         {
             <div class="game-card">
-                <img src="~/images/GameCovers/@obj.Image" class="game-image" />
+                <a asp-controller="Game" asp-route-id="@obj.Id" asp-action="Details">
+                    <img src="~/images/GameCovers/@obj.Image" class="game-image" />
+                </a>
                 <div class="game-card-info">
                     <div class="game-name-date-container">
                         <a asp-controller="Game" asp-route-id="@obj.Id" asp-action="Details"><h3>@obj.Name</h3></a>

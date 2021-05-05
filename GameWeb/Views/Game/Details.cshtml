@@ -13,9 +13,8 @@
             <img src="~/images/GameCovers/@Model.Image" />
         </div>
         <div class="game-header-info">
-            <div class="game-name-date-container game-header-container">
-                <h2>@Model.Name</h2>
-                <p>@Model.ReleaseDate.Year</p>
+            <div class="game-header-container">
+                <h2><span class="title-span">@Model.Name</span> <span class="year-span">@Model.ReleaseDate.Year</span></h2>
             </div>
             <p class="full-description">@Model.Description</p>
         </div>

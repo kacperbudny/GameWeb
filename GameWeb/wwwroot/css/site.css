@@ -1,12 +1,13 @@
 ﻿:root {
     --Blinker-font: 'Blinker', sans-serif;
+    --Montserrat-font: 'Montserrat', sans-serif;
 }
 
 body {
     box-sizing: border-box;
     background-color: #242424;
     color: white;
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--Montserrat-font);
 }
 
 a {
@@ -294,11 +295,11 @@ label {
         color: white;
     }
 
-    .two-column-grid {
-        display: grid;
-        grid-template-columns: 50% 50%;
-        grid-gap: 30px;
-    }
+.two-column-grid {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-gap: 30px;
+}
 
 /* GENERAL STYLES */
 .upper-row {
@@ -353,7 +354,6 @@ label {
     border-radius: 16px;
     overflow: hidden;
     position: relative;
-    cursor: pointer;
 }
 
     .game-card:hover {
@@ -465,11 +465,28 @@ label {
 
 .game-header-container {
     margin-bottom: 6px;
+    position: relative;
+    height: 100%;
 }
 
-    .game-header-container p {
-        font-size: 1.4rem;
+    .game-header-container h2 {
+        height: 100%;
+        display: inline;
+        line-height: 2.1rem;
+    }
+
+    .game-header-container .title-span {
+        margin-right: 10px;
+        max-height: 100%;
+    }
+
+    .game-header-container .year-span {
+        font-size: 1.5rem;
         color: lightgray;
+        display: inline-block;
+        vertical-align: middle;
+        height: 100%;
+        font-family: var(--Montserrat-font);
     }
 
 .game-page hr {
