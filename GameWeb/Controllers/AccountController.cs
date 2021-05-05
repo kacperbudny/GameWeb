@@ -94,10 +94,21 @@ namespace GameWeb.Controllers
 
             return RedirectToAction("index", "home");
         }
-        [HttpPost]
-        public async Task<IActionResult> DeleteUser(string id)
+
+        public IActionResult Manage()
         {
-            var user = await userManager.FindByIdAsync(id);
+            if (User.Identity.IsAuthenticated)
+            {
+                return View();
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        public async Task<IActionResult> DeleteAccount()
+        {
+            var username = User.Identity.Name;
+            var user = await userManager.FindByNameAsync(username);
 
             if (user == null)
             {
@@ -110,6 +121,7 @@ namespace GameWeb.Controllers
 
                 if (result.Succeeded)
                 {
+                    await signInManager.SignOutAsync();
                     return RedirectToAction("index", "home");
                 }
 
