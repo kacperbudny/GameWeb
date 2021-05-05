@@ -294,6 +294,12 @@ label {
         color: white;
     }
 
+    .two-column-grid {
+        display: grid;
+        grid-template-columns: 50% 50%;
+        grid-gap: 30px;
+    }
+
 /* GENERAL STYLES */
 .upper-row {
     margin: 20px 0;

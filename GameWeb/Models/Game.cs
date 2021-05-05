@@ -40,8 +40,10 @@ namespace GameWeb.Models
         [DisplayName("Zdjêcie")]
         public string Image { get; set; }
         public int MinimalRequirementsId { get; set; }
+        [ForeignKey("MinimalRequirementsId")]
         public Requirement MinimalRequirements { get; set; }
         public int RecommendedRequirementsId { get; set; }
+        [ForeignKey("RecommendedRequirementsId")]
         public Requirement RecommendedRequirements { get; set; }
     }
 }

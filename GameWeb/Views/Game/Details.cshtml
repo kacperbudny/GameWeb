@@ -52,23 +52,37 @@
                 <div class="game-info-grid">
                     <div>
                         <strong>Procesor</strong>
-                        <p>-</p>
+                        <p>@Model.MinimalRequirements.CPU</p>
                     </div>
                     <div>
                         <strong>Pamięć RAM</strong>
-                        <p>-</p>
+                        @if (Model.MinimalRequirements.RAM >= 1)
+                        {
+                            <p>@Model.MinimalRequirements.RAM GB</p>
+                        }
+                        else
+                        {
+                            <p>@(Model.MinimalRequirements.RAM*1000) MB</p>
+                        }
                     </div>
                     <div>
                         <strong>Karta graficzna</strong>
-                        <p>-</p>
+                        <p>@Model.MinimalRequirements.GPU</p>
                     </div>
                     <div>
                         <strong>Dysk twardy</strong>
-                        <p>-</p>
+                        @if (Model.MinimalRequirements.DriveSize >= 1000)
+                        {
+                            <p>@(Model.MinimalRequirements.DriveSize/1000) GB</p>
+                        }
+                        else
+                        {
+                            <p>@Model.MinimalRequirements.DriveSize MB</p>
+                        }
                     </div>
                     <div>
                         <strong>System operacyjny</strong>
-                        <p>-</p>
+                        <p>@Model.MinimalRequirements.OS lub nowszy</p>
                     </div>
                 </div>
             </div>
@@ -77,23 +91,37 @@
                 <div class="game-info-grid">
                     <div>
                         <strong>Procesor</strong>
-                        <p>-</p>
+                        <p>@Model.RecommendedRequirements.CPU</p>
                     </div>
                     <div>
                         <strong>Pamięć RAM</strong>
-                        <p>-</p>
+                        @if (Model.RecommendedRequirements.RAM >= 1)
+                        {
+                            <p>@Model.RecommendedRequirements.RAM GB</p>
+                        }
+                        else
+                        {
+                            <p>@(Model.RecommendedRequirements.RAM*1000) MB</p>
+                        }
                     </div>
                     <div>
                         <strong>Karta graficzna</strong>
-                        <p>-</p>
+                        <p>@Model.RecommendedRequirements.GPU</p>
                     </div>
                     <div>
                         <strong>Dysk twardy</strong>
-                        <p>-</p>
+                        @if (Model.RecommendedRequirements.DriveSize >= 1000)
+                        {
+                            <p>@(Model.RecommendedRequirements.DriveSize/1000) GB</p>
+                        }
+                        else
+                        {
+                            <p>@Model.RecommendedRequirements.DriveSize MB</p>
+                        }
                     </div>
                     <div>
                         <strong>System operacyjny</strong>
-                        <p>-</p>
+                        <p>@Model.RecommendedRequirements.OS lub nowszy</p>
                     </div>
                 </div>
             </div>

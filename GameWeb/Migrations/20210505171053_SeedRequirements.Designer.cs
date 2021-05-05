@@ -4,14 +4,16 @@ using GameWeb.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GameWeb.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210505171053_SeedRequirements")]
+    partial class SeedRequirements
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -141,8 +143,8 @@ namespace GameWeb.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("RAM")
-                        .HasColumnType("float");
+                    b.Property<int>("RAM")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -154,56 +156,56 @@ namespace GameWeb.Migrations
                         new
                         {
                             Id = 1,
-                            CPU = "Intel Core i3 3210 / AMD A8 7600 APU",
-                            DriveSize = 180,
-                            GPU = "NVIDIA GeForce 400 Series / AMD Radeon HD 7000 series",
-                            OS = "64-bit Windows 7",
-                            RAM = 4.0
+                            CPU = "test",
+                            DriveSize = 8,
+                            GPU = "test",
+                            OS = "Windows",
+                            RAM = 8
                         },
                         new
                         {
                             Id = 2,
-                            CPU = "Intel Core i5 4690 / AMD A10 7800",
-                            DriveSize = 4000,
-                            GPU = "NVIDIA GeForce 700 Series / AMD Radeon Rx 200 Series",
-                            OS = "64-bit Windows 10",
-                            RAM = 8.0
+                            CPU = "test",
+                            DriveSize = 8,
+                            GPU = "test",
+                            OS = "Windows",
+                            RAM = 8
                         },
                         new
                         {
                             Id = 3,
-                            CPU = "Pentium III 600 MHz / AMD Athlon 600 MHz",
-                            DriveSize = 800,
-                            GPU = "Kompatybilna z DirectX 8.1",
-                            OS = "Windows XP",
-                            RAM = 0.25600000000000001
+                            CPU = "test",
+                            DriveSize = 8,
+                            GPU = "test",
+                            OS = "Windows",
+                            RAM = 8
                         },
                         new
                         {
                             Id = 4,
-                            CPU = "Pentium III 1 GHz / AMD Athlon 1 Ghz",
-                            DriveSize = 800,
-                            GPU = "Kompatybilna z DirectX 9",
-                            OS = "Windows XP",
-                            RAM = 0.51200000000000001
+                            CPU = "test",
+                            DriveSize = 8,
+                            GPU = "test",
+                            OS = "Windows",
+                            RAM = 8
                         },
                         new
                         {
                             Id = 5,
-                            CPU = "Intel Pentium 4 2.0GHz / AMD Athlon XP 2000+",
-                            DriveSize = 3500,
-                            GPU = "AMD Radeon HD 4350 / NVIDIA GeForce 6600 GT",
-                            OS = "32-bit Windows XP",
-                            RAM = 0.25600000000000001
+                            CPU = "test",
+                            DriveSize = 8,
+                            GPU = "test",
+                            OS = "Windows",
+                            RAM = 8
                         },
                         new
                         {
                             Id = 6,
-                            CPU = "Intel Pentium 4 2.0GHz / AMD Athlon XP 2500+",
-                            DriveSize = 4000,
-                            GPU = "AMD Radeon 9600 Series / NVIDIA GeForce 6600",
-                            OS = "32-bit Windows XP",
-                            RAM = 0.51200000000000001
+                            CPU = "test",
+                            DriveSize = 8,
+                            GPU = "test",
+                            OS = "Windows",
+                            RAM = 8
                         });
                 });
 

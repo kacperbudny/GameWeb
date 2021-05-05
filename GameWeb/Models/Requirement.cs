@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,25 +12,21 @@ namespace GameWeb.Models
     {
         [Key]
         public int Id { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Proszę wprowadzić procesor.")]
+        [DisplayName("Procesor (oddzielać ukośnikiem)")]
         public string CPU { get; set; }
-        [Required]
-        public int RAM { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Proszę wprowadzić RAM.")]
+        [DisplayName("RAM w GB")]
+        public double RAM { get; set; }
+        [Required(ErrorMessage = "Proszę wprowadzić kartę graficzną.")]
+        [DisplayName("Karta graficzna")]
         public string GPU { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Proszę wprowadzić system operacyjny.")]
+        [DisplayName("System operacyjny")]
         public string OS { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Proszę wprowadzić miejsce na dysku.")]
+        [DisplayName("Miejsce na dysku w MB")]
         public int DriveSize { get; set; }
-        [Required]
-        public RequirementType RequirementType { get; set; }
-        public int GameId { get; set; }
         public Game Game { get; set; }
-    }
-
-    public enum RequirementType
-    {
-        Minimal,
-        Recommended
     }
 }
