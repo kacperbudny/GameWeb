@@ -126,21 +126,58 @@ namespace GameWeb.Controllers
             {
                 return NotFound();
             }
+
             var obj = _db.Game.Find(id);
+
             if (obj == null)
             {
                 return NotFound();
             }
-            return View(obj);
+
+            var objViewModel = new GameViewModel
+            {
+                Id = obj.Id,
+                Name = obj.Name,
+                ReleaseDate = obj.ReleaseDate,
+                Platform = obj.Platform,
+                Publisher = obj.Publisher,
+                Genre = obj.Genre,
+                Description = obj.Description,
+                Developer = obj.Developer,
+                MinimalRequirements = _db.Requirement.Find(obj.MinimalRequirementsId),
+                RecommendedRequirements = _db.Requirement.Find(obj.RecommendedRequirementsId),
+                Image = obj.Image,
+            };
+
+            return View(objViewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Game obj)
+        public IActionResult Edit(GameViewModel obj)
         {
             if (ModelState.IsValid)
             {
-                _db.Game.Update(obj);
+                string uniqueFileName = UploadedFile(obj);
+
+                Game game = new Game
+                {
+                    Id = obj.Id,
+                    Name = obj.Name,
+                    ReleaseDate = obj.ReleaseDate,
+                    Platform = obj.Platform,
+                    Publisher = obj.Publisher,
+                    Genre = obj.Genre,
+                    Description = obj.Description,
+                    Developer = obj.Developer,
+                    MinimalRequirements = obj.MinimalRequirements,
+                    MinimalRequirementsId = obj.MinimalRequirements.Id,
+                    RecommendedRequirements = obj.RecommendedRequirements,
+                    RecommendedRequirementsId = obj.RecommendedRequirements.Id,
+                    Image = uniqueFileName,
+                };
+
+                _db.Game.Update(game);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
