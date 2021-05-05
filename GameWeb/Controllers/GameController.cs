@@ -49,6 +49,11 @@ namespace GameWeb.Controllers
                     Publisher = obj.Publisher,
                     Genre = obj.Genre,
                     Description = obj.Description,
+                    Developer = obj.Developer,
+                    MinimalRequirements = obj.MinimalRequirements,
+                    MinimalRequirementsId = obj.MinimalRequirements.Id,
+                    RecommendedRequirements = obj.RecommendedRequirements,
+                    RecommendedRequirementsId = obj.RecommendedRequirements.Id,
                     Image = uniqueFileName,
                 };
 
@@ -57,6 +62,15 @@ namespace GameWeb.Controllers
                 return RedirectToAction("Index");
             }
             return View(obj);
+        }
+
+        public IActionResult Details(int id)
+        {
+            var obj = _db.Game.Find(id);
+            if (obj.MinimalRequirements == null) obj.MinimalRequirements = _db.Requirement.Find(obj.MinimalRequirementsId);
+            if (obj.RecommendedRequirements == null) obj.RecommendedRequirements = _db.Requirement.Find(obj.RecommendedRequirementsId);
+            ViewData["Title"] = obj.Name;
+            return View("Details", obj);
         }
 
         private string UploadedFile(GameViewModel model)
@@ -104,8 +118,6 @@ namespace GameWeb.Controllers
             _db.Game.Remove(obj);
             _db.SaveChanges();
             return RedirectToAction("Index");
-
-
         }
 
         public IActionResult Edit(int? id)

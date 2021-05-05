@@ -27,6 +27,9 @@ namespace GameWeb.Models
         [Required(ErrorMessage = "Proszê wprowadziæ wydawcê.")]
         [DisplayName("Wydawca")]
         public string Publisher { get; set; }
+        [Required(ErrorMessage = "Proszê wprowadziæ dewelopera.")]
+        [DisplayName("Deweloper")]
+        public string Developer { get; set; }
         [Required(ErrorMessage = "Proszê wprowadziæ gatunek.")]
         [DisplayName("Gatunek")]
         public string Genre { get; set; }
@@ -36,6 +39,11 @@ namespace GameWeb.Models
         [Required(ErrorMessage = "Proszê umieœciæ zdjêcie.")]
         [DisplayName("Zdjêcie")]
         public string Image { get; set; }
-
+        public int MinimalRequirementsId { get; set; }
+        [ForeignKey("MinimalRequirementsId")]
+        public Requirement MinimalRequirements { get; set; }
+        public int RecommendedRequirementsId { get; set; }
+        [ForeignKey("RecommendedRequirementsId")]
+        public Requirement RecommendedRequirements { get; set; }
     }
 }
