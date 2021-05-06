@@ -51,7 +51,7 @@
             <div class="form-input-set">
                 <label asp-for="ImageFile"></label>
                 <br />
-                <img src="~/images/GameCovers/@Model.Image" class="game-image" />
+                <img id="cover" src="~/images/GameCovers/@Model.Image" class="game-image" style="margin-bottom: 10px;"/>
                 <br />
                 <div class="custom-file">
                     <input asp-for="ImageFile" id="customFile" class="custom-file-input" />
@@ -133,7 +133,20 @@
     }
 
     <script type="text/javascript">
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#cover').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
         $(".custom-file-input").on("change", function () {
+            readURL(this);
             var fileName = $(this).val().split("\\").pop();
             $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
         });
