@@ -1,5 +1,6 @@
 ﻿using GameWeb.Data;
 using GameWeb.Models;
+using GameWeb.Models.ViewModels;
 using GameWeb.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -35,7 +36,7 @@ namespace GameWeb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(GameViewModel obj)
+        public IActionResult Create(GameCreateViewModel obj)
         {
             if (ModelState.IsValid)
             {
@@ -118,6 +119,73 @@ namespace GameWeb.Controllers
             _db.Game.Remove(obj);
             _db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public IActionResult Edit(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+
+            var obj = _db.Game.Find(id);
+
+            if (obj == null)
+            {
+                return NotFound();
+            }
+
+            var objViewModel = new GameEditViewModel
+            {
+                Id = obj.Id,
+                Name = obj.Name,
+                ReleaseDate = obj.ReleaseDate,
+                Platform = obj.Platform,
+                Publisher = obj.Publisher,
+                Genre = obj.Genre,
+                Description = obj.Description,
+                Developer = obj.Developer,
+                MinimalRequirements = _db.Requirement.Find(obj.MinimalRequirementsId),
+                RecommendedRequirements = _db.Requirement.Find(obj.RecommendedRequirementsId),
+                Image = obj.Image,
+            };
+
+            return View(objViewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(GameEditViewModel obj)
+        {
+            if (ModelState.IsValid)
+            {
+                string fileName;
+
+                if (obj.ImageFile != null) fileName = UploadedFile(obj);
+                else fileName = obj.Image;
+
+                Game game = new Game
+                {
+                    Id = obj.Id,
+                    Name = obj.Name,
+                    ReleaseDate = obj.ReleaseDate,
+                    Platform = obj.Platform,
+                    Publisher = obj.Publisher,
+                    Genre = obj.Genre,
+                    Description = obj.Description,
+                    Developer = obj.Developer,
+                    MinimalRequirements = obj.MinimalRequirements,
+                    MinimalRequirementsId = obj.MinimalRequirements.Id,
+                    RecommendedRequirements = obj.RecommendedRequirements,
+                    RecommendedRequirementsId = obj.RecommendedRequirements.Id,
+                    Image = fileName,
+                };
+
+                _db.Game.Update(game);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(obj);
         }
     }
 }

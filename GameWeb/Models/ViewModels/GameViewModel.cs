@@ -34,9 +34,7 @@ namespace GameWeb.ViewModels
         [Required(ErrorMessage = "Proszę wprowadzić opis.")]
         [DisplayName("Opis")]
         public string Description { get; set; }
-        [Required(ErrorMessage = "Proszę umieścić zdjęcie.")]
-        [DisplayName("Zdjęcie")]
-        public IFormFile ImageFile { get; set; }
+        public virtual IFormFile ImageFile { get; set; }
         public Requirement MinimalRequirements { get; set; }
         public Requirement RecommendedRequirements { get; set; }
     }
