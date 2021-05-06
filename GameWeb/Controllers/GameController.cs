@@ -1,5 +1,6 @@
 ﻿using GameWeb.Data;
 using GameWeb.Models;
+using GameWeb.Models.ViewModels;
 using GameWeb.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -35,7 +36,7 @@ namespace GameWeb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(GameViewModel obj)
+        public IActionResult Create(GameCreateViewModel obj)
         {
             if (ModelState.IsValid)
             {
@@ -134,7 +135,7 @@ namespace GameWeb.Controllers
                 return NotFound();
             }
 
-            var objViewModel = new GameViewModel
+            var objViewModel = new GameEditViewModel
             {
                 Id = obj.Id,
                 Name = obj.Name,
@@ -154,11 +155,14 @@ namespace GameWeb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(GameViewModel obj)
+        public IActionResult Edit(GameEditViewModel obj)
         {
             if (ModelState.IsValid)
             {
-                string uniqueFileName = UploadedFile(obj);
+                string fileName;
+
+                if (obj.ImageFile != null) fileName = UploadedFile(obj);
+                else fileName = obj.Image;
 
                 Game game = new Game
                 {
@@ -174,7 +178,7 @@ namespace GameWeb.Controllers
                     MinimalRequirementsId = obj.MinimalRequirements.Id,
                     RecommendedRequirements = obj.RecommendedRequirements,
                     RecommendedRequirementsId = obj.RecommendedRequirements.Id,
-                    Image = uniqueFileName,
+                    Image = fileName,
                 };
 
                 _db.Game.Update(game);

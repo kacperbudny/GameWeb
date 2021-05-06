@@ -11,7 +11,6 @@ namespace GameWeb.ViewModels
 {
     public class GameViewModel
     {
-        public int Id { get; set; }
         [Required(ErrorMessage = "Proszę wprowadzić nazwę.")]
         [DisplayName("Nazwa")]
         public string Name { get; set; }
@@ -35,10 +34,7 @@ namespace GameWeb.ViewModels
         [Required(ErrorMessage = "Proszę wprowadzić opis.")]
         [DisplayName("Opis")]
         public string Description { get; set; }
-        [Required(ErrorMessage = "Proszę umieścić zdjęcie.")]
-        [DisplayName("Zdjęcie")]
-        public IFormFile ImageFile { get; set; }
-        public string Image { get; set; }
+        public virtual IFormFile ImageFile { get; set; }
         public Requirement MinimalRequirements { get; set; }
         public Requirement RecommendedRequirements { get; set; }
     }
