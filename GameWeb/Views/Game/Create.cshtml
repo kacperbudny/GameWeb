@@ -9,6 +9,7 @@
         <h2>Dodaj grę</h2>
     </div>
     <div class="default-form">
+        <h3>Dane gry</h3>
         <div class="form-input-set">
             <label asp-for="Name"></label>
             <input class="text-input" asp-for="Name" />
@@ -30,13 +31,18 @@
             <span class="validation-error-span" asp-validation-for="Publisher" />
         </div>
         <div class="form-input-set">
+            <label asp-for="Developer"></label>
+            <input class="text-input" asp-for="Developer" />
+            <span class="validation-error-span" asp-validation-for="Developer" />
+        </div>
+        <div class="form-input-set">
             <label asp-for="Genre"></label>
             <input class="text-input" asp-for="Genre" />
             <span class="validation-error-span" asp-validation-for="Genre" />
         </div>
         <div class="form-input-set">
             <label asp-for="Description"></label>
-            <input class="text-input" asp-for="Description" />
+            <textarea class="text-input" rows="6" asp-for="Description"></textarea>
             <span class="validation-error-span" asp-validation-for="Description" />
         </div>
         <div class="form-input-set">
@@ -46,6 +52,65 @@
                 <label for="customFile" class="custom-file-label">Wybierz plik</label>
             </div>
             <span class="validation-error-span" asp-validation-for="ImageFile" />
+        </div>
+        <h3 style="margin-top: 30px">Wymagania</h3>
+        <div class="two-column-grid">
+            <div>
+                <h4>Minimalne</h4>
+                <div class="form-input-set">
+                    <label asp-for="MinimalRequirements.CPU"></label>
+                    <input class="text-input" asp-for="MinimalRequirements.CPU" />
+                    <span class="validation-error-span" asp-validation-for="MinimalRequirements.CPU" />
+                </div>
+                <div class="form-input-set">
+                    <label asp-for="MinimalRequirements.RAM"></label>
+                    <input class="text-input" asp-for="MinimalRequirements.RAM" />
+                    <span class="validation-error-span" asp-validation-for="MinimalRequirements.RAM" />
+                </div>
+                <div class="form-input-set">
+                    <label asp-for="MinimalRequirements.GPU"></label>
+                    <input class="text-input" asp-for="MinimalRequirements.GPU" />
+                    <span class="validation-error-span" asp-validation-for="MinimalRequirements.GPU" />
+                </div>
+                <div class="form-input-set">
+                    <label asp-for="MinimalRequirements.DriveSize"></label>
+                    <input class="text-input" asp-for="MinimalRequirements.DriveSize" />
+                    <span class="validation-error-span" asp-validation-for="MinimalRequirements.DriveSize" />
+                </div>
+                <div class="form-input-set">
+                    <label asp-for="MinimalRequirements.OS"></label>
+                    <input class="text-input" asp-for="MinimalRequirements.OS" />
+                    <span class="validation-error-span" asp-validation-for="MinimalRequirements.OS" />
+                </div>
+            </div>
+            <div>
+                <h4>Zalecane</h4>
+                <div class="form-input-set">
+                    <label asp-for="RecommendedRequirements.CPU"></label>
+                    <input class="text-input" asp-for="RecommendedRequirements.CPU" />
+                    <span class="validation-error-span" asp-validation-for="RecommendedRequirements.CPU" />
+                </div>
+                <div class="form-input-set">
+                    <label asp-for="RecommendedRequirements.RAM"></label>
+                    <input class="text-input" asp-for="RecommendedRequirements.RAM" />
+                    <span class="validation-error-span" asp-validation-for="RecommendedRequirements.RAM" />
+                </div>
+                <div class="form-input-set">
+                    <label asp-for="RecommendedRequirements.GPU"></label>
+                    <input class="text-input" asp-for="RecommendedRequirements.GPU" />
+                    <span class="validation-error-span" asp-validation-for="RecommendedRequirements.GPU" />
+                </div>
+                <div class="form-input-set">
+                    <label asp-for="RecommendedRequirements.DriveSize"></label>
+                    <input class="text-input" asp-for="RecommendedRequirements.DriveSize" />
+                    <span class="validation-error-span" asp-validation-for="RecommendedRequirements.DriveSize" />
+                </div>
+                <div class="form-input-set">
+                    <label asp-for="RecommendedRequirements.OS"></label>
+                    <input class="text-input" asp-for="RecommendedRequirements.OS" />
+                    <span class="validation-error-span" asp-validation-for="RecommendedRequirements.OS" />
+                </div>
+            </div>
         </div>
     </div>
     <div class="form-buttons-row">
