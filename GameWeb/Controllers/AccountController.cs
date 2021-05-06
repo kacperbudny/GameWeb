@@ -74,7 +74,8 @@ namespace GameWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await signInManager.PasswordSignInAsync(user.Email, user.Password, user.RememberMe, false);
+                var username = await userManager.FindByEmailAsync(user.Email);
+                var result = await signInManager.PasswordSignInAsync(username, user.Password, user.RememberMe, false);
 
                 if (result.Succeeded)
                 {

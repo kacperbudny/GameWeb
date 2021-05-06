@@ -29,7 +29,7 @@ namespace GameWeb.Controllers
 
             if (!String.IsNullOrEmpty(SearchString))
             {
-                objList = objList.Where(s => s.Name.Contains(SearchString));
+                objList = objList.Where(s => s.Name.ToLower().Contains(SearchString.ToLower()));
             }
 
             return View(objList.ToList());
