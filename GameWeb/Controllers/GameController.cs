@@ -23,11 +23,18 @@ namespace GameWeb.Controllers
             webHostEnvironment = hostEnvironment;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string SearchString)
         {
             IEnumerable<Game> objList = _db.Game;
-            return View(objList);
+
+            if (!String.IsNullOrEmpty(SearchString))
+            {
+                objList = objList.Where(s => s.Name.Contains(SearchString));
+            }
+
+            return View(objList.ToList());
         }
+
 
         public IActionResult Create()
         {
