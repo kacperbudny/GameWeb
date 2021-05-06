@@ -94,5 +94,43 @@ namespace GameWeb.Controllers
 
             return RedirectToAction("index", "home");
         }
+
+        public IActionResult Manage()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                return View();
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        public async Task<IActionResult> DeleteAccount()
+        {
+            var username = User.Identity.Name;
+            var user = await userManager.FindByNameAsync(username);
+
+            if (user == null)
+            {
+                ModelState.AddModelError("", "User Not Found");
+                return View();
+            }
+            else
+            {
+                var result = await userManager.DeleteAsync(user);
+
+                if (result.Succeeded)
+                {
+                    await signInManager.SignOutAsync();
+                    return RedirectToAction("index", "home");
+                }
+
+                foreach(var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+            }
+        return RedirectToAction("Index", "Home");
+        }
     }
 }
