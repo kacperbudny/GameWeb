@@ -2,6 +2,7 @@
 using GameWeb.Models;
 using GameWeb.Models.ViewModels;
 using GameWeb.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace GameWeb.Controllers
 {
+    [Authorize]
     public class GameController : Controller
     {
         private readonly ApplicationDbContext _db;
