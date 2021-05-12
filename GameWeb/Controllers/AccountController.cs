@@ -127,5 +127,10 @@ namespace GameWeb.Controllers
             }
         return RedirectToAction("Index", "Home");
         }
+        public IActionResult UserList()
+        {
+            var users = userManager.Users;
+            return View(users);
+        }
     }
 }
