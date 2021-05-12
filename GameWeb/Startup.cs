@@ -1,4 +1,3 @@
-using GameWeb.Authorization;
 using GameWeb.Data;
 using GameWeb.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -60,13 +59,6 @@ namespace GameWeb
                 options.Lockout.MaxFailedAccessAttempts = 3;
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
             });
-
-            services.AddSingleton<IAuthorizationHandler,
-                          AdminAuthorizationHandler>();
-            services.AddSingleton<IAuthorizationHandler,
-                          GamePublisherAuthorizationHandler>();
-            services.AddSingleton<IAuthorizationHandler,
-                          NewsCreatorAuthorizationHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

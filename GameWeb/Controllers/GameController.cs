@@ -1,6 +1,7 @@
 ﻿using GameWeb.Data;
 using GameWeb.Models;
 using GameWeb.Models.ViewModels;
+using GameWeb.Utilities;
 using GameWeb.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -13,7 +14,6 @@ using System.Threading.Tasks;
 
 namespace GameWeb.Controllers
 {
-    [Authorize]
     public class GameController : Controller
     {
         private readonly ApplicationDbContext _db;
@@ -37,7 +37,7 @@ namespace GameWeb.Controllers
             return View(objList.ToList());
         }
 
-
+        [Authorize(Roles = RoleNames.AdminRole + "," + RoleNames.GamePublisherRole)]
         public IActionResult Create()
         {
             return View();
@@ -45,6 +45,7 @@ namespace GameWeb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleNames.AdminRole + "," + RoleNames.GamePublisherRole)]
         public IActionResult Create(GameCreateViewModel obj)
         {
             if (ModelState.IsValid)
@@ -100,6 +101,7 @@ namespace GameWeb.Controllers
             return uniqueFileName;
         }
 
+        [Authorize(Roles = RoleNames.AdminRole + "," + RoleNames.GamePublisherRole)]
         public IActionResult Delete(int? id)
         {
             if (id == null || id == 0)
@@ -115,9 +117,9 @@ namespace GameWeb.Controllers
             return View(obj);
         }
 
-        //POST - DELETE
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleNames.AdminRole + "," + RoleNames.GamePublisherRole)]
         public IActionResult DeletePost(int? id)
         {
             var obj = _db.Game.Find(id);
@@ -130,6 +132,7 @@ namespace GameWeb.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = RoleNames.AdminRole + "," + RoleNames.GamePublisherRole)]
         public IActionResult Edit(int? id)
         {
             if (id == null || id == 0)
@@ -164,6 +167,7 @@ namespace GameWeb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleNames.AdminRole + "," + RoleNames.GamePublisherRole)]
         public IActionResult Edit(GameEditViewModel obj)
         {
             if (ModelState.IsValid)

@@ -33,6 +33,14 @@ namespace GameWeb.Controllers
 
             return View();
         }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Login()
@@ -44,7 +52,6 @@ namespace GameWeb.Controllers
 
             return View();
         }
-
 
         [HttpPost]
         public async Task<IActionResult> Register(RegistrationViewModel model)
@@ -96,6 +103,7 @@ namespace GameWeb.Controllers
             return View(user);
         }
 
+        [Authorize]
         public async Task<IActionResult> Logout()
         {
             await signInManager.SignOutAsync();
@@ -113,6 +121,7 @@ namespace GameWeb.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [Authorize]
         public async Task<IActionResult> DeleteAccount()
         {
             var username = User.Identity.Name;
