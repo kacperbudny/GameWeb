@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using GameWeb.Models;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -24,14 +25,17 @@ namespace GameWeb.ViewModels
         [Required(ErrorMessage = "Proszę wprowadzić wydawcę.")]
         [DisplayName("Wydawca")]
         public string Publisher { get; set; }
+        [Required(ErrorMessage = "Proszę wprowadzić dewelopera.")]
+        [DisplayName("Deweloper")]
+        public string Developer { get; set; }
         [Required(ErrorMessage = "Proszę wprowadzić gatunek.")]
         [DisplayName("Gatunek")]
         public string Genre { get; set; }
         [Required(ErrorMessage = "Proszę wprowadzić opis.")]
         [DisplayName("Opis")]
         public string Description { get; set; }
-        [Required(ErrorMessage = "Proszę umieścić zdjęcie.")]
-        [DisplayName("Zdjęcie")]
-        public IFormFile ImageFile { get; set; }
+        public virtual IFormFile ImageFile { get; set; }
+        public Requirement MinimalRequirements { get; set; }
+        public Requirement RecommendedRequirements { get; set; }
     }
 }

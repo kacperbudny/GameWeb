@@ -35,6 +35,14 @@ namespace GameWeb.Controllers
 
             return View();
         }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Login()
@@ -47,9 +55,8 @@ namespace GameWeb.Controllers
             return View();
         }
 
-
         [HttpPost]
-        public async Task <IActionResult> Register(RegistrationViewModel model)
+        public async Task<IActionResult> Register(RegistrationViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -62,7 +69,7 @@ namespace GameWeb.Controllers
                     return RedirectToAction("index", "home");
                 }
 
-                foreach(var error in result.Errors)
+                foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError("", error.Description);
                 }
@@ -72,38 +79,59 @@ namespace GameWeb.Controllers
         }
 
         [HttpPost]
-        public async Task <IActionResult> Login(LoginViewModel user)
+        public async Task<IActionResult> Login(LoginViewModel user)
         {
             if (ModelState.IsValid)
             {
-                var result = await signInManager.PasswordSignInAsync(user.Email, user.Password, user.RememberMe, false);
+                var username = await userManager.FindByEmailAsync(user.Email);
+
+                if (username == null)
+                {
+                    ModelState.AddModelError(string.Empty, "Nieprawidłowe dane logowania");
+                    return View();
+                }
+
+                var result = await signInManager.PasswordSignInAsync(username, user.Password, user.RememberMe, false);
 
                 if (result.Succeeded)
                 {
                     return RedirectToAction("Index", "Home");
                 }
 
-                ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
+                ModelState.AddModelError(string.Empty, "Nieprawidłowe dane logowania");
 
             }
 
             return View(user);
         }
 
+        [Authorize]
         public async Task<IActionResult> Logout()
         {
             await signInManager.SignOutAsync();
 
             return RedirectToAction("index", "home");
         }
-        [HttpPost]
-        public async Task<IActionResult> DeleteUser(string id)
+
+        public IActionResult Manage()
         {
-            var user = await userManager.FindByIdAsync(id);
+            if (User.Identity.IsAuthenticated)
+            {
+                return View();
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        [Authorize]
+        public async Task<IActionResult> DeleteAccount()
+        {
+            var username = User.Identity.Name;
+            var user = await userManager.FindByNameAsync(username);
 
             if (user == null)
             {
-                ModelState.AddModelError("", "User Not Found");
+                ModelState.AddModelError(string.Empty, "Nie znaleziono użytkownika");
                 return View();
             }
             else
@@ -112,15 +140,16 @@ namespace GameWeb.Controllers
 
                 if (result.Succeeded)
                 {
+                    await signInManager.SignOutAsync();
                     return RedirectToAction("index", "home");
                 }
 
-                foreach(var error in result.Errors)
+                foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError("", error.Description);
                 }
             }
-        return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Home");
         }
     }
 }
