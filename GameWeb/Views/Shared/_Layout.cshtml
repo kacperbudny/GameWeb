@@ -23,12 +23,14 @@
                     <li>
                         <a class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Game" ? "active" : "")" asp-area="" asp-controller="Game" asp-action="Index">Gry</a>
                     </li>
+                    <li>
+                        <a asp-controller="UsersManagement" asp-action="Index">Lista użytkowników</a>
+                    </li>
                 </ul>
             </div>
             <div class="header-right">
                 @if (User.Identity.IsAuthenticated)
                 {
-<<<<<<< Updated upstream
     <div class="dropdown-container">
         <div class="user-hello"><i class="fas fa-angle-down"></i> Witaj, @User.Identity.Name! <i class="fas fa-user-circle user-icon"></i></div>
         <div class="dropdown-content">
@@ -43,43 +45,12 @@ else
 {
 <ul>
     <li>
-        <a asp-controller="Account" asp-action="ListUsers">Lista użytkowników</a>
-    </li>
-    <li>
         <a asp-controller="Account" asp-action="Login">Logowanie</a>
     </li>
     <li>
         <a asp-controller="Account" asp-action="Register">Rejestracja</a>
     </li>
 </ul>}
-=======
-                    <div class="dropdown-container">
-                        <div class="user-hello"><i class="fas fa-angle-down"></i> Witaj, @User.Identity.Name! <i class="fas fa-user-circle user-icon"></i></div>
-                        <div class="dropdown-content">
-                            <ul class="dropdown-menu-flex">
-                                <li>
-                                    <a asp-controller="Account" asp-action="Manage"><i class="fas fa-cog"></i> Zarządzaj kontem</a>
-                                </li>
-                                <li>
-                                    <a asp-controller="Account" asp-action="UserList"><i class="fas fa-cog"></i> Lista użytkowników</a>
-                                </li>
-                                <li>
-                                    <a asp-controller="Account" asp-action="Logout"><i class="fas fa-sign-out-alt"></i> Wyloguj</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>}
-                else
-                {
-                    <ul>
-                        <li>
-                            <a asp-controller="Account" asp-action="Login">Logowanie</a>
-                        </li>
-                        <li>
-                            <a asp-controller="Account" asp-action="Register">Rejestracja</a>
-                        </li>
-                    </ul>}
->>>>>>> Stashed changes
             </div>
         </nav>
     </header>
