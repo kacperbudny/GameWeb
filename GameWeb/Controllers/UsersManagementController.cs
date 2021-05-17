@@ -23,9 +23,16 @@ namespace GameWeb.Controllers
             this.userManager = userManager;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             var list = userManager.Users;
+
+            foreach(var user in list)
+            {
+                var role = await userManager.GetRolesAsync(user);
+                user.Role = role.FirstOrDefault();
+            }
+
             return View(list);
         }
     }
