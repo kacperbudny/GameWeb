@@ -12,7 +12,8 @@ namespace GameWeb.Models
         public DateTime Date { get; set; }
         [Column(TypeName = "ntext")]
         public string Body { get; set; }
-        public string UserID { get; set; }
+        public string AuthorID { get; set; }
+        public ApplicationUser Author { get; set; }
         public int ThreadId { get; set; }
         public GameCommentThread Thread { get; set; }
     }
