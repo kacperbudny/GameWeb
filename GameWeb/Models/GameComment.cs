@@ -6,15 +6,14 @@ using System.Threading.Tasks;
 
 namespace GameWeb.Models
 {
-    public class Comment
+    public class GameComment
     {
-        public int CommentID { get; set; }
-
-        public string Name { get; set; }
-
+        public int Id { get; set; }
+        public DateTime Date { get; set; }
         [Column(TypeName = "ntext")]
         public string Body { get; set; }
-
-        public int Id { get; set; }
+        public string UserID { get; set; }
+        public int ThreadId { get; set; }
+        public GameCommentThread Thread { get; set; }
     }
 }
