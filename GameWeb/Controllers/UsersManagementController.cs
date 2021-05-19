@@ -35,5 +35,33 @@ namespace GameWeb.Controllers
 
             return View(list);
         }
+        [HttpPost]
+        public async Task<IActionResult> DeleteUser(string id)
+        {
+            var username = User.Identity.Name;
+            var user = await userManager.FindByNameAsync(username);
+
+            if (user == null)
+            {
+                ModelState.AddModelError(string.Empty, "Nie znaleziono użytkownika");
+                return View();
+            }
+            else
+            {
+                var result = await userManager.DeleteAsync(user);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("index", "home");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+
+                return RedirectToAction("Index", "Home");
+            }
+        }
     }
 }
