@@ -5,6 +5,7 @@ using GameWeb.Utilities;
 using GameWeb.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -17,12 +18,14 @@ namespace GameWeb.Controllers
     public class GameController : Controller
     {
         private readonly ApplicationDbContext _db;
+        private readonly UserManager<IdentityUser> userManager;
         private readonly IWebHostEnvironment webHostEnvironment;
 
-        public GameController(ApplicationDbContext db, IWebHostEnvironment hostEnvironment)
+        public GameController(ApplicationDbContext db, IWebHostEnvironment hostEnvironment, UserManager<IdentityUser> userManager)
         {
             _db = db;
             webHostEnvironment = hostEnvironment;
+            this.userManager = userManager;
         }
 
         public IActionResult Index(string SearchString)
@@ -82,6 +85,24 @@ namespace GameWeb.Controllers
             if (obj.RecommendedRequirements == null) obj.RecommendedRequirements = _db.Requirement.Find(obj.RecommendedRequirementsId);
             ViewData["Title"] = obj.Name;
             return View("Details", obj);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> FavPost(int id)
+        {
+            var obj = _db.Game.Find(id);
+            var currentUser = await userManager.FindByNameAsync(User.Identity.Name);
+
+            var newFavGame = new FavouriteGame()
+            {
+                GameId = id,
+                UserId = currentUser.Id
+            };
+
+            _db.FavouriteGame.Add(newFavGame);
+            _db.SaveChanges();
+
+            return RedirectToAction("Details", new { id = id });
         }
 
         private string UploadedFile(GameViewModel model)
