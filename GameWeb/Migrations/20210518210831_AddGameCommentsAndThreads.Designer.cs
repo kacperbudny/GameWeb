@@ -4,14 +4,16 @@ using GameWeb.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GameWeb.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210518210831_AddGameCommentsAndThreads")]
+    partial class AddGameCommentsAndThreads
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -123,9 +125,6 @@ namespace GameWeb.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("AuthorID")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("Body")
                         .HasColumnType("ntext");
 
@@ -135,9 +134,10 @@ namespace GameWeb.Migrations
                     b.Property<int>("ThreadId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.Property<string>("UserID")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("AuthorID");
+                    b.HasKey("Id");
 
                     b.HasIndex("ThreadId");
 
@@ -495,17 +495,11 @@ namespace GameWeb.Migrations
 
             modelBuilder.Entity("GameWeb.Models.GameComment", b =>
                 {
-                    b.HasOne("GameWeb.Models.ApplicationUser", "Author")
-                        .WithMany()
-                        .HasForeignKey("AuthorID");
-
                     b.HasOne("GameWeb.Models.GameCommentThread", "Thread")
                         .WithMany("Comments")
                         .HasForeignKey("ThreadId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Author");
 
                     b.Navigation("Thread");
                 });
