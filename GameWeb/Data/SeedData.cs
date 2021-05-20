@@ -21,29 +21,29 @@ namespace GameWeb.Data
 
         public static async Task SeedUsers(IServiceProvider serviceProvider)
         {
-            var userManager = serviceProvider.GetService<UserManager<IdentityUser>>();
+            var userManager = serviceProvider.GetService<UserManager<ApplicationUser>>();
             var context = serviceProvider.GetRequiredService<ApplicationDbContext>();
 
             if (!userManager.Users.Any())
             {
-                var users = new List<IdentityUser>
+                var users = new List<ApplicationUser>
                 {
-                    new IdentityUser
+                    new ApplicationUser
                     {
                         UserName = "Admin",
                         Email = "admin@gameweb.com",
                     },
-                    new IdentityUser
+                    new ApplicationUser
                     {
                         UserName = "User",
                         Email = "user@gameweb.com",
                     },
-                    new IdentityUser
+                    new ApplicationUser
                     {
                         UserName = "Editor",
                         Email = "editor@gameweb.com",
                     },
-                    new IdentityUser
+                    new ApplicationUser
                     {
                         UserName = "Publisher",
                         Email = "publisher@gameweb.com",

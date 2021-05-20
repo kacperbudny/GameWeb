@@ -1,0 +1,41 @@
+@model IEnumerable<ApplicationUser>
+
+@{
+    ViewBag.Title = "All Users";
+}
+
+<h1>Wszyscy użytkownicy</h1>
+
+@if (Model.Any())
+{
+    <table>
+        <tr>
+            <th>Nazwa użytkownika</th>
+            <th>Email</th>
+            <th>Rola</th>
+            <th></th>
+        </tr>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <th>
+                    @user.UserName
+                </th>
+                <th>
+                    @user.Email
+                </th>
+                <th>
+                    @user.Role
+                </th>
+                <th>
+                    <a href="#" class="btn btn-info">Edit</a>
+                    <a href="#" class="btn btn-danger">Delete</a>
+                </th>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <p>Brak użytkowników.</p>
+}

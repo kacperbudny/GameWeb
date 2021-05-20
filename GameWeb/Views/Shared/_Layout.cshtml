@@ -23,7 +23,13 @@
                     <li>
                         <a class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Game" ? "active" : "")" asp-area="" asp-controller="Game" asp-action="Index">Gry</a>
                     </li>
-                </ul>
+                    @if (User.IsInRole(GameWeb.Utilities.RoleNames.AdminRole))
+                    {
+                        <li>
+                            <a asp-controller="UsersManagement" asp-action="Index">Lista użytkowników</a>
+                        </li>
+                    }
+                    </ul>
             </div>
             <div class="header-right">
                 @await Html.PartialAsync("_LoginPartial")
