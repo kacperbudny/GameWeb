@@ -45,5 +45,6 @@ namespace GameWeb.Models
         public int RecommendedRequirementsId { get; set; }
         [ForeignKey("RecommendedRequirementsId")]
         public Requirement RecommendedRequirements { get; set; }
+        public List<GameCommentThread> CommentThreads { get; set; }
     }
 }

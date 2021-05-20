@@ -14,7 +14,8 @@ namespace GameWeb.Data
         public DbSet<ApplicationUser> ApplicationUser { get; set; }
         public DbSet<Game> Game { get; set; }
         public DbSet<Requirement> Requirement { get; set; }
-
+        public DbSet<GameComment> GameComment { get; set; }
+        public DbSet<GameCommentThread> GameCommentThread { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
