@@ -78,11 +78,17 @@ namespace GameWeb.Controllers
             return View(obj);
         }
 
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
             var obj = _db.Game.Find(id);
+            var currentUser = await userManager.FindByNameAsync(User.Identity.Name);
+
             if (obj.MinimalRequirements == null) obj.MinimalRequirements = _db.Requirement.Find(obj.MinimalRequirementsId);
             if (obj.RecommendedRequirements == null) obj.RecommendedRequirements = _db.Requirement.Find(obj.RecommendedRequirementsId);
+            obj.FavouriteGames = _db.FavouriteGame.Where(fg => fg.GameId == obj.Id).ToList();
+
+            obj.IsCurrentUsersFavourite = obj.FavouriteGames.Any(game => game.UserId == currentUser.Id);
+
             ViewData["Title"] = obj.Name;
             return View("Details", obj);
         }
@@ -90,7 +96,6 @@ namespace GameWeb.Controllers
         [HttpPost]
         public async Task<IActionResult> FavPost(int id)
         {
-            var obj = _db.Game.Find(id);
             var currentUser = await userManager.FindByNameAsync(User.Identity.Name);
 
             var newFavGame = new FavouriteGame()
