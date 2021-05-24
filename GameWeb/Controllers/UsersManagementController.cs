@@ -35,11 +35,38 @@ namespace GameWeb.Controllers
 
             return View(list);
         }
+
+        public IActionResult Delete(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var obj = _db.ApplicationUser.Find(id);
+
+            if (obj == null)
+            {
+                return NotFound();
+            }
+
+            return View(obj);
+        }
+
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteUser(string id)
         {
-            var username = User.Identity.Name;
-            var user = await userManager.FindByNameAsync(username);
+            var currentUser = await userManager.FindByNameAsync(User.Identity.Name);
+
+            var user = _db.ApplicationUser.Find(id);
+
+            if (id == currentUser.Id)
+            {
+                ModelState.AddModelError(string.Empty, "Nie możesz usunąć własnego konta w ten sposób!");
+                return View("Delete", user);
+            }
+
 
             if (user == null)
             {
@@ -52,7 +79,7 @@ namespace GameWeb.Controllers
 
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("index", "home");
+                    return RedirectToAction("index");
                 }
 
                 foreach (var error in result.Errors)
@@ -60,7 +87,7 @@ namespace GameWeb.Controllers
                     ModelState.AddModelError("", error.Description);
                 }
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index");
             }
         }
     }

@@ -4,34 +4,9 @@
     <input asp-for="Id" hidden/>
     <div>
         <div asp-validation-summary="ModelOnly"></div>
+        <p>Czy na pewno chcesz usunąć użytkownika <strong>@Model.UserName</strong>?</p>
         <div>
-            <div>
-                <div>
-                    <label asp-for="UserName"></label>
-                </div>
-                <div>
-                    <input asp-for="UserName" disabled/>
-                </div>
-            </div>
-            <div>
-                <div>
-                    <label asp-for="Email"></label>
-                </div>
-                <div>
-                    <input asp-for="Email" disabled/>
-                </div>
-            </div>
-            <div>
-                <div>
-                    <label asp-for="Password"></label>
-                </div>
-                <div>
-                    <input asp-for="Password" disabled/>
-                </div>
-            </div>
-        </div>
-        <div>
-            <input type="submit" value="Delete" />
+            <input type="submit" value="Usuń" />
             <a asp-action="Index">Anuluj</a>
         </div>
     </div>
