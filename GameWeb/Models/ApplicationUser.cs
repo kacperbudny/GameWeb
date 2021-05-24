@@ -14,5 +14,6 @@ namespace GameWeb.Models
         [NotMapped]
         public string Role { get; set; }
         public ICollection<FavouriteGame> FavouriteGames { get; set; }
+        public ICollection<WishlistGame> WishlistGames { get; set; }
     }
 }
