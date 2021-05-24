@@ -50,5 +50,7 @@ namespace GameWeb.Models
         public ICollection<WishlistGame> WishlistGames { get; set; }
         [NotMapped]
         public bool IsCurrentUsersFavourite { get; set; }
+        [NotMapped]
+        public bool IsInCurrentUsersWishlist { get; set; }
     }
 }
