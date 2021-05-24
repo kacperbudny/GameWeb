@@ -16,6 +16,21 @@
             <div class="game-header-container">
                 <h2><span class="title-span">@Model.Name</span> <span class="year-span">@Model.ReleaseDate.Year</span></h2>
             </div>
+            @if (User.Identity.IsAuthenticated)
+            {
+                @if (Model.IsCurrentUsersFavourite)
+                {
+                    <form asp-controller="Game" asp-action="UnfavPost" asp-route-id="@Model.Id">
+                        <input type="submit" value="Remove from favourites" />
+                    </form>
+                }
+                else
+                {
+                    <form asp-controller="Game" asp-action="FavPost" asp-route-id="@Model.Id">
+                        <input type="submit" value="Add to favourites" />
+                    </form>
+                }
+            }
             <p class="full-description">@Model.Description</p>
         </div>
     </div>

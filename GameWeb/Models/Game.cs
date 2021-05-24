@@ -46,5 +46,8 @@ namespace GameWeb.Models
         [ForeignKey("RecommendedRequirementsId")]
         public Requirement RecommendedRequirements { get; set; }
         public List<GameCommentThread> CommentThreads { get; set; }
+        public ICollection<FavouriteGame> FavouriteGames { get; set; }
+        [NotMapped]
+        public bool IsCurrentUsersFavourite { get; set; }
     }
 }

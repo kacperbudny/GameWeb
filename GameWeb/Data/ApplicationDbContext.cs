@@ -16,6 +16,8 @@ namespace GameWeb.Data
         public DbSet<Requirement> Requirement { get; set; }
         public DbSet<GameComment> GameComment { get; set; }
         public DbSet<GameCommentThread> GameCommentThread { get; set; }
+        public DbSet<FavouriteGame> FavouriteGame { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -33,6 +35,19 @@ namespace GameWeb.Data
                 .HasOne(e => e.RecommendedRequirements)
                 .WithMany()
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<FavouriteGame>()
+                .HasKey(fg => new { fg.GameId, fg.UserId });
+
+            builder.Entity<FavouriteGame>()
+                .HasOne(fg => fg.Game)
+                .WithMany(g => g.FavouriteGames)
+                .HasForeignKey(fg => fg.GameId);
+
+            builder.Entity<FavouriteGame>()
+                .HasOne(fg => fg.User)
+                .WithMany(u => u.FavouriteGames)
+                .HasForeignKey(fg => fg.UserId);
 
             builder.Entity<Requirement>().HasData(
                 new Requirement

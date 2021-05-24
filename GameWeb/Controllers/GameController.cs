@@ -5,6 +5,7 @@ using GameWeb.Utilities;
 using GameWeb.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -17,12 +18,14 @@ namespace GameWeb.Controllers
     public class GameController : Controller
     {
         private readonly ApplicationDbContext _db;
+        private readonly UserManager<ApplicationUser> userManager;
         private readonly IWebHostEnvironment webHostEnvironment;
 
-        public GameController(ApplicationDbContext db, IWebHostEnvironment hostEnvironment)
+        public GameController(ApplicationDbContext db, IWebHostEnvironment hostEnvironment, UserManager<ApplicationUser> userManager)
         {
             _db = db;
             webHostEnvironment = hostEnvironment;
+            this.userManager = userManager;
         }
 
         public IActionResult Index(string SearchString)
@@ -75,13 +78,60 @@ namespace GameWeb.Controllers
             return View(obj);
         }
 
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
             var obj = _db.Game.Find(id);
+            var currentUser = await userManager.FindByNameAsync(User.Identity.Name);
+
             if (obj.MinimalRequirements == null) obj.MinimalRequirements = _db.Requirement.Find(obj.MinimalRequirementsId);
             if (obj.RecommendedRequirements == null) obj.RecommendedRequirements = _db.Requirement.Find(obj.RecommendedRequirementsId);
+            obj.FavouriteGames = _db.FavouriteGame.Where(fg => fg.GameId == obj.Id).ToList();
+
+            obj.IsCurrentUsersFavourite = obj.FavouriteGames.Any(game => game.UserId == currentUser.Id);
+
             ViewData["Title"] = obj.Name;
             return View("Details", obj);
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Favourite()
+        {
+            var currentUser = await userManager.FindByNameAsync(User.Identity.Name);
+            var favourites = _db.FavouriteGame.Where(fg => fg.UserId == currentUser.Id);
+            IEnumerable<Game> objList = _db.Game.Where(game => favourites.Any(fav => fav.GameId == game.Id));
+
+            return View(objList.ToList());
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> FavPost(int id)
+        {
+            var currentUser = await userManager.FindByNameAsync(User.Identity.Name);
+
+            var newFavGame = new FavouriteGame()
+            {
+                GameId = id,
+                UserId = currentUser.Id
+            };
+
+            _db.FavouriteGame.Add(newFavGame);
+            _db.SaveChanges();
+
+            return Redirect(Request.Headers["Referer"].ToString());
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> UnfavPost(int id)
+        {
+            var currentUser = await userManager.FindByNameAsync(User.Identity.Name);
+            var obj = _db.FavouriteGame.Find(id, currentUser.Id);
+
+            _db.FavouriteGame.Remove(obj);
+            _db.SaveChanges();
+
+            return Redirect(Request.Headers["Referer"].ToString());
         }
 
         private string UploadedFile(GameViewModel model)
