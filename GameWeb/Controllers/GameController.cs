@@ -110,6 +110,18 @@ namespace GameWeb.Controllers
             return RedirectToAction("Details", new { id = id });
         }
 
+        [HttpPost]
+        public async Task<IActionResult> UnfavPost(int id)
+        {
+            var currentUser = await userManager.FindByNameAsync(User.Identity.Name);
+            var obj = _db.FavouriteGame.Find(id, currentUser.Id);
+
+            _db.FavouriteGame.Remove(obj);
+            _db.SaveChanges();
+
+            return RedirectToAction("Details", new { id = id });
+        }
+
         private string UploadedFile(GameViewModel model)
         {
             string uniqueFileName = null;
