@@ -93,6 +93,17 @@ namespace GameWeb.Controllers
             return View("Details", obj);
         }
 
+        [Authorize]
+        public async Task<IActionResult> Favourite()
+        {
+            var currentUser = await userManager.FindByNameAsync(User.Identity.Name);
+            var favourites = _db.FavouriteGame.Where(fg => fg.UserId == currentUser.Id);
+            IEnumerable<Game> objList = _db.Game.Where(game => favourites.Any(fav => fav.GameId == game.Id));
+
+            return View(objList.ToList());
+        }
+
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> FavPost(int id)
         {
@@ -107,9 +118,10 @@ namespace GameWeb.Controllers
             _db.FavouriteGame.Add(newFavGame);
             _db.SaveChanges();
 
-            return RedirectToAction("Details", new { id = id });
+            return Redirect(Request.Headers["Referer"].ToString());
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> UnfavPost(int id)
         {
@@ -119,7 +131,7 @@ namespace GameWeb.Controllers
             _db.FavouriteGame.Remove(obj);
             _db.SaveChanges();
 
-            return RedirectToAction("Details", new { id = id });
+            return Redirect(Request.Headers["Referer"].ToString());
         }
 
         private string UploadedFile(GameViewModel model)
