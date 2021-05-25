@@ -3,4 +3,33 @@
     ViewData["Title"] = "Dodaj nowy wątek";
 }
 
-<p>@Model.GameId</p>
+<form method="post" asp-action="Create" enctype="multipart/form-data">
+    <input asp-for="GameId" hidden />
+    <div asp-validation-summary="ModelOnly"></div>
+    <div class="upper-row">
+        <h2>Nowy wątek - @Model.Game.Name</h2>
+    </div>
+    <div class="default-form">
+        <h3>Dane gry</h3>
+        <div class="form-input-set">
+            <label asp-for="Name"></label>
+            <input class="text-input" asp-for="Name" />
+            <span class="validation-error-span" asp-validation-for="Name" />
+        </div>
+        <div class="form-input-set">
+            <label asp-for="Comment.Body"></label>
+            <textarea class="text-input" rows="6" asp-for="Comment.Body"></textarea>
+            <span class="validation-error-span" asp-validation-for="Comment.Body" />
+        </div>
+    </div>
+    <div class="form-buttons-row">
+        <input type="submit" value="Dodaj" class="action-button add-button" />
+        <a asp-controller="Game" asp-action="Details" asp-route-id="@Model.GameId" class="action-button cancel-button">Anuluj</a>
+    </div>
+</form>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

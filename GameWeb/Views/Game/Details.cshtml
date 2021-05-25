@@ -143,19 +143,10 @@
     </div>
     <div>
         <a asp-controller="Forum" asp-action="Create" asp-route-gameId="@Model.Id">Dodaj nowy wątek</a>
+        <br />
         <strong>Komentarze:</strong>
 
     </div>
-
-    <div>
-        <strong>Twój komentarz:</strong>
-        <form>
-            <textarea name="Komentarz" cols="50" rows="10">Proszę, wpisz tutaj jakiś komentarz...</textarea>
-            <input type="text" name="watek"/>
-            <button class="btn btn-success">Skomentuj</button>
-        </form>
-    </div>
-
 </div>
 
 @section Scripts{
