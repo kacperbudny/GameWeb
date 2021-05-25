@@ -1,0 +1,15 @@
+﻿@model IEnumerable<GameComment>
+
+<div>
+    <div class="upper-row">
+        <h2>@Model.FirstOrDefault().Thread.Name</h2>
+        <h4><a asp-controller="Forum" asp-route-gameId="@Model.FirstOrDefault().Thread.GameId" asp-action="Index">Forum gry @Model.FirstOrDefault().Thread.Game.Name</a></h4>
+    </div>
+
+    @foreach (var comment in Model)
+    {
+        <p>@comment.Author.UserName</p>
+        <p>@comment.Date</p>
+        <p>@comment.Body</p>
+    }
+</div>

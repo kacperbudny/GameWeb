@@ -35,7 +35,25 @@ namespace GameWeb.Controllers
 
             threads = threads.OrderByDescending(thread => thread.Comments.FirstOrDefault().Date).ToList();
 
+            ViewData["Title"] = "Forum gry " + threads.FirstOrDefault().Game.Name;
+
             return View(threads);
+        }
+
+        public IActionResult Thread(int id)
+        {
+            var comments = _db.GameComment.Where(c => c.ThreadId == id);
+
+            foreach(var comment in comments)
+            {
+                comment.Thread = _db.GameCommentThread.Find(id);
+                comment.Thread.Game = _db.Game.Find(comment.Thread.GameId);
+                comment.Author = _db.ApplicationUser.Find(comment.AuthorID);
+            }
+
+            ViewData["Title"] = comments.FirstOrDefault().Thread.Name + " - " + comments.FirstOrDefault().Thread.Game.Name;
+
+            return View(comments);
         }
 
         [Authorize]
