@@ -149,11 +149,11 @@
         {
             @foreach (var thread in Model.CommentThreads)
             {
-                <h4>@thread.Name</h4>
+                <h4><a asp-controller="Forum" asp-route-id="@thread.Id" asp-action="Thread">@thread.Name</a></h4>
                 <p>@thread.Comments.FirstOrDefault().Author.UserName</p>
                 <p>@thread.Comments.FirstOrDefault().Date</p>
                 <p>@thread.Comments.FirstOrDefault().Body</p>
-                <p>@thread.Comments.Count() komentarzy</p>
+                <p>@(thread.Comments.Count()-1) odpowiedzi</p>
             }
             <br />
             <a asp-controller="Forum" asp-action="Index" asp-route-gameId="@Model.Id">Zobacz pełne forum gry</a>

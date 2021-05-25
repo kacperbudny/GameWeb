@@ -44,16 +44,22 @@ namespace GameWeb.Controllers
         {
             var comments = _db.GameComment.Where(c => c.ThreadId == id);
 
-            foreach(var comment in comments)
+            foreach (var comment in comments)
             {
-                comment.Thread = _db.GameCommentThread.Find(id);
-                comment.Thread.Game = _db.Game.Find(comment.Thread.GameId);
                 comment.Author = _db.ApplicationUser.Find(comment.AuthorID);
             }
 
+            CommentCreateViewModel obj = new CommentCreateViewModel
+            {
+                Comments = comments,
+                Thread = _db.GameCommentThread.Find(id),
+            };
+
+            obj.Thread.Game = _db.Game.Find(obj.Thread.GameId);
+
             ViewData["Title"] = comments.FirstOrDefault().Thread.Name + " - " + comments.FirstOrDefault().Thread.Game.Name;
 
-            return View(comments);
+            return View(obj);
         }
 
         [Authorize]
@@ -92,7 +98,34 @@ namespace GameWeb.Controllers
 
                 _db.GameComment.Add(comment);
                 _db.SaveChanges();
-                return RedirectToAction("Details", "Game", _db.Game.Find(obj.GameId));
+
+                return RedirectToAction("Thread", "Forum", new { id = comment.ThreadId });
+            }
+            return View(obj);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public async Task<IActionResult> AddCommentPost(CommentCreateViewModel obj)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await userManager.FindByNameAsync(User.Identity.Name);
+
+                GameComment comment = new GameComment
+                {
+                    Date = DateTime.Now,
+                    Body = obj.NewComment.Body,
+                    AuthorID = user.Id,
+                    Author = user,
+                    ThreadId = obj.Thread.Id,
+                };
+
+                _db.GameComment.Add(comment);
+                _db.SaveChanges();
+
+                return RedirectToAction("Thread", "Forum", new { id = comment.ThreadId });
             }
             return View(obj);
         }

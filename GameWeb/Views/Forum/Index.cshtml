@@ -15,7 +15,7 @@
             <p>@thread.Comments.FirstOrDefault().Author.UserName</p>
             <p>@thread.Comments.FirstOrDefault().Date</p>
             <p>@thread.Comments.FirstOrDefault().Body</p>
-            <p>@thread.Comments.Count() komentarzy</p>
+            <p>@(thread.Comments.Count()-1) odpowiedzi</p>
         }
     }
     else
