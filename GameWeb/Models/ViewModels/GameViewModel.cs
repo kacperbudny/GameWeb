@@ -38,5 +38,6 @@ namespace GameWeb.ViewModels
         public virtual IFormFile ImageFile { get; set; }
         public Requirement MinimalRequirements { get; set; }
         public Requirement RecommendedRequirements { get; set; }
+        public List<GameCommentThread> CommentThreads { get; set; }
     }
 }
