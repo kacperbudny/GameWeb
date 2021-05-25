@@ -81,7 +81,6 @@ namespace GameWeb.Controllers
         public async Task<IActionResult> Details(int id)
         {
             var obj = _db.Game.Find(id);
-            var currentUser = await userManager.FindByNameAsync(User.Identity.Name);
 
             if (obj.MinimalRequirements == null) obj.MinimalRequirements = _db.Requirement.Find(obj.MinimalRequirementsId);
             if (obj.RecommendedRequirements == null) obj.RecommendedRequirements = _db.Requirement.Find(obj.RecommendedRequirementsId);
@@ -91,9 +90,16 @@ namespace GameWeb.Controllers
             foreach (var thread in obj.CommentThreads)
             {
                 thread.Comments = _db.GameComment.Where(comment => comment.ThreadId == thread.Id).ToList();
+
+                if (thread.Comments.FirstOrDefault().AuthorID != null)
+                    thread.Comments.FirstOrDefault().Author = _db.ApplicationUser.Find(thread.Comments.FirstOrDefault().AuthorID);
             }
 
-            obj.IsCurrentUsersFavourite = obj.FavouriteGames.Any(game => game.UserId == currentUser.Id);
+            if (User.Identity.IsAuthenticated)
+            {
+                var currentUser = await userManager.FindByNameAsync(User.Identity.Name);
+                obj.IsCurrentUsersFavourite = obj.FavouriteGames.Any(game => game.UserId == currentUser.Id);
+            }
 
             ViewData["Title"] = obj.Name;
             return View("Details", obj);

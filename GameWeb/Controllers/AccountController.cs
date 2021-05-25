@@ -1,4 +1,5 @@
-﻿using GameWeb.Models;
+﻿using GameWeb.Data;
+using GameWeb.Models;
 using GameWeb.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -15,12 +16,14 @@ namespace GameWeb.Controllers
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
+        private readonly ApplicationDbContext _db;
 
         public AccountController(UserManager<ApplicationUser> userManager,
-                                SignInManager<ApplicationUser> signInManager)
+                                SignInManager<ApplicationUser> signInManager, ApplicationDbContext db)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
+            _db = db;
         }
 
 
@@ -136,6 +139,13 @@ namespace GameWeb.Controllers
             }
             else
             {
+                var userComments = _db.GameComment.Where(comment => comment.AuthorID == user.Id);
+
+                foreach(var comment in userComments)
+                {
+                    comment.AuthorID = null;
+                }
+
                 var result = await userManager.DeleteAsync(user);
 
                 if (result.Succeeded)
