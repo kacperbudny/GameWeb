@@ -86,6 +86,12 @@ namespace GameWeb.Controllers
             if (obj.MinimalRequirements == null) obj.MinimalRequirements = _db.Requirement.Find(obj.MinimalRequirementsId);
             if (obj.RecommendedRequirements == null) obj.RecommendedRequirements = _db.Requirement.Find(obj.RecommendedRequirementsId);
             obj.FavouriteGames = _db.FavouriteGame.Where(fg => fg.GameId == obj.Id).ToList();
+            obj.CommentThreads = _db.GameCommentThread.Where(thread => thread.GameId == obj.Id).ToList().TakeLast(3).Reverse().ToList();
+
+            foreach (var thread in obj.CommentThreads)
+            {
+                thread.Comments = _db.GameComment.Where(comment => comment.ThreadId == thread.Id).ToList();
+            }
 
             obj.IsCurrentUsersFavourite = obj.FavouriteGames.Any(game => game.UserId == currentUser.Id);
 

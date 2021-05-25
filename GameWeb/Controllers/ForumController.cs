@@ -22,9 +22,20 @@ namespace GameWeb.Controllers
             this.userManager = userManager;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int gameId)
         {
-            return View();
+            var threads = _db.GameCommentThread.Where(thread => thread.GameId == gameId).ToList();
+
+            foreach (var thread in threads)
+            {
+                thread.Game = _db.Game.Find(gameId);
+                thread.Comments = _db.GameComment.Where(comment => comment.ThreadId == thread.Id).ToList();
+                thread.Comments.FirstOrDefault().Author = _db.ApplicationUser.Find(thread.Comments.FirstOrDefault().AuthorID);
+            }
+
+            threads = threads.OrderByDescending(thread => thread.Comments.FirstOrDefault().Date).ToList();
+
+            return View(threads);
         }
 
         [Authorize]
@@ -63,7 +74,7 @@ namespace GameWeb.Controllers
 
                 _db.GameComment.Add(comment);
                 _db.SaveChanges();
-                return RedirectToAction("Index", "Game");
+                return RedirectToAction("Details", "Game", _db.Game.Find(obj.GameId));
             }
             return View(obj);
         }

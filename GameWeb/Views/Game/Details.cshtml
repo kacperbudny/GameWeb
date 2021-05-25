@@ -144,7 +144,24 @@
     <div>
         <a asp-controller="Forum" asp-action="Create" asp-route-gameId="@Model.Id">Dodaj nowy wątek</a>
         <br />
-        <strong>Komentarze:</strong>
+        <h3>Komentarze</h3>
+        @if (Model.CommentThreads.Count > 0)
+        {
+            @foreach (var thread in Model.CommentThreads)
+            {
+                <h4>@thread.Name</h4>
+                <p>@thread.Comments.FirstOrDefault().Author.UserName</p>
+                <p>@thread.Comments.FirstOrDefault().Date</p>
+                <p>@thread.Comments.FirstOrDefault().Body</p>
+                <p>@thread.Comments.Count() komentarzy</p>
+            }
+            <br />
+            <a asp-controller="Forum" asp-action="Index" asp-route-gameId="@Model.Id">Zobacz pełne forum gry</a>
+        }
+        else
+        {
+            <p>Brak komentarzy.</p>
+        }
 
     </div>
 </div>
