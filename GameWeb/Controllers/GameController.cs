@@ -100,10 +100,9 @@ namespace GameWeb.Controllers
             {
                 var currentUser = await userManager.FindByNameAsync(User.Identity.Name);
                 obj.IsCurrentUsersFavourite = obj.FavouriteGames.Any(game => game.UserId == currentUser.Id);
+                obj.IsInCurrentUsersWishlist = obj.WishlistGames.Any(game => game.UserId == currentUser.Id);
             }
-            obj.IsCurrentUsersFavourite = obj.FavouriteGames.Any(game => game.UserId == currentUser.Id);
-            obj.IsInCurrentUsersWishlist = obj.WishlistGames.Any(game => game.UserId == currentUser.Id);
-
+            
             ViewData["Title"] = obj.Name;
             return View("Details", obj);
         }
