@@ -21,13 +21,26 @@
                 @if (Model.IsCurrentUsersFavourite)
                 {
                     <form asp-controller="Game" asp-action="UnfavPost" asp-route-id="@Model.Id">
-                        <input type="submit" value="Remove from favourites" />
+                        <input type="submit" value="Usuń z ulubionych" />
                     </form>
                 }
                 else
                 {
                     <form asp-controller="Game" asp-action="FavPost" asp-route-id="@Model.Id">
-                        <input type="submit" value="Add to favourites" />
+                        <input type="submit" value="Dodaj do ulubionych" />
+                    </form>
+                }
+
+                @if (Model.IsInCurrentUsersWishlist)
+                {
+                    <form asp-controller="Game" asp-action="WishlistDeletePost" asp-route-id="@Model.Id">
+                        <input type="submit" value="Nie chcę zagrać"/>
+                    </form>
+                }
+                else
+                {
+                    <form asp-controller="Game" asp-action="WishlistAddPost" asp-route-id="@Model.Id">
+                        <input type="submit" value="Chcę zagrać" />
                     </form>
                 }
             }
