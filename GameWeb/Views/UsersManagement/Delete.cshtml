@@ -1,13 +1,18 @@
 ﻿@model GameWeb.Models.ApplicationUser
 
 <form method="post" asp-action="DeleteUser" enctype="multipart/form-data">
-    <input asp-for="Id" hidden/>
+    <input asp-for="Id" hidden />
     <div>
-        <div asp-validation-summary="ModelOnly"></div>
-        <p>Czy na pewno chcesz usunąć użytkownika <strong>@Model.UserName</strong>?</p>
-        <div>
-            <input type="submit" value="Usuń" />
-            <a asp-action="Index">Anuluj</a>
+        <h2>Usuwanie użytkownika</h2>
+        
+        <div style="text-align: center; margin-top: 20px;">
+            <div asp-validation-summary="ModelOnly" class="validation-error-span"></div>
+            <p>Czy na pewno chcesz usunąć użytkownika <strong>@Model.UserName</strong>?</p>
+
+            <div>
+                <input type="submit" value="Usuń" class="action-button cancel-button" style="margin-right: 8px;" />
+                <a asp-action="Index" class="action-button">Anuluj</a>
+            </div>
         </div>
     </div>
 </form>

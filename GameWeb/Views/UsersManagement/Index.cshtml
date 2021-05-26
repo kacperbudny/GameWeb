@@ -8,32 +8,34 @@
 
 @if (Model.Any())
 {
-    <table>
-        <tr>
-            <th>Nazwa użytkownika</th>
-            <th>Email</th>
-            <th>Rola</th>
-            <th></th>
-        </tr>
-        @foreach (var user in Model)
-        {
+    <div class="table-container">
+        <table>
             <tr>
-                <th>
-                    @user.UserName
-                </th>
-                <th>
-                    @user.Email
-                </th>
-                <th>
-                    @user.Role
-                </th>
-                <th>
-                    <a href="#" class="btn btn-info">Edit</a>
-                    <a asp-controller="UsersManagement" asp-route-Id="@user.Id" asp-action="Delete" class="btn btn-danger">Delete</a>
-                </th>
+                <th>Nazwa użytkownika</th>
+                <th>Email</th>
+                <th>Rola</th>
+                <th></th>
             </tr>
-        }
-    </table>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>
+                        @user.UserName
+                    </td>
+                    <td>
+                        @user.Email
+                    </td>
+                    <td>
+                        @user.Role
+                    </td>
+                    <td>
+                        <a href="#" class="btn btn-info"><i class="fas fa-edit"></i></a>
+                        <a asp-controller="UsersManagement" asp-route-Id="@user.Id" asp-action="Delete" class="btn btn-danger"><i class="far fa-trash-alt"></i></a>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
 }
 else
 {

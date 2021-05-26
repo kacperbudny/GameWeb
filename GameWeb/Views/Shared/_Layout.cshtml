@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="~/css/forum.css" />
     <link rel="stylesheet" href="~/css/game-page.css" />
     <link rel="stylesheet" href="~/css/game-list.css" />
+    <link rel="stylesheet" href="~/css/users-table.css" />
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Blinker:wght@200;400&family=Montserrat&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/4bcc385cef.js" crossorigin="anonymous"></script>
@@ -21,7 +22,7 @@
                 <a class="logo" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/images/logo-45px.png" alt="Site logo" />GameWeb</a>
                 <ul>
                     <li>
-                        <a asp-area="" asp-controller="Home" asp-action="Index">Strona główna</a>
+                        <a class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Home" ? "active" : "")" asp-area="" asp-controller="Home" asp-action="Index">Strona główna</a>
                     </li>
                     <li>
                         <a class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Game" ? "active" : "")" asp-area="" asp-controller="Game" asp-action="Index">Gry</a>
@@ -29,7 +30,7 @@
                     @if (User.IsInRole(GameWeb.Utilities.RoleNames.AdminRole))
                     {
                         <li>
-                            <a asp-controller="UsersManagement" asp-action="Index">Lista użytkowników</a>
+                            <a class="@(ViewContext.RouteData.Values["Controller"].ToString() == "UsersManagement" ? "active" : "")" asp-controller="UsersManagement" asp-action="Index">Lista użytkowników</a>
                         </li>
                     }
                     </ul>

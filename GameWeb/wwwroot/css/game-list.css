@@ -79,3 +79,26 @@
 .games-actions i {
     margin-left: 4px;
 }
+
+.unfav-button {
+    border: none;
+    background: none;
+    color: #BC1B1B;
+    font-size: 1.3rem;
+}
+
+    .unfav-button span.mouseout {
+        display: inline;
+    }
+
+    .unfav-button:hover span.mouseout {
+        display: none;
+    }
+
+    .unfav-button span.mousein {
+        display: none;
+    }
+
+    .unfav-button:hover span.mousein {
+        display: inline;
+    }
