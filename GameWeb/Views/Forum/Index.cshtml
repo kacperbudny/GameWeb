@@ -3,31 +3,43 @@
 <div>
     <div class="upper-row">
         <h2>Forum gry <a asp-controller="Game" asp-route-id="@Model.FirstOrDefault().GameId" asp-action="Details">@Model.FirstOrDefault().Game.Name</a></h2>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <a asp-controller="Forum" asp-action="Create" asp-route-gameId="@Model.FirstOrDefault().GameId" class="action-button add-button forum-add-button"><i class="fas fa-plus"></i> Dodaj nowy wątek</a>
+        }
     </div>
-
-    <a asp-controller="Forum" asp-action="Create" asp-route-gameId="@Model.FirstOrDefault().GameId">Dodaj nowy wątek</a>
 
     @if (Model.Count() > 0)
     {
         @foreach (var thread in Model)
         {
-            <h4><a asp-controller="Forum" asp-route-id="@thread.Id" asp-action="Thread">@thread.Name</a></h4>
-
-            @if (thread.Comments.FirstOrDefault().Author != null)
-            {
-                <p>@thread.Comments.FirstOrDefault().Author.UserName</p>
-            }
-            else
-            {
-                <p>Konto usunięte</p>
-            }
-            <p>@thread.Comments.FirstOrDefault().Date</p>
-            <p>@thread.Comments.FirstOrDefault().Body</p>
-            <p>@(thread.Comments.Count()-1) odpowiedzi</p>
+            <div class="forum-thread">
+                <div class="forum-user-info">
+                    <i class="fas fa-user-circle user-icon"></i>
+                    @if (thread.Comments.FirstOrDefault().Author != null)
+                    {
+                        <p><strong>@thread.Comments.FirstOrDefault().Author.UserName</strong></p>
+                    }
+                    else
+                    {
+                        <p><strong>Konto usunięte</strong></p>
+                    }
+                </div>
+                <div class="forum-post-info">
+                    <div>
+                        <h4><a asp-controller="Forum" asp-route-id="@thread.Id" asp-action="Thread">@thread.Name</a></h4>
+                        <p>@thread.Comments.FirstOrDefault().Body</p>
+                    </div>
+                    <div class="forum-post-data">
+                        <p><a asp-controller="Forum" asp-route-id="@thread.Id" asp-action="Thread"><i class="far fa-comment"></i> @(thread.Comments.Count()-1) odpowiedzi</a></p>
+                        <p>@String.Format("{0:dd.MM.yyyy HH:mm}", thread.Comments.FirstOrDefault().Date)</p>
+                    </div>
+                </div>
+            </div>
         }
     }
     else
     {
-        <p>Brak gier.</p>
+        <p>Brak komentarzy. Bądź pierwszy!</p>
     }
 </div>

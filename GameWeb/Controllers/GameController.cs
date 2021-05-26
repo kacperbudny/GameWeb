@@ -78,8 +78,13 @@ namespace GameWeb.Controllers
             return View(obj);
         }
 
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Details(int? id)
         {
+            if(id == null)
+            {
+                return NotFound();
+            }
+
             var obj = _db.Game.Find(id);
 
             if (obj.MinimalRequirements == null) obj.MinimalRequirements = _db.Requirement.Find(obj.MinimalRequirementsId);

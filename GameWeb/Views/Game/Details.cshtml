@@ -171,7 +171,7 @@
                     <div class="forum-thread">
                         <div class="forum-user-info">
                             <i class="fas fa-user-circle user-icon"></i>
-                            @if (@thread.Comments.FirstOrDefault().Author != null)
+                            @if (thread.Comments.FirstOrDefault().Author != null)
                             {
                                 <p><strong>@thread.Comments.FirstOrDefault().Author.UserName</strong></p>
                             }
@@ -198,7 +198,7 @@
             }
             else
             {
-                <p>Brak komentarzy.</p>
+                <p>Brak komentarzy. Bądź pierwszy!</p>
             }
 
         </div>
