@@ -34,7 +34,7 @@
                 @if (Model.IsInCurrentUsersWishlist)
                 {
                     <form asp-controller="Game" asp-action="WishlistDeletePost" asp-route-id="@Model.Id">
-                        <input type="submit" value="Nie chcę zagrać"/>
+                        <input type="submit" value="Nie chcę zagrać" />
                     </form>
                 }
                 else
@@ -153,39 +153,57 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div>
-        <a asp-controller="Forum" asp-action="Create" asp-route-gameId="@Model.Id">Dodaj nowy wątek</a>
-        <br />
-        <h3>Komentarze</h3>
-        @if (Model.CommentThreads.Count > 0)
-        {
-            @foreach (var thread in Model.CommentThreads)
+
+        <hr class="game-divider" />
+
+        <div>
+            <div class="forum-header">
+                <h3>Komentarze</h3>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <a asp-controller="Forum" asp-action="Create" asp-route-gameId="@Model.Id" class="action-button add-button forum-add-button"><i class="fas fa-plus"></i> Dodaj nowy wątek</a>
+                }
+            </div>
+            @if (Model.CommentThreads.Count > 0)
             {
-                <h4><a asp-controller="Forum" asp-route-id="@thread.Id" asp-action="Thread">@thread.Name</a></h4>
-
-                @if (@thread.Comments.FirstOrDefault().Author != null)
+                @foreach (var thread in Model.CommentThreads)
                 {
-                    <p>@thread.Comments.FirstOrDefault().Author.UserName</p>
+                    <div class="forum-thread">
+                        <div class="forum-user-info">
+                            <i class="fas fa-user-circle user-icon"></i>
+                            @if (@thread.Comments.FirstOrDefault().Author != null)
+                            {
+                                <p><strong>@thread.Comments.FirstOrDefault().Author.UserName</strong></p>
+                            }
+                            else
+                            {
+                                <p><strong>Konto usunięte</strong></p>
+                            }
+                        </div>
+                        <div class="forum-post-info">
+                            <div>
+                                <h4><a asp-controller="Forum" asp-route-id="@thread.Id" asp-action="Thread">@thread.Name</a></h4>
+                                <p>@thread.Comments.FirstOrDefault().Body</p>
+                            </div>
+                            <div class="forum-post-data">
+                                <p><a asp-controller="Forum" asp-route-id="@thread.Id" asp-action="Thread"><i class="far fa-comment"></i> @(thread.Comments.Count()-1) odpowiedzi</a></p>
+                                <p>@String.Format("{0:dd.MM.yyyy HH:mm}", thread.Comments.FirstOrDefault().Date)</p>
+                            </div>
+                        </div>
+                    </div>
                 }
-                else
-                {
-                    <p>Konto usunięte</p>
-                }
-
-                <p>@thread.Comments.FirstOrDefault().Date</p>
-                <p>@thread.Comments.FirstOrDefault().Body</p>
-                <p>@(thread.Comments.Count()-1) odpowiedzi</p>
+                <div class="center-container">
+                    <a asp-controller="Forum" asp-action="Index" asp-route-gameId="@Model.Id" class="see-full-forum">Zobacz więcej komentarzy</a>
+                </div>
             }
-            <br />
-            <a asp-controller="Forum" asp-action="Index" asp-route-gameId="@Model.Id">Zobacz pełne forum gry</a>
-        }
-        else
-        {
-            <p>Brak komentarzy.</p>
-        }
+            else
+            {
+                <p>Brak komentarzy.</p>
+            }
 
+        </div>
     </div>
+
 </div>
 
 @section Scripts{

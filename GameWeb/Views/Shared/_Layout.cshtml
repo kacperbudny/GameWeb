@@ -6,6 +6,7 @@
     <title>@ViewData["Title"] - GameWeb</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/forum.css" />
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Blinker:wght@200;400&family=Montserrat&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/4bcc385cef.js" crossorigin="anonymous"></script>
@@ -32,6 +33,14 @@
                     </ul>
             </div>
             <div class="header-right">
+
+                <form asp-controller="Game" asp-action="Index" method="get">
+                    <div class="search-container">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" name="searchString" class="search-bar" placeholder="Wyszukaj grę..."/>
+                    </div>
+                </form>
+
                 @await Html.PartialAsync("_LoginPartial")
             </div>
         </nav>

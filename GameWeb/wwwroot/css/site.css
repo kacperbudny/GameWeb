@@ -169,6 +169,49 @@ header li {
     font-size: 30px;
 }
 
+.search-container {
+    position: relative;
+}
+
+.search-bar {
+    background: #777777;
+    border: none;
+    border-radius: 16px;
+    color: white;
+    margin-right: 50px;
+    min-width: 300px;
+    padding: 6px;
+    padding-left: 40px;
+}
+
+    .search-bar:hover {
+        background: #888888;
+    }
+
+::-webkit-input-placeholder {
+    color: white;
+    opacity: 0.8;
+}
+
+::-moz-placeholder {
+    color: white;
+}
+
+:-ms-input-placeholder {
+    color: white;
+}
+
+:-moz-placeholder {
+    color: white;
+}
+
+.search-icon {
+    position: absolute;
+    top: 10px;
+    left: 12px;
+    opacity: 0.8;
+}
+
 /* FOOTER */
 html {
     position: relative;
