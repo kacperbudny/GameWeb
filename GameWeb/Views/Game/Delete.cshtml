@@ -4,68 +4,14 @@
     <input asp-for="Id" hidden/>
     <div>
         <div asp-validation-summary="ModelOnly"></div>
-        <div>
+        <h2>Usuwanie gry</h2>
+        <div style="text-align: center; margin-top: 20px;">
+            <p>Czy na pewno chcesz usunąć grę <strong>@Model.Name?</strong></p>
+
             <div>
-                <div>
-                    <label asp-for="Name"></label>
-                </div>
-                <div>
-                    <input asp-for="Name" disabled/>
-                </div>
+                <input type="submit" value="Usuń" class="action-button cancel-button" style="margin-right: 16px;"/>
+                <a asp-action="Index" class="action-button">Anuluj</a>
             </div>
-            <div>
-                <div>
-                    <label asp-for="ReleaseDate"></label>
-                </div>
-                <div>
-                    <input asp-for="ReleaseDate" type="date" disabled/>
-                </div>
-            </div>
-            <div>
-                <div>
-                    <label asp-for="Platform"></label>
-                </div>
-                <div>
-                    <input asp-for="Platform" disabled/>
-                </div>
-            </div>
-            <div>
-                <div>
-                    <label asp-for="Publisher"></label>
-                </div>
-                <div>
-                    <input asp-for="Publisher" disabled/>
-                </div>
-            </div>
-            <div>
-                <div>
-                    <label asp-for="Genre"></label>
-                </div>
-                <div>
-                    <input asp-for="Genre" disabled/>
-                </div>
-            </div>
-            <div>
-                <div>
-                    <label asp-for="Description"></label>
-                </div>
-                <div>
-                    <input asp-for="Description" disabled/>
-                </div>
-            </div>
-            <div>
-                <div>
-                    <label asp-for="Image"></label>
-                </div>
-                <div>
-                    <input asp-for="Image" id="customFile" disabled class="custom-file-input" />
-                    <label for="customFile">Wybierz plik</label>
-                </div>
-            </div>
-        </div>
-        <div>
-            <input type="submit" value="Delete" />
-            <a asp-action="Index">Anuluj</a>
         </div>
     </div>
 </form>

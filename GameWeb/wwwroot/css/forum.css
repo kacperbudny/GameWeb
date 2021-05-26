@@ -1,7 +1,7 @@
 ﻿.forum-header {
     display: flex;
     justify-content: space-between;
-    margin-bottom:8px;
+    margin-bottom: 8px;
 }
 
 .forum-add-button {
@@ -12,9 +12,9 @@
     text-align: center;
 }
 
-.forum-add-button i {
-    margin-right: 6px;
-}
+    .forum-add-button i {
+        margin-right: 6px;
+    }
 
 .forum-thread {
     display: grid;
@@ -36,19 +36,19 @@
     color: #CCCCCC;
 }
 
-.forum-user-info:hover {
-    color: white;
-    cursor: pointer;
-}
+    .forum-user-info:hover {
+        color: white;
+        cursor: pointer;
+    }
 
-.forum-user-info i {
-    font-size: 50px;
-    margin-bottom: 6px;
-}
+    .forum-user-info i {
+        font-size: 50px;
+        margin-bottom: 6px;
+    }
 
-.forum-user-info p {
-    text-align: center;
-}
+    .forum-user-info p {
+        text-align: center;
+    }
 
 .forum-post-info {
     padding: 0 16px;
@@ -74,11 +74,11 @@
     padding: 0;
 }
 
-.forum-post-data p {
-    margin: 0;
-    padding: 0;
-    color: #BBBBBB;
-}
+    .forum-post-data p {
+        margin: 0;
+        padding: 0;
+        color: #BBBBBB;
+    }
 
 .center-container {
     display: flex;
@@ -95,6 +95,43 @@
     box-shadow: 0 0 16px rgba(0,0,0,0.7);
 }
 
-.see-full-forum:hover {
-    background: #111111;
+    .see-full-forum:hover {
+        background: #111111;
+    }
+
+.thread-user-info {
+    display: flex;
+    margin: 0;
+    padding: 0 0 8px 0;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    font-size: 0.9rem;
+    color: #CCCCCC;
+    border-bottom: 1px solid #666;
+}
+
+    .thread-user-info p {
+        margin: 0 0 0 8px;
+        padding: 0;
+    }
+
+.user-info-container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.thread-post {
+    white-space: pre-line;
+}
+
+.thread-container {
+    width: 90%;
+    margin: auto;
+}
+
+.post-body {
+    padding: 0 8px;
+    margin: -16px 0;
 }
