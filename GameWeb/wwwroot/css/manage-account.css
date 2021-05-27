@@ -1,0 +1,7 @@
+﻿.danger {
+    color: red;
+}
+
+.danger:hover {
+    color: #CC0000;
+}

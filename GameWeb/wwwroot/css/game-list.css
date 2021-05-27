@@ -1,0 +1,126 @@
+﻿.game-card {
+    width: 100%;
+    border: none;
+    display: flex;
+    margin-bottom: 30px;
+    padding: 0;
+    box-shadow: 0 0 16px rgba(0,0,0,0.7);
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+}
+
+    .game-card:hover {
+        background: rgba(0,0,0,0.1);
+    }
+
+.game-image {
+    width: 150px;
+    height: 200px;
+    object-fit: cover;
+    margin: 0;
+    padding: 0;
+}
+
+.game-card-info {
+    padding: 10px 20px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+    .game-card-info p {
+        margin: 0;
+        font-size: 0.9rem;
+    }
+
+    .game-card-info h3 {
+        font-size: 1.5rem;
+        margin: 0;
+    }
+
+    .game-card-info .description {
+        margin: 0.5rem 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+    }
+
+    .game-card-info .release-date::before {
+        content: '\00B7';
+        margin: 0 6px;
+        color: grey;
+    }
+
+.game-name-date-container {
+    display: flex;
+    align-items: center;
+    line-height: 0;
+}
+
+    .game-name-date-container p, h2 {
+        margin: 0;
+    }
+
+.game-card-after-description {
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 10px;
+}
+
+.space-between {
+    display: flex;
+    justify-content: space-between;
+}
+
+.games-actions i {
+    margin-left: 4px;
+}
+
+.unfav-button {
+    border: none;
+    background: none;
+    color: #BC1B1B;
+    font-size: 1.3rem;
+}
+    .unfav-button span.mouseout {
+        display: inline;
+    }
+
+    .unfav-button:hover span.mouseout {
+        display: none;
+    }
+
+    .unfav-button span.mousein {
+        display: none;
+    }
+
+    .unfav-button:hover span.mousein {
+        display: inline;
+    }
+
+.unwish-button {
+    border: none;
+    background: none;
+    color: white;
+    font-size: 1.3rem;
+}
+
+    .unwish-button span.mouseout {
+        display: inline;
+    }
+
+    .unwish-button:hover span.mouseout {
+        display: none;
+    }
+
+    .unwish-button span.mousein {
+        display: none;
+    }
+
+    .unwish-button:hover span.mousein {
+        display: inline;
+    }

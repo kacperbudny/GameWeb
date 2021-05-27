@@ -11,6 +11,7 @@ namespace GameWeb.Models
     public class GameComment
     {
         public int Id { get; set; }
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd hh:mm}", ApplyFormatInEditMode = true)]
         public DateTime Date { get; set; }
         [Column(TypeName = "ntext")]
         [Required(ErrorMessage = "Proszę wprowadzić treść komentarza.")]

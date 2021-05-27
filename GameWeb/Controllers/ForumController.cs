@@ -22,8 +22,13 @@ namespace GameWeb.Controllers
             this.userManager = userManager;
         }
 
-        public IActionResult Index(int gameId)
+        public IActionResult Index(int? gameId)
         {
+            if(gameId == null)
+            {
+                return NotFound();
+            }
+
             var threads = _db.GameCommentThread.Where(thread => thread.GameId == gameId).ToList();
 
             foreach (var thread in threads)
@@ -40,8 +45,13 @@ namespace GameWeb.Controllers
             return View(threads);
         }
 
-        public IActionResult Thread(int id)
+        public IActionResult Thread(int? id)
         {
+            if(id == null)
+            {
+                return NotFound();
+            }
+
             var comments = _db.GameComment.Where(c => c.ThreadId == id);
 
             foreach (var comment in comments)
