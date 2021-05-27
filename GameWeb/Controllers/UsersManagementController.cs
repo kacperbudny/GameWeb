@@ -35,5 +35,60 @@ namespace GameWeb.Controllers
 
             return View(list);
         }
+
+        public IActionResult Delete(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var obj = _db.ApplicationUser.Find(id);
+
+            if (obj == null)
+            {
+                return NotFound();
+            }
+
+            return View(obj);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteUser(string id)
+        {
+            var currentUser = await userManager.FindByNameAsync(User.Identity.Name);
+
+            var user = _db.ApplicationUser.Find(id);
+
+            if (id == currentUser.Id)
+            {
+                ModelState.AddModelError(string.Empty, "Nie możesz usunąć własnego konta w ten sposób!");
+                return View("Delete", user);
+            }
+
+
+            if (user == null)
+            {
+                ModelState.AddModelError(string.Empty, "Nie znaleziono użytkownika");
+                return View();
+            }
+            else
+            {
+                var result = await userManager.DeleteAsync(user);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("index");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+
+                return RedirectToAction("Index");
+            }
+        }
     }
 }
