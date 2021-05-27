@@ -86,8 +86,10 @@ namespace GameWeb.Controllers
             if (obj.MinimalRequirements == null) obj.MinimalRequirements = _db.Requirement.Find(obj.MinimalRequirementsId);
             if (obj.RecommendedRequirements == null) obj.RecommendedRequirements = _db.Requirement.Find(obj.RecommendedRequirementsId);
             obj.FavouriteGames = _db.FavouriteGame.Where(fg => fg.GameId == obj.Id).ToList();
+            obj.WishlistGames = _db.WishlistGame.Where(wg => wg.GameId == obj.Id).ToList();
 
             obj.IsCurrentUsersFavourite = obj.FavouriteGames.Any(game => game.UserId == currentUser.Id);
+            obj.IsInCurrentUsersWishlist = obj.WishlistGames.Any(game => game.UserId == currentUser.Id);
 
             ViewData["Title"] = obj.Name;
             return View("Details", obj);
@@ -129,6 +131,47 @@ namespace GameWeb.Controllers
             var obj = _db.FavouriteGame.Find(id, currentUser.Id);
 
             _db.FavouriteGame.Remove(obj);
+            _db.SaveChanges();
+
+            return Redirect(Request.Headers["Referer"].ToString());
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Wishlist()
+        {
+            var currentUser = await userManager.FindByNameAsync(User.Identity.Name);
+            var wishlisted = _db.WishlistGame.Where(wg => wg.UserId == currentUser.Id);
+            IEnumerable<Game> objList = _db.Game.Where(game => wishlisted.Any(wl => wl.GameId == game.Id));
+
+            return View(objList.ToList());
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> WishlistAddPost(int id)
+        {
+            var currentUser = await userManager.FindByNameAsync(User.Identity.Name);
+
+            var newWishlistGame = new WishlistGame()
+            {
+                GameId = id,
+                UserId = currentUser.Id
+            };
+
+            _db.WishlistGame.Add(newWishlistGame);
+            _db.SaveChanges();
+
+            return Redirect(Request.Headers["Referer"].ToString());
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> WishlistDeletePost(int id)
+        {
+            var currentUser = await userManager.FindByNameAsync(User.Identity.Name);
+            var obj = _db.WishlistGame.Find(id, currentUser.Id);
+
+            _db.WishlistGame.Remove(obj);
             _db.SaveChanges();
 
             return Redirect(Request.Headers["Referer"].ToString());
