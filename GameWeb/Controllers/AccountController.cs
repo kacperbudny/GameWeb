@@ -116,6 +116,7 @@ namespace GameWeb.Controllers
             return RedirectToAction("index", "home");
         }
 
+        [Authorize]
         public IActionResult Manage()
         {
             if (User.Identity.IsAuthenticated)
@@ -127,10 +128,37 @@ namespace GameWeb.Controllers
         }
 
         [Authorize]
-        public async Task<IActionResult> DeleteAccount()
+        public IActionResult Delete()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return View();
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> Delete(string? password)
+        {
+            if(password==null)
+            {
+                ModelState.AddModelError(string.Empty, "Musisz wprowadzić hasło");
+                return View();
+            }
+
             var username = User.Identity.Name;
             var user = await userManager.FindByNameAsync(username);
+
+            var passwordValidator = new PasswordValidator<ApplicationUser>();
+            var passwordCheckResult = await passwordValidator.ValidateAsync(userManager, null, password);
+
+            if (!passwordCheckResult.Succeeded)
+            {
+                ModelState.AddModelError(string.Empty, "Błędne hasło");
+                return View();
+            }
 
             if (user == null)
             {

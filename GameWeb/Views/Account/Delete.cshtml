@@ -1,0 +1,26 @@
+﻿<form method="post" asp-action="Delete" enctype="multipart/form-data">
+    <div>
+        <h2>Usuwanie konta</h2>
+        <div style="text-align: center; margin-top: 20px;">
+            <div asp-validation-summary="All" class="validation-error-span"></div>
+            <p>Czy na pewno chcesz usunąć swoje konto?</p>
+            <p><strong>Tej operacji nie da się odwrócić!</strong></p>
+            <br />
+            <p>Aby usunąć swoje konto, potwierdź swoje hasło:</p>
+
+            <input type="password" name="password" class="text-input" style="width: 50%;" />
+
+            <div class="form-buttons-row">
+                <input type="submit" value="Usuń konto" class="action-button cancel-button" style="margin-right: 16px;" />
+                <a asp-action="Manage" class="action-button">Anuluj</a>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts{
+
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

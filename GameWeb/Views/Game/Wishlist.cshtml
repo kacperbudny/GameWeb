@@ -18,19 +18,25 @@
                     <img src="~/images/GameCovers/@obj.Image" class="game-image" />
                 </a>
                 <div class="game-card-info">
-                    <div class="game-name-date-container">
-                        <a asp-controller="Game" asp-route-id="@obj.Id" asp-action="Details"><h3>@obj.Name</h3></a>
-                        <p class="release-date">@obj.ReleaseDate.Year</p>
+                    <div>
+                        <div class="space-between">
+                            <div class="game-name-date-container">
+                                <a asp-controller="Game" asp-route-id="@obj.Id" asp-action="Details"><h3>@obj.Name</h3></a>
+                                <p class="release-date">@obj.ReleaseDate.Year</p>
+                            </div>
+
+                            <form asp-controller="Game" asp-action="WishlistDeletePost" asp-route-id="@obj.Id">
+                                <button type="submit" class="unwish-button"><span class="mouseout"><i class="fas fa-eye"></i></span><span class="mousein"><i class="far fa-eye"></i></span></button>
+                            </form>
+                        </div>
+
+                        <p class="publisher">@obj.Publisher</p>
+                        <p class="description">@obj.Description</p>
                     </div>
-                    <p class="publisher">@obj.Publisher</p>
-                    <p class="description">@obj.Description</p>
-
-                    <p class="genre"><strong>Gatunek:</strong> @obj.Genre</p>
-                    <p class="platforms"><strong>Platformy:</strong> @obj.Platform</p>
-
-                    <form asp-controller="Game" asp-action="WishlistDeletePost" asp-route-id="@obj.Id">
-                        <input type="submit" value="Nie chcę zagrać" />
-                    </form>
+                    <div>
+                        <p class="genre"><strong>Gatunek:</strong> @obj.Genre</p>
+                        <p class="platforms"><strong>Platformy:</strong> @obj.Platform</p>
+                    </div>
                 </div>
             </div>
         }

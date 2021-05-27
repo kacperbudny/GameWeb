@@ -4,18 +4,18 @@
 }
 
 <form method="post">
-    <div asp-validation-summary="ModelOnly" class="validation-error-span"></div>
     <div class="upper-row">
         <h2>Logowanie</h2>
     </div>
+    <div asp-validation-summary="ModelOnly" class="validation-error-span"></div>
     <div class="form-input-set">
         <label asp-for="Email"></label>
-        <input asp-for="Email" class="text-input"/>
+        <input asp-for="Email" class="text-input" />
         <span asp-validation-for="Email" class="validation-error-span"></span>
     </div>
     <div class="form-input-set">
         <label asp-for="Password"></label>
-        <input asp-for="Password" class="text-input"/>
+        <input asp-for="Password" class="text-input" />
         <span asp-validation-for="Password" class="validation-error-span"></span>
     </div>
     <div class="form-input-set">

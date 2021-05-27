@@ -86,7 +86,6 @@
     color: #BC1B1B;
     font-size: 1.3rem;
 }
-
     .unfav-button span.mouseout {
         display: inline;
     }
@@ -100,5 +99,28 @@
     }
 
     .unfav-button:hover span.mousein {
+        display: inline;
+    }
+
+.unwish-button {
+    border: none;
+    background: none;
+    color: white;
+    font-size: 1.3rem;
+}
+
+    .unwish-button span.mouseout {
+        display: inline;
+    }
+
+    .unwish-button:hover span.mouseout {
+        display: none;
+    }
+
+    .unwish-button span.mousein {
+        display: none;
+    }
+
+    .unwish-button:hover span.mousein {
         display: inline;
     }
