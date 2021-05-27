@@ -61,9 +61,6 @@ namespace GameWeb.Data
                         case "Admin":
                             role = RoleNames.AdminRole;
                             break;
-                        case "User":
-                            role = RoleNames.RegisteredUserRole;
-                            break;
                         case "Editor":
                             role = RoleNames.NewsCreatorRole;
                             break;
