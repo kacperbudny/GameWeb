@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,6 +13,8 @@ namespace GameWeb.Models
         public int Id { get; set; }
         public DateTime Date { get; set; }
         [Column(TypeName = "ntext")]
+        [Required(ErrorMessage = "Proszę wprowadzić treść komentarza.")]
+        [DisplayName("Treść komentarza")]
         public string Body { get; set; }
         public string AuthorID { get; set; }
         public ApplicationUser Author { get; set; }

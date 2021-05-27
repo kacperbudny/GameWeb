@@ -1,0 +1,46 @@
+﻿@model GameWeb.Models.ViewModels.CommentCreateViewModel
+
+<div>
+    <div class="upper-row">
+        <h2>@Model.Thread.Name</h2>
+        <h4><a asp-controller="Forum" asp-route-gameId="@Model.Thread.GameId" asp-action="Index">Forum gry @Model.Thread.Game.Name</a></h4>
+    </div>
+
+    @foreach (var comment in Model.Comments)
+    {
+        @if (comment.Author != null)
+        {
+            <p>@comment.Author.UserName</p>
+        }
+        else
+        {
+            <p>Konto usunięte</p>
+        }
+        <p>@comment.Date</p>
+        <p>@comment.Body</p>
+    }
+
+    <form method="post" asp-action="AddCommentPost" enctype="multipart/form-data">
+        <input asp-for="@Model.Thread.Id" hidden />
+        <div asp-validation-summary="ModelOnly"></div>
+        <div class="upper-row">
+            <h2>Dodaj swoją odpowiedź</h2>
+        </div>
+        <div class="default-form">
+            <div class="form-input-set">
+                <label asp-for="@Model.NewComment.Body"></label>
+                <textarea class="text-input" rows="6" asp-for="@Model.NewComment.Body"></textarea>
+                <span class="validation-error-span" asp-validation-for="@Model.NewComment.Body" />
+            </div>
+        </div>
+        <div class="form-buttons-row">
+            <input type="submit" value="Dodaj" class="action-button add-button" />
+        </div>
+    </form>
+</div>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

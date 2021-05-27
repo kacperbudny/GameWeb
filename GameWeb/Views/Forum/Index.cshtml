@@ -1,0 +1,33 @@
+﻿@model IEnumerable<GameCommentThread>
+
+<div>
+    <div class="upper-row">
+        <h2>Forum gry <a asp-controller="Game" asp-route-id="@Model.FirstOrDefault().GameId" asp-action="Details">@Model.FirstOrDefault().Game.Name</a></h2>
+    </div>
+
+    <a asp-controller="Forum" asp-action="Create" asp-route-gameId="@Model.FirstOrDefault().GameId">Dodaj nowy wątek</a>
+
+    @if (Model.Count() > 0)
+    {
+        @foreach (var thread in Model)
+        {
+            <h4><a asp-controller="Forum" asp-route-id="@thread.Id" asp-action="Thread">@thread.Name</a></h4>
+
+            @if (thread.Comments.FirstOrDefault().Author != null)
+            {
+                <p>@thread.Comments.FirstOrDefault().Author.UserName</p>
+            }
+            else
+            {
+                <p>Konto usunięte</p>
+            }
+            <p>@thread.Comments.FirstOrDefault().Date</p>
+            <p>@thread.Comments.FirstOrDefault().Body</p>
+            <p>@(thread.Comments.Count()-1) odpowiedzi</p>
+        }
+    }
+    else
+    {
+        <p>Brak gier.</p>
+    }
+</div>

@@ -67,7 +67,6 @@ namespace GameWeb.Controllers
                 return View("Delete", user);
             }
 
-
             if (user == null)
             {
                 ModelState.AddModelError(string.Empty, "Nie znaleziono użytkownika");
@@ -75,6 +74,13 @@ namespace GameWeb.Controllers
             }
             else
             {
+                var userComments = _db.GameComment.Where(comment => comment.AuthorID == user.Id);
+
+                foreach (var comment in userComments)
+                {
+                    comment.AuthorID = null;
+                }
+
                 var result = await userManager.DeleteAsync(user);
 
                 if (result.Succeeded)

@@ -155,19 +155,37 @@
         </div>
     </div>
     <div>
-        <strong>Komentarze:</strong>
+        <a asp-controller="Forum" asp-action="Create" asp-route-gameId="@Model.Id">Dodaj nowy wątek</a>
+        <br />
+        <h3>Komentarze</h3>
+        @if (Model.CommentThreads.Count > 0)
+        {
+            @foreach (var thread in Model.CommentThreads)
+            {
+                <h4><a asp-controller="Forum" asp-route-id="@thread.Id" asp-action="Thread">@thread.Name</a></h4>
+
+                @if (@thread.Comments.FirstOrDefault().Author != null)
+                {
+                    <p>@thread.Comments.FirstOrDefault().Author.UserName</p>
+                }
+                else
+                {
+                    <p>Konto usunięte</p>
+                }
+
+                <p>@thread.Comments.FirstOrDefault().Date</p>
+                <p>@thread.Comments.FirstOrDefault().Body</p>
+                <p>@(thread.Comments.Count()-1) odpowiedzi</p>
+            }
+            <br />
+            <a asp-controller="Forum" asp-action="Index" asp-route-gameId="@Model.Id">Zobacz pełne forum gry</a>
+        }
+        else
+        {
+            <p>Brak komentarzy.</p>
+        }
 
     </div>
-
-    <div>
-        <strong>Twój komentarz:</strong>
-        <form>
-            <textarea name="Komentarz" cols="50" rows="10">Proszę, wpisz tutaj jakiś komentarz...</textarea>
-            <input type="text" name="watek"/>
-            <button class="btn btn-success">Skomentuj</button>
-        </form>
-    </div>
-
 </div>
 
 @section Scripts{
