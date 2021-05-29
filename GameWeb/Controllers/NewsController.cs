@@ -32,6 +32,12 @@ namespace GameWeb.Controllers
         {
             IEnumerable<News> objList = _db.News;
 
+            foreach (var news in objList)
+            {
+                if (news.AuthorID != null)
+                    news.Author = _db.ApplicationUser.Find(news.AuthorID);
+            }
+
             objList = objList.OrderByDescending(n => n.PublicationDate).ToList();
 
             return View(objList.ToList());

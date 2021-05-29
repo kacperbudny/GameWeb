@@ -34,7 +34,13 @@
                             <a class="@(ViewContext.RouteData.Values["Controller"].ToString() == "UsersManagement" ? "active" : "")" asp-controller="UsersManagement" asp-action="Index">Lista użytkowników</a>
                         </li>
                     }
-                    </ul>
+                    @if (User.IsInRole(GameWeb.Utilities.RoleNames.AdminRole) || User.IsInRole(GameWeb.Utilities.RoleNames.NewsCreatorRole))
+                    {
+                        <li>
+                            <a class="@(ViewContext.RouteData.Values["Controller"].ToString() == "News" ? "active" : "")" asp-controller="News" asp-action="Index">Newsy</a>
+                        </li>
+                    }
+                </ul>
             </div>
             <div class="header-right">
 

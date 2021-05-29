@@ -174,6 +174,13 @@ namespace GameWeb.Controllers
                     comment.AuthorID = null;
                 }
 
+                var news = _db.News.Where(n => n.AuthorID == user.Id);
+
+                foreach (var n in news)
+                {
+                    n.AuthorID = null;
+                }
+
                 var result = await userManager.DeleteAsync(user);
 
                 if (result.Succeeded)

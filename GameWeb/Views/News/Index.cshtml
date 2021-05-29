@@ -1,0 +1,59 @@
+﻿@model IEnumerable<News>
+
+@{
+    ViewBag.Title = "Zarządaj newsami";
+}
+
+<div class="upper-row">
+    <h1>Zarządzaj newsami</h1>
+    <div class="buttons-row"><a class="action-button add-button" asp-controller="News" asp-action="Create"><i class="fas fa-plus"></i></a></div>
+</div>
+
+@if (Model.Any())
+{
+    <div class="table-container">
+        <table>
+            <tr>
+                <th>Id</th>
+                <th>Tytuł</th>
+                <th>Data dodania</th>
+                <th>Autor</th>
+                <th></th>
+            </tr>
+            @foreach (var news in Model)
+            {
+                <tr>
+                    <td>
+                        @news.Id
+                    </td>
+                    <td>
+                        @news.Title
+                    </td>
+                    <td>
+                        @news.PublicationDate
+                    </td>
+                    @if (news.AuthorID != null)
+                    {
+                        <td>
+                            @news.Author.UserName
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            Konto usunięte
+                        </td>
+                    }
+                    <td>
+                        <a href="#" class="btn btn-info"><i class="fas fa-edit"></i></a>
+                        <a href="#" class="btn btn-danger"><i class="far fa-trash-alt"></i></a>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+}
+else
+{
+    <p>Brak newsów.</p>
+}
