@@ -13,6 +13,7 @@ namespace GameWeb.Models
         public string Description { get; set; }
         [NotMapped]
         public string Role { get; set; }
+        public List<News> News { get; set; }
         public ICollection<FavouriteGame> FavouriteGames { get; set; }
         public ICollection<WishlistGame> WishlistGames { get; set; }
     }
