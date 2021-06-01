@@ -1,8 +1,59 @@
-﻿@{
+﻿@model IEnumerable<News>
+
+@{
     ViewData["Title"] = "Strona główna";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Witaj</h1>
-    <p>Tutaj będą newsy.</p>
-</div>
+@if (Model.Any())
+{
+    <div class="home-container">
+        <div class="first-news">
+            <img src="~/images/NewsImages/@Model.FirstOrDefault().ImagePath" />
+            <div class="first-news-info">
+                <h3>@Model.FirstOrDefault().Title</h3>
+                <p>@String.Format("{0:dd.MM.yyyy}", @Model.FirstOrDefault().PublicationDate)</p>
+            </div>
+        </div>
+        @if (Model.Count() > 1)
+        {
+            <div class="four-news-grid">
+                @foreach (var news in Model.Skip(1).Take(4))
+                {
+                    <div class="grid-news-card">
+                        <div class="img-container">
+                            <img src="~/images/NewsImages/@news.ImagePath" />
+                        </div>
+                        <h3>@news.Title</h3>
+                        <p>@String.Format("{0:dd.MM.yyyy}", @news.PublicationDate)</p>
+                    </div>
+                }
+            </div>
+        }
+        @if (Model.Count() > 5)
+        {
+            <div class="other-news">
+                @foreach (var news in Model.Skip(5))
+                {
+                    <div class="news-card">
+                        <div class="img-container">
+                            <img src="~/images/NewsImages/@news.ImagePath" />
+                        </div>
+                        <div class="news-card-info">
+                            <h3>@news.Title</h3>
+                            <p class="news-card-content">@news.Content</p>
+                            <p class="date-paragraph">@String.Format("{0:dd.MM.yyyy}", @news.PublicationDate)</p>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+
+    </div>
+}
+else
+{
+    <div class="text-center">
+        <h1 class="display-4">Witaj</h1>
+        <p>Tutaj będą newsy.</p>
+    </div>
+}
