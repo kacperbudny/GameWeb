@@ -85,14 +85,30 @@ namespace GameWeb.Controllers
                 return NotFound();
             }
 
-            var obj = _db.News.Find(id);
+            var obj = _db.Game.Find(id);
 
-            if (obj.AuthorID != null)
+            if (obj.MinimalRequirements == null) obj.MinimalRequirements = _db.Requirement.Find(obj.MinimalRequirementsId);
+            if (obj.RecommendedRequirements == null) obj.RecommendedRequirements = _db.Requirement.Find(obj.RecommendedRequirementsId);
+            obj.FavouriteGames = _db.FavouriteGame.Where(fg => fg.GameId == obj.Id).ToList();
+            obj.WishlistGames = _db.WishlistGame.Where(wg => wg.GameId == obj.Id).ToList();
+            obj.CommentThreads = _db.GameCommentThread.Where(thread => thread.GameId == obj.Id).ToList().TakeLast(3).Reverse().ToList();
+
+            foreach (var thread in obj.CommentThreads)
             {
-                obj.Author = _db.ApplicationUser.Find(obj.AuthorID);
+                thread.Comments = _db.GameComment.Where(comment => comment.ThreadId == thread.Id).ToList();
+
+                if (thread.Comments.FirstOrDefault().AuthorID != null)
+                    thread.Comments.FirstOrDefault().Author = _db.ApplicationUser.Find(thread.Comments.FirstOrDefault().AuthorID);
             }
 
-            ViewData["Title"] = obj.Title;
+            if (User.Identity.IsAuthenticated)
+            {
+                var currentUser = await userManager.FindByNameAsync(User.Identity.Name);
+                obj.IsCurrentUsersFavourite = obj.FavouriteGames.Any(game => game.UserId == currentUser.Id);
+                obj.IsInCurrentUsersWishlist = obj.WishlistGames.Any(game => game.UserId == currentUser.Id);
+            }
+
+            ViewData["Title"] = obj.Name;
             return View("Details", obj);
         }
 

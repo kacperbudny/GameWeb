@@ -57,6 +57,18 @@ namespace GameWeb.Controllers
                 obj.Author = _db.ApplicationUser.Find(obj.AuthorID);
             }
 
+            if (obj.Tags != null)
+            {
+                obj.TagsList = new List<string>();
+
+                var tags = obj.Tags.Split(",");
+
+                foreach(var tag in tags)
+                {
+                    obj.TagsList.Add(tag.Trim());
+                }
+            }
+
             ViewData["Title"] = obj.Title;
             return View("Display", obj);
         }

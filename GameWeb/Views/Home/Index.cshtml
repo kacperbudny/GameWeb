@@ -13,7 +13,7 @@
 
                 <div class="first-news-info">
                     <h3>@Model.FirstOrDefault().Title</h3>
-                    <p>@String.Format("{0:dd.MM.yyyy}", @Model.FirstOrDefault().PublicationDate)</p>
+                    @String.Format("{0:dd.MM.yyyy}", @Model.FirstOrDefault().PublicationDate)
                 </div>
             </a>
         </div>
