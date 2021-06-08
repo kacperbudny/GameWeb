@@ -1,0 +1,12 @@
+﻿@model GameWeb.Models.News
+
+<article>
+    <h2>@Model.Title</h2>
+    <p>@Model.Author.UserName</p>
+    <p>@Model.PublicationDate</p>
+
+    <img src="~/images/NewsImages/@Model.ImagePath" />
+
+    <p>@Model.Content</p>
+    <p>@Model.Tags</p>
+</article>

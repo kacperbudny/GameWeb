@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 
 namespace GameWeb.Controllers
 {
-    [Authorize(Roles = RoleNames.AdminRole + "," + RoleNames.NewsCreatorRole)]
     public class NewsController : Controller
     {
         private readonly ApplicationDbContext _db;
@@ -28,6 +27,7 @@ namespace GameWeb.Controllers
             this.userManager = userManager;
         }
 
+        [Authorize(Roles = RoleNames.AdminRole + "," + RoleNames.NewsCreatorRole)]
         public IActionResult Index()
         {
             IEnumerable<News> objList = _db.News;
@@ -43,6 +43,25 @@ namespace GameWeb.Controllers
             return View(objList.ToList());
         }
 
+        public IActionResult Display(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var obj = _db.News.Find(id);
+
+            if (obj.AuthorID != null)
+            {
+                obj.Author = _db.ApplicationUser.Find(obj.AuthorID);
+            }
+
+            ViewData["Title"] = obj.Title;
+            return View("Display", obj);
+        }
+
+        [Authorize(Roles = RoleNames.AdminRole + "," + RoleNames.NewsCreatorRole)]
         public IActionResult Create()
         {
             return View();
@@ -50,6 +69,7 @@ namespace GameWeb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleNames.AdminRole + "," + RoleNames.NewsCreatorRole)]
         public async Task<IActionResult> Create(NewsCreateViewModel obj)
         {
             if (ModelState.IsValid)

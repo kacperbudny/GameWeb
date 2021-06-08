@@ -80,35 +80,19 @@ namespace GameWeb.Controllers
 
         public async Task<IActionResult> Details(int? id)
         {
-            if(id == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var obj = _db.Game.Find(id);
+            var obj = _db.News.Find(id);
 
-            if (obj.MinimalRequirements == null) obj.MinimalRequirements = _db.Requirement.Find(obj.MinimalRequirementsId);
-            if (obj.RecommendedRequirements == null) obj.RecommendedRequirements = _db.Requirement.Find(obj.RecommendedRequirementsId);
-            obj.FavouriteGames = _db.FavouriteGame.Where(fg => fg.GameId == obj.Id).ToList();
-            obj.WishlistGames = _db.WishlistGame.Where(wg => wg.GameId == obj.Id).ToList();
-            obj.CommentThreads = _db.GameCommentThread.Where(thread => thread.GameId == obj.Id).ToList().TakeLast(3).Reverse().ToList();
-
-            foreach (var thread in obj.CommentThreads)
+            if (obj.AuthorID != null)
             {
-                thread.Comments = _db.GameComment.Where(comment => comment.ThreadId == thread.Id).ToList();
-
-                if (thread.Comments.FirstOrDefault().AuthorID != null)
-                    thread.Comments.FirstOrDefault().Author = _db.ApplicationUser.Find(thread.Comments.FirstOrDefault().AuthorID);
+                obj.Author = _db.ApplicationUser.Find(obj.AuthorID);
             }
 
-            if (User.Identity.IsAuthenticated)
-            {
-                var currentUser = await userManager.FindByNameAsync(User.Identity.Name);
-                obj.IsCurrentUsersFavourite = obj.FavouriteGames.Any(game => game.UserId == currentUser.Id);
-                obj.IsInCurrentUsersWishlist = obj.WishlistGames.Any(game => game.UserId == currentUser.Id);
-            }
-            
-            ViewData["Title"] = obj.Name;
+            ViewData["Title"] = obj.Title;
             return View("Details", obj);
         }
 
