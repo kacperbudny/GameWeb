@@ -43,6 +43,47 @@ namespace GameWeb.Controllers
             return View(objList.ToList());
         }
 
+        public IActionResult Tag(string tagName)
+        {
+            if (tagName == null)
+            {
+                return NotFound();
+            }
+
+            IEnumerable<News> objList = _db.News.Where(n => n.Tags != null);
+
+            foreach (var obj in objList)
+            {
+                if (obj.Tags != null)
+                {
+                    var tagsList = new List<string>();
+                    obj.TagsList = new List<string>();
+
+                    var tags = obj.Tags.Split(",");
+
+                    foreach (var tag in tags)
+                    {
+                        tagsList.Add(tag.Trim());
+                    }
+
+                    obj.TagsList = tagsList;
+                }
+            }
+
+            objList = objList.Where(n => n.TagsList.Contains(tagName));
+
+            foreach (var news in objList)
+            {
+                if (news.AuthorID != null)
+                    news.Author = _db.ApplicationUser.Find(news.AuthorID);
+            }
+
+            objList = objList.OrderByDescending(n => n.PublicationDate).ToList();
+
+            ViewData["Title"] = "Newsy o #" + tagName;
+            return View(objList.ToList());
+        }
+
         public IActionResult Display(int? id)
         {
             if (id == null)
@@ -57,6 +98,8 @@ namespace GameWeb.Controllers
                 obj.Author = _db.ApplicationUser.Find(obj.AuthorID);
             }
 
+            var tagsList = new List<string>();
+
             if (obj.Tags != null)
             {
                 obj.TagsList = new List<string>();
@@ -65,8 +108,10 @@ namespace GameWeb.Controllers
 
                 foreach(var tag in tags)
                 {
-                    obj.TagsList.Add(tag.Trim());
+                    tagsList.Add(tag.Trim());
                 }
+
+                obj.TagsList = tagsList;
             }
 
             ViewData["Title"] = obj.Title;

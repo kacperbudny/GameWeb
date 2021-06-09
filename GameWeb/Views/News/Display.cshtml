@@ -19,7 +19,9 @@
         <div class="news-tags">
             @foreach (var tag in Model.TagsList)
             {
-                <span class="news-tag">#@tag</span>
+                <a class="news-tag" asp-controller="News" asp-action="Tag" asp-route-tagName="@tag">
+                    #@tag
+                </a>
             }
         </div>
     }

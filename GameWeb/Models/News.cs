@@ -23,6 +23,6 @@ namespace GameWeb.Models
         [Required(ErrorMessage = "Proszę umieścić zdjęcie.")]
         public string ImagePath { get; set; }
         [NotMapped]
-        public List<string> TagsList { get; set; }
+        public IEnumerable<string> TagsList { get; set; }
     }
 }
