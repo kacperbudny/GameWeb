@@ -1,0 +1,26 @@
+@model GameWeb.Models.ApplicationUser
+@{
+    ViewData["Title"] = "Edytuj użytkownika";
+}
+
+<form method="post" asp-action="Edit" enctype="multipart/form-data">
+    <input asp-for="Id" hidden />
+    <div>
+        <div asp-validation-summary="ModelOnly"></div>
+        <div class="upper-row">
+            <h2>Edytuj użytkownika</h2>
+        </div>
+        <div class="default-form">
+            <h3>Dane użytkownika</h3>
+            <div class="form-input-set">
+                <label asp-for="Id"></label>
+                <input class="text-input" asp-for="Id" />
+                <span class="validation-error-span" asp-validation-for="Id" />
+            </div>
+        </div>
+        <div class="form-buttons-row">
+            <input type="submit" value="Dodaj" class="action-button add-button" />
+            <a asp-action="Index" class="action-button cancel-button">Anuluj</a>
+        </div>
+    </div>
+</form>
