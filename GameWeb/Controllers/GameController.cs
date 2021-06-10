@@ -80,7 +80,7 @@ namespace GameWeb.Controllers
 
         public async Task<IActionResult> Details(int? id)
         {
-            if(id == null)
+            if (id == null)
             {
                 return NotFound();
             }
@@ -107,7 +107,7 @@ namespace GameWeb.Controllers
                 obj.IsCurrentUsersFavourite = obj.FavouriteGames.Any(game => game.UserId == currentUser.Id);
                 obj.IsInCurrentUsersWishlist = obj.WishlistGames.Any(game => game.UserId == currentUser.Id);
             }
-            
+
             ViewData["Title"] = obj.Name;
             return View("Details", obj);
         }

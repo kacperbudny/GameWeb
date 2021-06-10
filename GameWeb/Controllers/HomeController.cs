@@ -1,4 +1,5 @@
-﻿using GameWeb.Models;
+﻿using GameWeb.Data;
+using GameWeb.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -13,21 +14,26 @@ namespace GameWeb.Controllers
     [AllowAnonymous]
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ApplicationDbContext _db;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ApplicationDbContext db)
         {
-            _logger = logger;
+            _db = db;
         }
 
         public IActionResult Index()
         {
-            return View();
-        }
+            IEnumerable<News> objList = _db.News;
 
-        public IActionResult Privacy()
-        {
-            return View();
+            foreach (var news in objList)
+            {
+                if (news.AuthorID != null)
+                    news.Author = _db.ApplicationUser.Find(news.AuthorID);
+            }
+
+            objList = objList.OrderByDescending(n => n.PublicationDate).ToList();
+
+            return View(objList.ToList());
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

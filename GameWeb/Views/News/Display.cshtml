@@ -1,0 +1,28 @@
+﻿@model GameWeb.Models.News
+
+<article class="news-container">
+
+    <h2>@Model.Title</h2>
+    <div class="news-header">
+        <div class="avatar-author-container">
+            <i class="fas fa-user-circle user-icon"></i> @Model.Author.UserName
+        </div>
+        @String.Format("{0:dd.MM.yyyy HH:mm}", @Model.PublicationDate)
+    </div>
+
+    <img src="~/images/NewsImages/@Model.ImagePath" />
+
+    <p class="news-content">@Model.Content</p>
+
+    @if (Model.TagsList != null)
+    {
+        <div class="news-tags">
+            @foreach (var tag in Model.TagsList)
+            {
+                <a class="news-tag" asp-controller="News" asp-action="Tag" asp-route-tagName="@tag">
+                    #@tag
+                </a>
+            }
+        </div>
+    }
+</article>
