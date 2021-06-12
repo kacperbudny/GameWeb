@@ -8,10 +8,21 @@
     </div>
 </div>
 
+<div class="game-rating-box">
+    @if (Model.GameRates.Count > 0)
+    {
+        <p>Ocena gry wynosi @Model.AverageRating na postawie @Model.GameRates.Count ocen</p>
+    }
+    else
+    {
+        <p>Nikt jeszcze nie ocenił tej gry.</p>
+    }
+    @if (User.Identity.IsAuthenticated)
+    {
+        <form asp-controller="Game" asp-action="RatePost" asp-route-id="@Model.Id" asp-route-rating="4" style="width: 100%;">
+            <button type="submit" class="action-button wishlist-button">Oceń</button>
+        </form>
 
-@if (User.Identity.IsAuthenticated)
-{
-    <div class="game-rating-box">
         @if (Model.IsInCurrentUsersWishlist)
         {
             <form asp-controller="Game" asp-action="WishlistDeletePost" asp-route-id="@Model.Id" style="width: 100%;">
@@ -37,8 +48,8 @@
                 <button type="submit" class="action-button favourite-button"><i class="far fa-heart"></i> Dodaj do ulubionych</button>
             </form>
         }
-    </div>
-}
+    }
+</div>
 
 <div class="game-page">
     <div class="game-header">

@@ -53,5 +53,9 @@ namespace GameWeb.Models
         public bool IsCurrentUsersFavourite { get; set; }
         [NotMapped]
         public bool IsInCurrentUsersWishlist { get; set; }
+        [NotMapped]
+        public int UserRating { get; set; }
+        [NotMapped]
+        public double AverageRating { get; set; }
     }
 }
