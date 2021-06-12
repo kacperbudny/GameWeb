@@ -189,9 +189,28 @@
     background: url(/svg/star-empty.svg) no-repeat center center;
     background-size: contain;
     border: none;
-    margin: 0 2px;
+    padding: 0 18px;
 }
 
 .rating-star-clicked {
     background: url(/svg/star.svg) no-repeat center center;
+    width: 30px;
+    height: 30px;
+    padding: 0 18px;
+}
+
+
+.rating-row:hover .rating-star {
+    background: url(/svg/star.svg) no-repeat center center;
+    width: 30px;
+    height: 30px;
+    padding: 0 18px;
+}
+
+.rating-row .rating-star:hover ~ .rating-star {
+    background: url(/svg/star-empty.svg) no-repeat center center;
+    filter: brightness(80%);
+    width: 30px;
+    height: 30px;
+    padding: 0 18px;
 }

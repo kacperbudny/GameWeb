@@ -24,14 +24,14 @@
             <p>Twoja ocena wynosi @Model.UserRating</p>
         }
 
-        <div class="rating-row">
-            @for (int i = 0; i < 10; i++)
-            {
-                <form asp-controller="Game" asp-action="RatePost" asp-route-id="@Model.Id" asp-route-rating="@(i+1)" style="width: 100%;">
-                    <button type="submit" class="rating-star @(i < Model.UserRating ? "rating-star-clicked" : "")"></button>
-                </form>
-            }
-        </div>
+<div class="rating-row">
+    @for (int i = 0; i < 10; i++)
+    {
+        <button type="submit" class="rating-star @(i < Model.UserRating ? "rating-star-clicked" : "")" form="star@(i)"></button>
+        <form asp-controller="Game" asp-action="RatePost" asp-route-id="@Model.Id" asp-route-rating="@(i+1)" id="star@(i)">
+        </form>
+    }
+</div>
 
         @if (Model.IsInCurrentUsersWishlist)
         {
