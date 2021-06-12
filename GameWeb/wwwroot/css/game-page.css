@@ -175,3 +175,23 @@
     .favourite-button:hover {
         background: #961616;
     }
+
+.rating-row {
+    display: flex;
+    margin-bottom: 16px;
+}
+
+.rating-star {
+    display: block;
+    text-indent: -9999px;
+    width: 30px;
+    height: 30px;
+    background: url(/svg/star-empty.svg) no-repeat center center;
+    background-size: contain;
+    border: none;
+    margin: 0 2px;
+}
+
+.rating-star-clicked {
+    background: url(/svg/star.svg) no-repeat center center;
+}

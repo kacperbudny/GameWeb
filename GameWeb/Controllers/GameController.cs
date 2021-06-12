@@ -94,7 +94,7 @@ namespace GameWeb.Controllers
             obj.GameRates = _db.GameRating.Where(gr => gr.GameId == obj.Id).ToList();
             obj.CommentThreads = _db.GameCommentThread.Where(thread => thread.GameId == obj.Id).ToList().TakeLast(3).Reverse().ToList();
 
-            if(obj.GameRates.Count > 0)
+            if (obj.GameRates.Count > 0)
             {
                 obj.AverageRating = obj.GameRates.Average(game => game.Rating);
             }
@@ -115,7 +115,7 @@ namespace GameWeb.Controllers
 
                 var usersRatingObj = obj.GameRates.FirstOrDefault(game => game.UserId == currentUser.Id);
 
-                if(usersRatingObj != null)
+                if (usersRatingObj != null)
                 {
                     obj.UserRating = usersRatingObj.Rating;
                 }
@@ -139,6 +139,13 @@ namespace GameWeb.Controllers
                     UserId = currentUser.Id,
                     Rating = rating,
                 };
+
+                var obj = _db.GameRating.Where(gr => gr.GameId == id).FirstOrDefault(gr => gr.UserId == currentUser.Id);
+
+                if (obj != null)
+                {
+                    _db.GameRating.Remove(obj);
+                }
 
                 _db.GameRating.Add(newRating);
                 _db.SaveChanges();
