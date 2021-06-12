@@ -170,47 +170,72 @@
     background: #BC1B1B;
     border: none;
     box-shadow: none;
+    width: 100%;
 }
 
     .favourite-button:hover {
         background: #961616;
     }
 
+.rating-box {
+    margin: 24px 0;
+    text-align: center;
+}
+
+.rating-header {
+    padding: 0;
+    margin: 0 0 12px 0;
+    font-family: var(--Blinker-font);
+    font-size: 1.6rem;
+    line-height: 1rem;
+}
+
+.average-rating {
+    padding: 0;
+    margin: 0 0 8px 0;
+    font-family: var(--Blinker-font);
+    font-size: 3rem;
+    line-height: 2rem;
+}
+
+.rate-count {
+    padding: 0;
+    margin: 0;
+    font-size: 0.8rem;
+    color: #ccc;
+    line-height: 1rem;
+}
+
 .rating-row {
     display: flex;
-    margin-bottom: 16px;
 }
 
 .rating-star {
     display: block;
     text-indent: -9999px;
-    width: 30px;
-    height: 30px;
+    width: 26px;
+    height: 26px;
     background: url(/svg/star-empty.svg) no-repeat center center;
     background-size: contain;
     border: none;
-    padding: 0 18px;
+    padding: 0 16px;
 }
 
 .rating-star-clicked {
     background: url(/svg/star.svg) no-repeat center center;
-    width: 30px;
-    height: 30px;
-    padding: 0 18px;
 }
 
 
 .rating-row:hover .rating-star {
     background: url(/svg/star.svg) no-repeat center center;
-    width: 30px;
-    height: 30px;
-    padding: 0 18px;
 }
 
 .rating-row .rating-star:hover ~ .rating-star {
     background: url(/svg/star-empty.svg) no-repeat center center;
     filter: brightness(80%);
-    width: 30px;
-    height: 30px;
-    padding: 0 18px;
+}
+
+.remove-styling {
+    margin: 0;
+    padding: 0;
 }
