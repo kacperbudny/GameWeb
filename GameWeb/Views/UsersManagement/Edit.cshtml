@@ -1,25 +1,49 @@
-@model GameWeb.Models.ApplicationUser
+@model GameWeb.Models.ViewModels.UserEditViewModel
 @{
     ViewData["Title"] = "Edytuj użytkownika";
 }
 
-<form method="post" asp-action="Edit" enctype="multipart/form-data">
+<form method="post" asp-action="Edit">
     <input asp-for="Id" hidden />
     <div>
-        <div asp-validation-summary="ModelOnly"></div>
+        <div asp-validation-summary="ModelOnly" class="validation-error-span"></div>
         <div class="upper-row">
             <h2>Edytuj użytkownika</h2>
         </div>
         <div class="default-form">
-            <h3>Dane użytkownika</h3>
             <div class="form-input-set">
-                <label asp-for="Id"></label>
-                <input class="text-input" asp-for="Id" />
-                <span class="validation-error-span" asp-validation-for="Id" />
+                <label asp-for="UserName"></label>
+                <input class="text-input" asp-for="UserName" />
+                <span class="validation-error-span" asp-validation-for="UserName" />
+            </div>
+            <div class="form-input-set">
+                <label asp-for="Email"></label>
+                <input class="text-input" asp-for="Email" />
+                <span class="validation-error-span" asp-validation-for="Email" />
+            </div>
+            <div class="form-input-set">
+                <label asp-for="Password"></label>
+                <input class="text-input" asp-for="Password" />
+                <span class="validation-error-span" asp-validation-for="Password" />
+            </div>
+            <div class="form-input-set">
+                <label asp-for="ConfirmPassword"></label>
+                <input class="text-input" asp-for="ConfirmPassword" />
+                <span class="validation-error-span" asp-validation-for="ConfirmPassword" />
+            </div>
+            <div class="form-input-set">
+                <label asp-for="BirthDate"></label>
+                <input class="text-input" asp-for="BirthDate" />
+                <span class="validation-error-span" asp-validation-for="BirthDate" />
+            </div>
+            <div class="form-input-set">
+                <label asp-for="Description"></label>
+                <textarea class="text-input" rows="6" asp-for="Description"></textarea>
+                <span class="validation-error-span" asp-validation-for="Description" />
             </div>
         </div>
         <div class="form-buttons-row">
-            <input type="submit" value="Dodaj" class="action-button add-button" />
+            <input type="submit" value="Zatwierdź" class="action-button add-button" />
             <a asp-action="Index" class="action-button cancel-button">Anuluj</a>
         </div>
     </div>
