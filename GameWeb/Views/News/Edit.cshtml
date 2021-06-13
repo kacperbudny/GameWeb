@@ -1,0 +1,75 @@
+﻿@model GameWeb.Models.ViewModels.NewsEditViewModel
+
+@{
+    ViewData["Title"] = "Edytuj newsa";
+}
+
+<form method="post" asp-action="Edit" enctype="multipart/form-data">
+    <input asp-for="Id" hidden />
+    <input asp-for="Image" hidden />
+    <input asp-for="AuthorID" hidden />
+    <input asp-for="PublicationDate" hidden />
+    <div asp-validation-summary="ModelOnly"></div>
+    <div class="upper-row">
+        <h2>Dodaj newsa</h2>
+    </div>
+    <div class="default-form">
+        <div class="form-input-set">
+            <label asp-for="Title"></label>
+            <input class="text-input" asp-for="Title" />
+            <span class="validation-error-span" asp-validation-for="Title" />
+        </div>
+        <div class="form-input-set">
+            <label asp-for="Content"></label>
+            <textarea class="text-input" rows="6" asp-for="Content"></textarea>
+            <span class="validation-error-span" asp-validation-for="Content" />
+        </div>
+        <div class="form-input-set">
+            <label asp-for="Tags"></label>
+            <input class="text-input" asp-for="Tags" />
+            <span class="validation-error-span" asp-validation-for="Tags" />
+        </div>
+        <div class="form-input-set">
+            <label asp-for="ImageFile"></label>
+            <br />
+            <img id="cover" src="~/images/NewsImages/@Model.Image" style="margin-bottom: 10px; width: 200px;" />
+            <br />
+            <div class="custom-file">
+                <input asp-for="ImageFile" id="customFile" class="custom-file-input" />
+                <label for="customFile" class="custom-file-label">Wybierz plik</label>
+            </div>
+            <span class="validation-error-span" asp-validation-for="ImageFile" />
+        </div>
+    </div>
+    <div class="form-buttons-row">
+        <input type="submit" value="Zatwierdź" class="action-button add-button" />
+        <a asp-action="Index" class="action-button cancel-button">Anuluj</a>
+    </div>
+</form>
+
+@section Scripts{
+
+    @{
+<partial name="_ValidationScriptsPartial" />
+    }
+
+<script type="text/javascript">
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#cover').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $(".custom-file-input").on("change", function () {
+        readURL(this);
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
+</script>
+}
