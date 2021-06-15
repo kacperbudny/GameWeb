@@ -29,7 +29,7 @@
                         @user.Role
                     </td>
                     <td>
-                        <a href="#" class="btn btn-info"><i class="fas fa-edit"></i></a>
+                        <a asp-controller="UsersManagement" asp-route-id="@user.Id" asp-action="Edit" class="btn btn-info"><i class="fas fa-edit"></i></a>
                         <a asp-controller="UsersManagement" asp-route-Id="@user.Id" asp-action="Delete" class="btn btn-danger"><i class="far fa-trash-alt"></i></a>
                     </td>
                 </tr>
