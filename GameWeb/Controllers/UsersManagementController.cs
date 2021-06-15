@@ -131,6 +131,8 @@ namespace GameWeb.Controllers
             return View(objViewModel);
         }
 
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(UserEditViewModel obj)

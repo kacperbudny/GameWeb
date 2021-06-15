@@ -41,10 +41,19 @@
                 <textarea class="text-input" rows="6" asp-for="Description"></textarea>
                 <span class="validation-error-span" asp-validation-for="Description" />
             </div>
+            <div>
+                <select>
+                    <option>Brak roli</option>
+                    <option>NewsCreator</option>
+                    <option>Publisher</option>
+                    <option>Admin</option>
+                </select>
+            </div>
         </div>
         <div class="form-buttons-row">
             <input type="submit" value="Zatwierdź" class="action-button add-button" />
             <a asp-action="Index" class="action-button cancel-button">Anuluj</a>
         </div>
+ 
     </div>
 </form>
