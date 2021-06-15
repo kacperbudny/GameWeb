@@ -8,10 +8,31 @@
     </div>
 </div>
 
+<div class="game-rating-box">
+    @if (Model.GameRates.Count > 0)
+    {
+        <p class="rating-header">Ocena gry</p>
+        <p class="average-rating" style="color: @(Model.AverageRating > 7 ? "lime" : Model.AverageRating < 3 ? "red" : "yellow")">@String.Format("{0:0.0}", Model.AverageRating)/10</p>
+        <p class="rate-count">(@Model.GameRates.Count ocen)</p>
+    }
+    else
+    {
+        <p class="remove-styling">Nikt jeszcze nie ocenił tej gry.</p>
+    }
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="rating-box">
+            <p class="rating-header">Twoja ocena</p>
+            <div class="rating-row">
+                @for (int i = 0; i < 10; i++)
+                {
+                    <button type="submit" class="rating-star @(i < Model.UserRating ? "rating-star-clicked" : "")" form="star@(i)"></button>
+                    <form asp-controller="Game" asp-action="RatePost" asp-route-id="@Model.Id" asp-route-rating="@(i+1)" id="star@(i)">
+                    </form>
+                }
+            </div>
+        </div>
 
-@if (User.Identity.IsAuthenticated)
-{
-    <div class="game-rating-box">
         @if (Model.IsInCurrentUsersWishlist)
         {
             <form asp-controller="Game" asp-action="WishlistDeletePost" asp-route-id="@Model.Id" style="width: 100%;">
@@ -27,18 +48,18 @@
 
         @if (Model.IsCurrentUsersFavourite)
         {
-            <form asp-controller="Game" asp-action="UnfavPost" asp-route-id="@Model.Id">
+            <form asp-controller="Game" asp-action="UnfavPost" asp-route-id="@Model.Id" style="width:100%">
                 <button type="submit" class="action-button favourite-button"><i class="fas fa-heart"></i> Usuń z ulubionych</button>
             </form>
         }
         else
         {
-            <form asp-controller="Game" asp-action="FavPost" asp-route-id="@Model.Id">
+            <form asp-controller="Game" asp-action="FavPost" asp-route-id="@Model.Id" style="width:100%">
                 <button type="submit" class="action-button favourite-button"><i class="far fa-heart"></i> Dodaj do ulubionych</button>
             </form>
         }
-    </div>
-}
+    }
+</div>
 
 <div class="game-page">
     <div class="game-header">

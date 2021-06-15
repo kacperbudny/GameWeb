@@ -91,7 +91,13 @@ namespace GameWeb.Controllers
             if (obj.RecommendedRequirements == null) obj.RecommendedRequirements = _db.Requirement.Find(obj.RecommendedRequirementsId);
             obj.FavouriteGames = _db.FavouriteGame.Where(fg => fg.GameId == obj.Id).ToList();
             obj.WishlistGames = _db.WishlistGame.Where(wg => wg.GameId == obj.Id).ToList();
+            obj.GameRates = _db.GameRating.Where(gr => gr.GameId == obj.Id).ToList();
             obj.CommentThreads = _db.GameCommentThread.Where(thread => thread.GameId == obj.Id).ToList().TakeLast(3).Reverse().ToList();
+
+            if (obj.GameRates.Count > 0)
+            {
+                obj.AverageRating = obj.GameRates.Average(game => game.Rating);
+            }
 
             foreach (var thread in obj.CommentThreads)
             {
@@ -106,10 +112,46 @@ namespace GameWeb.Controllers
                 var currentUser = await userManager.FindByNameAsync(User.Identity.Name);
                 obj.IsCurrentUsersFavourite = obj.FavouriteGames.Any(game => game.UserId == currentUser.Id);
                 obj.IsInCurrentUsersWishlist = obj.WishlistGames.Any(game => game.UserId == currentUser.Id);
+
+                var usersRatingObj = obj.GameRates.FirstOrDefault(game => game.UserId == currentUser.Id);
+
+                if (usersRatingObj != null)
+                {
+                    obj.UserRating = usersRatingObj.Rating;
+                }
             }
 
             ViewData["Title"] = obj.Name;
             return View("Details", obj);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> RatePost(int id, int rating)
+        {
+            if (rating <= 10 && rating > 0)
+            {
+                var currentUser = await userManager.FindByNameAsync(User.Identity.Name);
+
+                var newRating = new GameRating()
+                {
+                    GameId = id,
+                    UserId = currentUser.Id,
+                    Rating = rating,
+                };
+
+                var obj = _db.GameRating.Where(gr => gr.GameId == id).FirstOrDefault(gr => gr.UserId == currentUser.Id);
+
+                if (obj != null)
+                {
+                    _db.GameRating.Remove(obj);
+                }
+
+                _db.GameRating.Add(newRating);
+                _db.SaveChanges();
+            }
+
+            return Redirect(Request.Headers["Referer"].ToString());
         }
 
         [Authorize]
