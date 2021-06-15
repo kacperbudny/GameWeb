@@ -11,7 +11,7 @@ namespace GameWeb.Models.ViewModels
     public class ManageAccountViewModel
     {
         public string Id { get; set; }
-        [Required]
+
         [Display(Name = "Nazwa użytkownika")]
         public string UserName { get; set; }
 

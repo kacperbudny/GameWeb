@@ -162,7 +162,7 @@ namespace GameWeb.Controllers
                     return View(obj);
                 }
 
-                if(obj.UserName != user.UserName || obj.Email != user.Email || obj.NewPassword != null)
+                if(obj.Email != user.Email || obj.NewPassword != null)
                 {
                     if(obj.CurrentPassword == null)
                     {

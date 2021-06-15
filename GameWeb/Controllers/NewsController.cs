@@ -243,7 +243,7 @@ namespace GameWeb.Controllers
         }
 
 
-        private string UploadedFile(NewsCreateViewModel model)
+        private string UploadedFile(NewsViewModel model)
         {
             string uniqueFileName = null;
 

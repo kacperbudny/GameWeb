@@ -5,6 +5,7 @@
 
 <form method="post" asp-action="Manage">
     <div>
+        <input asp-for="UserName" hidden />
         <div asp-validation-summary="ModelOnly" class="validation-error-span"></div>
         <div class="upper-row">
             <h2>Zarządzaj kontem</h2>
@@ -14,8 +15,8 @@
         <p>Ustawienia z tej sekcji należy zatwierdzić hasłem.</p>
         <div class="default-form">
             <div class="form-input-set">
-                <label asp-for="UserName"></label>
-                <input class="text-input" asp-for="UserName" />
+                <label asp-for="UserName"></label><br />
+                <input class="text-input" asp-for="UserName" disabled="disabled" />
                 <span class="validation-error-span" asp-validation-for="UserName" />
             </div>
             <div class="form-input-set">
