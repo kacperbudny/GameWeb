@@ -66,6 +66,7 @@ namespace GameWeb.Controllers
             };
 
             obj.Thread.Game = _db.Game.Find(obj.Thread.GameId);
+            obj.NewComment = new GameComment();
 
             ViewData["Title"] = comments.FirstOrDefault().Thread.Name + " - " + comments.FirstOrDefault().Thread.Game.Name;
 

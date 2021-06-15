@@ -16,6 +16,10 @@
     position: relative;
 }
 
+    .first-news a {
+        width: 100%;
+    }
+
     .first-news img {
         object-fit: cover;
         width: 100%;
