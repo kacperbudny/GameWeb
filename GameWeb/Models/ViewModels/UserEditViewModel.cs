@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -35,5 +36,9 @@ namespace GameWeb.Models.ViewModels
 
         [DisplayName("Opis")]
         public string Description { get; set; }
+
+        public string SelectedRole { get; set; }
+
+        public IEnumerable<SelectListItem> RoleList { get; set; }
     }
 }

@@ -254,6 +254,20 @@ label {
         background: rgba(0,0,0,0.3);
     }
 
+.select-input {
+    background: rgba(0,0,0,0.5);
+    width: 100%;
+    box-shadow: 0 0 8px rgba(0,0,0,0.5);
+    border: none;
+    border-radius: 8px;
+    padding: 6px;
+    color: white;
+}
+
+    .select-input:hover {
+        background: rgba(0,0,0,0.3);
+    }
+
 .form-input-set {
     margin-bottom: 10px;
 }
