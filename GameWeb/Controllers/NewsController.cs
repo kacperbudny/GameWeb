@@ -152,7 +152,66 @@ namespace GameWeb.Controllers
             return View(obj);
         }
 
-        private string UploadedFile(NewsCreateViewModel model)
+        [Authorize(Roles = RoleNames.AdminRole + "," + RoleNames.NewsCreatorRole)]
+        public IActionResult Edit(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+
+            var obj = _db.News.Find(id);
+
+            if (obj == null)
+            {
+                return NotFound();
+            }
+
+            var objViewModel = new NewsEditViewModel
+            {
+                Id = obj.Id,
+                Title = obj.Title,
+                Content = obj.Content,
+                PublicationDate = obj.PublicationDate,
+                AuthorID = obj.AuthorID,
+                Tags = obj.Tags,
+                Image = obj.ImagePath,
+            };
+
+            return View(objViewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleNames.AdminRole + "," + RoleNames.NewsCreatorRole)]
+        public IActionResult Edit(NewsEditViewModel obj)
+        {
+            if (ModelState.IsValid)
+            {
+                string fileName;
+
+                if (obj.ImageFile != null) fileName = UploadedFile(obj);
+                else fileName = obj.Image;
+
+                News news = new News
+                {
+                    Id = obj.Id,
+                    Title = obj.Title,
+                    Content = obj.Content,
+                    PublicationDate = obj.PublicationDate,
+                    AuthorID = obj.AuthorID,
+                    Tags = obj.Tags,
+                    ImagePath = fileName,
+                };
+
+                _db.News.Update(news);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(obj);
+        }
+
+        private string UploadedFile(NewsViewModel model)
         {
             string uniqueFileName = null;
 
