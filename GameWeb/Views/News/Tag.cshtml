@@ -1,0 +1,33 @@
+﻿@model IEnumerable<News>
+
+<div class="home-container">
+    <h2>Newsy z tagiem #@Context.Request.Query["tagName"]</h2>
+    <br />
+    @if (Model.Any())
+    {
+
+        <div class="other-news">
+            @foreach (var news in Model)
+            {
+                <a asp-controller="News" asp-action="Display" asp-route-id="@news.Id">
+                    <div class="news-card">
+                        <div class="img-container">
+                            <img src="~/images/NewsImages/@news.ImagePath" />
+                        </div>
+                        <div class="news-card-info">
+                            <h3>@news.Title</h3>
+                            <p class="news-card-content">@news.Content</p>
+                            <p class="date-paragraph">@String.Format("{0:dd.MM.yyyy}", @news.PublicationDate)</p>
+                        </div>
+                    </div>
+                </a>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="text-center">
+            <p>Brak newsów o podanym tagu.</p>
+        </div>
+    }
+</div>

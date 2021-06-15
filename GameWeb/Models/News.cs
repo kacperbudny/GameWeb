@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -21,5 +22,7 @@ namespace GameWeb.Models
         public string Tags { get; set; }
         [Required(ErrorMessage = "Proszę umieścić zdjęcie.")]
         public string ImagePath { get; set; }
+        [NotMapped]
+        public IEnumerable<string> TagsList { get; set; }
     }
 }

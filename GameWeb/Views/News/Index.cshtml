@@ -27,7 +27,9 @@
                         @news.Id
                     </td>
                     <td>
-                        @news.Title
+                        <a asp-controller="News" asp-action="Display" asp-route-id="@news.Id">
+                            @news.Title
+                        </a>
                     </td>
                     <td>
                         @news.PublicationDate

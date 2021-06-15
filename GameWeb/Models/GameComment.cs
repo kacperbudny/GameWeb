@@ -17,7 +17,7 @@ namespace GameWeb.Models
         [Required(ErrorMessage = "Proszę wprowadzić treść komentarza.")]
         [DisplayName("Treść komentarza")]
         public string Body { get; set; }
-        public string AuthorID { get; set; }
+        public string? AuthorID { get; set; }
         public ApplicationUser Author { get; set; }
         public int ThreadId { get; set; }
         public GameCommentThread Thread { get; set; }
