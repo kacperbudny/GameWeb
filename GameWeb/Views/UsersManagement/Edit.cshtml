@@ -42,11 +42,9 @@
                 <span class="validation-error-span" asp-validation-for="Description" />
             </div>
             <div>
-                <select>
-                    <option>Brak roli</option>
-                    <option>NewsCreator</option>
-                    <option>Publisher</option>
-                    <option>Admin</option>
+                <label>Rola</label>
+                <select asp-for="SelectedRole" asp-items="@Model.RoleList" class="select-input">
+                    Wybierz rolę
                 </select>
             </div>
         </div>
@@ -54,6 +52,6 @@
             <input type="submit" value="Zatwierdź" class="action-button add-button" />
             <a asp-action="Index" class="action-button cancel-button">Anuluj</a>
         </div>
- 
+
     </div>
 </form>

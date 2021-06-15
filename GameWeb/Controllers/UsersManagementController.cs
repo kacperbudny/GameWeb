@@ -5,6 +5,7 @@ using GameWeb.Utilities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -105,7 +106,7 @@ namespace GameWeb.Controllers
             }
         }
 
-        public IActionResult Edit(string? id)
+        public async Task<IActionResult> Edit(string? id)
         {
             if (id == null)
             {
@@ -128,10 +129,39 @@ namespace GameWeb.Controllers
                 Description = obj.Description,
             };
 
+            objViewModel.RoleList = new List<SelectListItem>
+            {
+                new SelectListItem {Text = "Brak roli",
+                    Value = "0"},
+                new SelectListItem {Text = RoleNames.GamePublisherRole,
+                    Value = "1"},
+                new SelectListItem {Text = RoleNames.NewsCreatorRole,
+                    Value = "2"},
+                new SelectListItem {Text = RoleNames.AdminRole,
+                    Value = "3"},
+            };
+
+            var userRole = await userManager.GetRolesAsync(obj);
+
+            if (userRole.Count == 0)
+            {
+                objViewModel.SelectedRole = "0";
+            }
+            else if (userRole[0] == RoleNames.GamePublisherRole)
+            {
+                objViewModel.SelectedRole = "1";
+            }
+            else if (userRole[0] == RoleNames.NewsCreatorRole)
+            {
+                objViewModel.SelectedRole = "2";
+            }
+            else if (userRole[0] == RoleNames.AdminRole)
+            {
+                objViewModel.SelectedRole = "3";
+            }
+
             return View(objViewModel);
         }
-
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -177,7 +207,7 @@ namespace GameWeb.Controllers
                         }
                     }
 
-                    if(errors.Count > 0)
+                    if (errors.Count > 0)
                     {
                         var message = String.Join(" ", errors.ToArray());
                         ModelState.AddModelError(string.Empty, message);
@@ -186,6 +216,26 @@ namespace GameWeb.Controllers
 
                     await userManager.RemovePasswordAsync(user);
                     await userManager.AddPasswordAsync(user, obj.Password);
+                }
+
+                var userRole = await userManager.GetRolesAsync(user);
+
+                if (userRole.Count > 0)
+                {
+                    await userManager.RemoveFromRoleAsync(user, userRole[0]);
+                }
+
+                switch (obj.SelectedRole)
+                {
+                    case "1":
+                        await userManager.AddToRoleAsync(user, RoleNames.GamePublisherRole);
+                        break;
+                    case "2":
+                        await userManager.AddToRoleAsync(user, RoleNames.NewsCreatorRole);
+                        break;
+                    case "3":
+                        await userManager.AddToRoleAsync(user, RoleNames.AdminRole);
+                        break;
                 }
 
                 await userManager.UpdateAsync(user);
