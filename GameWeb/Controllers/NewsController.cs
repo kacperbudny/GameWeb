@@ -210,8 +210,40 @@ namespace GameWeb.Controllers
             }
             return View(obj);
         }
+        
+        [Authorize(Roles = RoleNames.AdminRole + "," + RoleNames.NewsCreatorRole)]
+        public IActionResult Delete(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            var obj = _db.News.Find(id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
 
-        private string UploadedFile(NewsViewModel model)
+            return View(obj);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleNames.AdminRole + "," + RoleNames.NewsCreatorRole)]
+        public IActionResult DeletePost(int? id)
+        {
+            var obj = _db.News.Find(id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            _db.News.Remove(obj);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+
+        private string UploadedFile(NewsCreateViewModel model)
         {
             string uniqueFileName = null;
 
