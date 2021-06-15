@@ -1,5 +1,6 @@
 ﻿using GameWeb.Data;
 using GameWeb.Models;
+using GameWeb.Models.ViewModels;
 using GameWeb.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -117,17 +118,116 @@ namespace GameWeb.Controllers
         }
 
         [Authorize]
-        public IActionResult Manage()
+        public async Task<IActionResult> Manage()
         {
-            if (User.Identity.IsAuthenticated)
+            if (!User.Identity.IsAuthenticated)
             {
-                return View();
+                return RedirectToAction("Index", "Home");
             }
 
-            return RedirectToAction("Index", "Home");
+            var username = User.Identity.Name;
+            var user = await userManager.FindByNameAsync(username);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var objViewModel = new ManageAccountViewModel
+            {
+                Id = user.Id,
+                UserName = user.UserName,
+                Email = user.Email,
+                BirthDate = user.BirthDate,
+                Description = user.Description,
+            };
+
+            return View(objViewModel);
+            
         }
 
+        [HttpPost]
         [Authorize]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Manage(ManageAccountViewModel obj)
+        {
+            if (ModelState.IsValid)
+            {
+                var username = User.Identity.Name;
+                var user = await userManager.FindByNameAsync(username);
+
+                if (_db.ApplicationUser.Any(u => u.NormalizedEmail == obj.Email.ToUpper()) && _db.ApplicationUser.FirstOrDefault(u => u.NormalizedEmail == obj.Email.ToUpper()).Id != user.Id)
+                {
+                    ModelState.AddModelError(string.Empty, "Istnieje już użytkownik o takim adresie email");
+                    return View(obj);
+                }
+
+                if(obj.UserName != user.UserName || obj.Email != user.Email || obj.NewPassword != null)
+                {
+                    if(obj.CurrentPassword == null)
+                    {
+                        ModelState.AddModelError(string.Empty, "Musisz zatwierdzić zmiany hasłem");
+                        return View(obj);
+                    }
+
+                    var passwordValidator = new PasswordValidator<ApplicationUser>();
+                    var passwordCheckResult = await passwordValidator.ValidateAsync(userManager, null, obj.CurrentPassword);
+
+                    if (!passwordCheckResult.Succeeded)
+                    {
+                        ModelState.AddModelError(string.Empty, "Wprowadzono błędne dotychczasowe hasło");
+                        return View();
+                    }
+                }
+
+                user.UserName = obj.UserName;
+                user.Email = obj.Email;
+                user.BirthDate = obj.BirthDate;
+                user.Description = obj.Description;
+
+                if (obj.NewPassword != null)
+                {
+                    List<string> errors = new List<string>();
+
+                    var passwordValidators = userManager.PasswordValidators;
+
+                    foreach (var validator in passwordValidators)
+                    {
+                        var result = await validator.ValidateAsync(userManager, null, obj.NewPassword);
+
+                        if (!result.Succeeded)
+                        {
+                            foreach (var error in result.Errors)
+                            {
+                                errors.Add(error.Description);
+                            }
+                        }
+                    }
+
+                    if (errors.Count > 0)
+                    {
+                        var message = String.Join(" ", errors.ToArray());
+                        ModelState.AddModelError(string.Empty, message);
+                        return View(obj);
+                    }
+
+                    if(obj.NewPassword != obj.ConfirmNewPassword)
+                    {
+                        ModelState.AddModelError(string.Empty, "Hasła się nie zgadzają");
+                        return View(obj);
+                    }
+
+                    await userManager.ChangePasswordAsync(user, obj.CurrentPassword, obj.NewPassword);
+                }
+
+                await userManager.UpdateAsync(user);
+                _db.SaveChanges();
+                return View();
+            }
+            return View(obj);
+        }
+
+    [Authorize]
         public IActionResult Delete()
         {
             if (User.Identity.IsAuthenticated)

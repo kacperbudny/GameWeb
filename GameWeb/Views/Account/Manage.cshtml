@@ -1,11 +1,63 @@
-﻿@{
+﻿@model GameWeb.Models.ViewModels.ManageAccountViewModel
+@{
     ViewBag.Title = "Zarządzaj kontem";
 }
 
-<div>
-    <div class="upper-row">
-        <h2>Zarządzaj kontem</h2>
+<form method="post" asp-action="Manage">
+    <div>
+        <div asp-validation-summary="ModelOnly" class="validation-error-span"></div>
+        <div class="upper-row">
+            <h2>Zarządzaj kontem</h2>
+        </div>
+
+        <h3>Ustawienia konta</h3>
+        <p>Ustawienia z tej sekcji należy zatwierdzić hasłem.</p>
+        <div class="default-form">
+            <div class="form-input-set">
+                <label asp-for="UserName"></label>
+                <input class="text-input" asp-for="UserName" />
+                <span class="validation-error-span" asp-validation-for="UserName" />
+            </div>
+            <div class="form-input-set">
+                <label asp-for="Email"></label>
+                <input class="text-input" asp-for="Email" />
+                <span class="validation-error-span" asp-validation-for="Email" />
+            </div>
+            <div class="form-input-set">
+                <label asp-for="CurrentPassword"></label>
+                <input class="text-input" asp-for="CurrentPassword" />
+                <span class="validation-error-span" asp-validation-for="CurrentPassword" />
+            </div>
+            <div class="form-input-set">
+                <label asp-for="NewPassword"></label>
+                <input class="text-input" asp-for="NewPassword" />
+                <span class="validation-error-span" asp-validation-for="NewPassword" />
+            </div>
+            <div class="form-input-set">
+                <label asp-for="ConfirmNewPassword"></label>
+                <input class="text-input" asp-for="ConfirmNewPassword" />
+                <span class="validation-error-span" asp-validation-for="ConfirmNewPassword" />
+            </div>
+        </div>
+
+        <h3>Informacje o użytkowniku</h3>
+        <div class="default-form">
+            <div class="form-input-set">
+                <label asp-for="BirthDate"></label>
+                <input class="text-input" asp-for="BirthDate" />
+                <span class="validation-error-span" asp-validation-for="BirthDate" />
+            </div>
+            <div class="form-input-set">
+                <label asp-for="Description"></label>
+                <textarea class="text-input" rows="6" asp-for="Description"></textarea>
+                <span class="validation-error-span" asp-validation-for="Description" />
+            </div>
+        </div>
+        <div class="form-buttons-row">
+            <input type="submit" value="Zatwierdź" class="action-button add-button" />
+        </div>
+
     </div>
     <h3>Usuwanie konta</h3>
     <a asp-controller="Account" asp-action="Delete" class="danger">Usuń konto</a>
-</div>
+</form>
