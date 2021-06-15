@@ -1,0 +1,24 @@
+﻿@model GameWeb.Models.News
+
+<form method="post" asp-action="DeletePost">
+    <input asp-for="Id" hidden/>
+    <div>
+        <div asp-validation-summary="ModelOnly"></div>
+        <h2>Usuwanie newsa</h2>
+        <div style="text-align: center; margin-top: 20px;">
+            <p>Czy na pewno chcesz usunąć newsa pt. "<strong>@Model.Title</strong>?</p>
+
+            <div>
+                <input type="submit" value="Usuń" class="action-button cancel-button" style="margin-right: 16px;"/>
+                <a asp-action="Index" class="action-button">Anuluj</a>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts{
+
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

@@ -16,5 +16,6 @@ namespace GameWeb.Models
         public List<News> News { get; set; }
         public ICollection<FavouriteGame> FavouriteGames { get; set; }
         public ICollection<WishlistGame> WishlistGames { get; set; }
+        public ICollection<GameRating> GameRates { get; set; }
     }
 }

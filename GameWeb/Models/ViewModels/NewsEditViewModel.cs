@@ -8,10 +8,8 @@ using System.Threading.Tasks;
 
 namespace GameWeb.Models.ViewModels
 {
-    public class NewsCreateViewModel : NewsViewModel
+    public class NewsEditViewModel : NewsViewModel
     {
-        [Required(ErrorMessage = "Proszę umieścić zdjęcie.")]
-        [DisplayName("Zdjęcie")]
-        public override IFormFile ImageFile { get; set; }
+        public string Image { get; set; }
     }
 }
