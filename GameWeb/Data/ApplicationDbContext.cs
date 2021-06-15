@@ -19,6 +19,7 @@ namespace GameWeb.Data
         public DbSet<FavouriteGame> FavouriteGame { get; set; }
         public DbSet<WishlistGame> WishlistGame { get; set; }
         public DbSet<News> News { get; set; }
+        public DbSet<GameRating> GameRating { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -63,6 +64,19 @@ namespace GameWeb.Data
                 .HasOne(wg => wg.User)
                 .WithMany(u => u.WishlistGames)
                 .HasForeignKey(wg => wg.UserId);
+
+            builder.Entity<GameRating>()
+                .HasKey(gr => new { gr.GameId, gr.UserId });
+
+            builder.Entity<GameRating>()
+                .HasOne(gr => gr.Game)
+                .WithMany(g => g.GameRates)
+                .HasForeignKey(gr => gr.GameId);
+
+            builder.Entity<GameRating>()
+                .HasOne(gr => gr.User)
+                .WithMany(u => u.GameRates)
+                .HasForeignKey(gr => gr.UserId);
 
             builder.Entity<News>()
                 .HasOne(n => n.Author)
