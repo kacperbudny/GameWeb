@@ -15,20 +15,27 @@ namespace GameWeb.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly UserManager<ApplicationUser> userManager;
-        private readonly SignInManager<ApplicationUser> signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ApplicationDbContext _db;
 
         public AccountController(UserManager<ApplicationUser> userManager,
-                                SignInManager<ApplicationUser> signInManager, ApplicationDbContext db)
+                                SignInManager<ApplicationUser> signInManager,
+                                ApplicationDbContext db)
         {
-            this.userManager = userManager;
-            this.signInManager = signInManager;
+            _userManager = userManager;
+            _signInManager = signInManager;
             _db = db;
         }
 
+        #region GET
 
-        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+
         [AllowAnonymous]
         public IActionResult Register()
         {
@@ -40,14 +47,6 @@ namespace GameWeb.Controllers
             return View();
         }
 
-        [HttpGet]
-        [AllowAnonymous]
-        public IActionResult AccessDenied()
-        {
-            return View();
-        }
-
-        [HttpGet]
         [AllowAnonymous]
         public IActionResult Login()
         {
@@ -59,60 +58,10 @@ namespace GameWeb.Controllers
             return View();
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Register(RegistrationViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email };
-                var result = await userManager.CreateAsync(user, model.Password);
-
-                if (result.Succeeded)
-                {
-                    await signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("index", "home");
-                }
-
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError("", error.Description);
-                }
-            }
-
-            return View(model);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel user)
-        {
-            if (ModelState.IsValid)
-            {
-                var username = await userManager.FindByEmailAsync(user.Email);
-
-                if (username == null)
-                {
-                    ModelState.AddModelError(string.Empty, "Nieprawidłowe dane logowania");
-                    return View();
-                }
-
-                var result = await signInManager.PasswordSignInAsync(username, user.Password, user.RememberMe, false);
-
-                if (result.Succeeded)
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-
-                ModelState.AddModelError(string.Empty, "Nieprawidłowe dane logowania");
-
-            }
-
-            return View(user);
-        }
-
         [Authorize]
         public async Task<IActionResult> Logout()
         {
-            await signInManager.SignOutAsync();
+            await _signInManager.SignOutAsync();
 
             return RedirectToAction("index", "home");
         }
@@ -126,7 +75,7 @@ namespace GameWeb.Controllers
             }
 
             var username = User.Identity.Name;
-            var user = await userManager.FindByNameAsync(username);
+            var user = await _userManager.FindByNameAsync(username);
 
             if (user == null)
             {
@@ -143,7 +92,70 @@ namespace GameWeb.Controllers
             };
 
             return View(objViewModel);
-            
+        }
+
+        [Authorize]
+        public IActionResult Delete()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                return View();
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        #endregion
+
+        #region POST
+
+        [HttpPost]
+        public async Task<IActionResult> Register(RegistrationViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email };
+                var result = await _userManager.CreateAsync(user, model.Password);
+
+                if (result.Succeeded)
+                {
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    return RedirectToAction("Index", "Home");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginViewModel user)
+        {
+            if (ModelState.IsValid)
+            {
+                var username = await _userManager.FindByEmailAsync(user.Email);
+
+                if (username == null)
+                {
+                    ModelState.AddModelError(string.Empty, "Nieprawidłowe dane logowania");
+                    return View();
+                }
+
+                var result = await _signInManager.PasswordSignInAsync(username, user.Password, user.RememberMe, false);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+
+                ModelState.AddModelError(string.Empty, "Nieprawidłowe dane logowania");
+            }
+
+            return View(user);
         }
 
         [HttpPost]
@@ -154,24 +166,24 @@ namespace GameWeb.Controllers
             if (ModelState.IsValid)
             {
                 var username = User.Identity.Name;
-                var user = await userManager.FindByNameAsync(username);
+                var user = await _userManager.FindByNameAsync(username);
 
-                if (_db.ApplicationUser.Any(u => u.NormalizedEmail == obj.Email.ToUpper()) && _db.ApplicationUser.FirstOrDefault(u => u.NormalizedEmail == obj.Email.ToUpper()).Id != user.Id)
+                if (isEmailTaken(user, obj))
                 {
                     ModelState.AddModelError(string.Empty, "Istnieje już użytkownik o takim adresie email");
                     return View(obj);
                 }
 
-                if(obj.Email != user.Email || obj.NewPassword != null)
+                if (obj.Email != user.Email || obj.NewPassword != null)
                 {
-                    if(obj.CurrentPassword == null)
+                    if (obj.CurrentPassword == null)
                     {
                         ModelState.AddModelError(string.Empty, "Musisz zatwierdzić zmiany hasłem");
                         return View(obj);
                     }
 
                     var passwordValidator = new PasswordValidator<ApplicationUser>();
-                    var passwordCheckResult = await passwordValidator.ValidateAsync(userManager, null, obj.CurrentPassword);
+                    var passwordCheckResult = await passwordValidator.ValidateAsync(_userManager, null, obj.CurrentPassword);
 
                     if (!passwordCheckResult.Succeeded)
                     {
@@ -187,72 +199,62 @@ namespace GameWeb.Controllers
 
                 if (obj.NewPassword != null)
                 {
-                    List<string> errors = new List<string>();
-
-                    var passwordValidators = userManager.PasswordValidators;
+                    var passwordValidators = _userManager.PasswordValidators;
 
                     foreach (var validator in passwordValidators)
                     {
-                        var result = await validator.ValidateAsync(userManager, null, obj.NewPassword);
+                        var result = await validator.ValidateAsync(_userManager, null, obj.NewPassword);
 
                         if (!result.Succeeded)
                         {
                             foreach (var error in result.Errors)
                             {
-                                errors.Add(error.Description);
+                                ModelState.AddModelError(string.Empty, error.Description);
                             }
+
+                            return View(obj);
                         }
                     }
 
-                    if (errors.Count > 0)
-                    {
-                        var message = String.Join(" ", errors.ToArray());
-                        ModelState.AddModelError(string.Empty, message);
-                        return View(obj);
-                    }
-
-                    if(obj.NewPassword != obj.ConfirmNewPassword)
+                    if (obj.NewPassword != obj.ConfirmNewPassword)
                     {
                         ModelState.AddModelError(string.Empty, "Hasła się nie zgadzają");
                         return View(obj);
                     }
 
-                    await userManager.ChangePasswordAsync(user, obj.CurrentPassword, obj.NewPassword);
+                    await _userManager.ChangePasswordAsync(user, obj.CurrentPassword, obj.NewPassword);
                 }
 
-                await userManager.UpdateAsync(user);
+                await _userManager.UpdateAsync(user);
                 _db.SaveChanges();
+
                 return View();
             }
+
             return View(obj);
-        }
-
-    [Authorize]
-        public IActionResult Delete()
-        {
-            if (User.Identity.IsAuthenticated)
-            {
-                return View();
-            }
-
-            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> Delete(string? password)
         {
-            if(password==null)
+            if (password == null)
             {
                 ModelState.AddModelError(string.Empty, "Musisz wprowadzić hasło");
                 return View();
             }
 
             var username = User.Identity.Name;
-            var user = await userManager.FindByNameAsync(username);
+            var user = await _userManager.FindByNameAsync(username);
+
+            if (user == null)
+            {
+                ModelState.AddModelError(string.Empty, "Nie znaleziono użytkownika");
+                return View();
+            }
 
             var passwordValidator = new PasswordValidator<ApplicationUser>();
-            var passwordCheckResult = await passwordValidator.ValidateAsync(userManager, null, password);
+            var passwordCheckResult = await passwordValidator.ValidateAsync(_userManager, null, password);
 
             if (!passwordCheckResult.Succeeded)
             {
@@ -260,41 +262,70 @@ namespace GameWeb.Controllers
                 return View();
             }
 
-            if (user == null)
+            deleteUsersContent(user.Id);
+
+            var result = await _userManager.DeleteAsync(user);
+
+            if (result.Succeeded)
             {
-                ModelState.AddModelError(string.Empty, "Nie znaleziono użytkownika");
-                return View();
+                await _signInManager.SignOutAsync();
+
+                return RedirectToAction("Index", "Home");
             }
-            else
+
+            foreach (var error in result.Errors)
             {
-                var userComments = _db.GameComment.Where(comment => comment.AuthorID == user.Id);
-
-                foreach(var comment in userComments)
-                {
-                    comment.AuthorID = null;
-                }
-
-                var news = _db.News.Where(n => n.AuthorID == user.Id);
-
-                foreach (var n in news)
-                {
-                    n.AuthorID = null;
-                }
-
-                var result = await userManager.DeleteAsync(user);
-
-                if (result.Succeeded)
-                {
-                    await signInManager.SignOutAsync();
-                    return RedirectToAction("index", "home");
-                }
-
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError("", error.Description);
-                }
+                ModelState.AddModelError(string.Empty, error.Description);
             }
+
             return RedirectToAction("Index", "Home");
         }
+
+        #endregion
+
+        #region helperMethods
+
+        public bool isEmailTaken(ApplicationUser user, ManageAccountViewModel obj)
+        {
+            var userFromDb = _db.ApplicationUser.FirstOrDefault(u => u.NormalizedEmail == obj.Email.ToUpper());
+
+            if (userFromDb != null && userFromDb.Id != user.Id)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        #endregion
+
+        #region helperMethods
+
+        private void deleteUsersContent(string userId)
+        {
+            deleteUsersComments(userId);
+        }
+
+        private void deleteUsersComments(string userId)
+        {
+            var userComments = _db.GameComment.Where(comment => comment.AuthorID == userId);
+
+            foreach (var comment in userComments)
+            {
+                comment.AuthorID = null;
+            }
+        }
+
+        private void deleteUsersNews(string userId)
+        {
+            var news = _db.News.Where(n => n.AuthorID == userId);
+
+            foreach (var n in news)
+            {
+                n.AuthorID = null;
+            }
+        }
+
+        #endregion
     }
 }
