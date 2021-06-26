@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
 
 namespace GameWeb.Models
 {
@@ -39,16 +36,16 @@ namespace GameWeb.Models
         [Required(ErrorMessage = "Proszê umieœciæ zdjêcie.")]
         [DisplayName("Zdjêcie")]
         public string Image { get; set; }
-        public int MinimalRequirementsId { get; set; }
+        public int? MinimalRequirementsId { get; set; }
         [ForeignKey("MinimalRequirementsId")]
-        public Requirement MinimalRequirements { get; set; }
-        public int RecommendedRequirementsId { get; set; }
+        public Requirement? MinimalRequirements { get; set; }
+        public int? RecommendedRequirementsId { get; set; }
         [ForeignKey("RecommendedRequirementsId")]
-        public Requirement RecommendedRequirements { get; set; }
-        public List<GameCommentThread> CommentThreads { get; set; }
-        public ICollection<FavouriteGame> FavouriteGames { get; set; }
-        public ICollection<WishlistGame> WishlistGames { get; set; }
-        public ICollection<GameRating> GameRates { get; set; }
+        public Requirement? RecommendedRequirements { get; set; }
+        public List<GameCommentThread>? CommentThreads { get; set; }
+        public ICollection<FavouriteGame>? FavouriteGames { get; set; }
+        public ICollection<WishlistGame>? WishlistGames { get; set; }
+        public ICollection<GameRating>? GameRates { get; set; }
         [NotMapped]
         public bool IsCurrentUsersFavourite { get; set; }
         [NotMapped]

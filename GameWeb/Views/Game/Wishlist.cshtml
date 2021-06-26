@@ -25,7 +25,7 @@
                                 <p class="release-date">@obj.ReleaseDate.Year</p>
                             </div>
 
-                            <form asp-controller="Game" asp-action="WishlistDeletePost" asp-route-id="@obj.Id">
+                            <form asp-controller="Game" asp-action="WishlistDeleteGame" asp-route-id="@obj.Id">
                                 <button type="submit" class="unwish-button"><span class="mouseout"><i class="fas fa-eye"></i></span><span class="mousein"><i class="far fa-eye"></i></span></button>
                             </form>
                         </div>

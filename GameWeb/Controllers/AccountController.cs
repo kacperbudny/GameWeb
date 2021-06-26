@@ -1,13 +1,11 @@
 ﻿using GameWeb.Data;
 using GameWeb.Models;
 using GameWeb.Models.ViewModels;
+using GameWeb.Utilities;
 using GameWeb.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -168,7 +166,7 @@ namespace GameWeb.Controllers
                 var username = User.Identity.Name;
                 var user = await _userManager.FindByNameAsync(username);
 
-                if (isEmailTaken(user, obj))
+                if (IsEmailTaken(user, obj))
                 {
                     ModelState.AddModelError(string.Empty, "Istnieje już użytkownik o takim adresie email");
                     return View(obj);
@@ -262,7 +260,7 @@ namespace GameWeb.Controllers
                 return View();
             }
 
-            deleteUsersContent(user.Id);
+            UserDeletionHelpers.DeleteUsersContent(user.Id, _db);
 
             var result = await _userManager.DeleteAsync(user);
 
@@ -285,7 +283,7 @@ namespace GameWeb.Controllers
 
         #region helperMethods
 
-        public bool isEmailTaken(ApplicationUser user, ManageAccountViewModel obj)
+        public bool IsEmailTaken(ApplicationUser user, ManageAccountViewModel obj)
         {
             var userFromDb = _db.ApplicationUser.FirstOrDefault(u => u.NormalizedEmail == obj.Email.ToUpper());
 
@@ -301,30 +299,7 @@ namespace GameWeb.Controllers
 
         #region helperMethods
 
-        private void deleteUsersContent(string userId)
-        {
-            deleteUsersComments(userId);
-        }
-
-        private void deleteUsersComments(string userId)
-        {
-            var userComments = _db.GameComment.Where(comment => comment.AuthorID == userId);
-
-            foreach (var comment in userComments)
-            {
-                comment.AuthorID = null;
-            }
-        }
-
-        private void deleteUsersNews(string userId)
-        {
-            var news = _db.News.Where(n => n.AuthorID == userId);
-
-            foreach (var n in news)
-            {
-                n.AuthorID = null;
-            }
-        }
+        
 
         #endregion
     }

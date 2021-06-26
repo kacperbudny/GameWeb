@@ -48,7 +48,7 @@
 
         @if (User.Identity.IsAuthenticated)
         {
-            <form method="post" asp-action="AddCommentPost" enctype="multipart/form-data">
+            <form method="post" asp-action="AddComment" enctype="multipart/form-data">
                 <input asp-for="@Model.Thread.Id" hidden />
                 <div asp-validation-summary="ModelOnly"></div>
                 <div class="upper-row">

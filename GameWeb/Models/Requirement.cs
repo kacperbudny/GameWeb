@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace GameWeb.Models
 {
@@ -27,6 +22,7 @@ namespace GameWeb.Models
         [Required(ErrorMessage = "Proszę wprowadzić miejsce na dysku.")]
         [DisplayName("Miejsce na dysku w MB")]
         public int DriveSize { get; set; }
-        public Game Game { get; set; }
+        public Game? Game { get; set; }
+        public int? GameId { get; set; }
     }
 }

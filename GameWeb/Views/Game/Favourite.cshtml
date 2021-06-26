@@ -25,7 +25,7 @@
                                 <p class="release-date">@obj.ReleaseDate.Year</p>
                             </div>
 
-                            <form asp-controller="Game" asp-action="UnfavPost" asp-route-id="@obj.Id">
+                            <form asp-controller="Game" asp-action="UnfavGame" asp-route-id="@obj.Id">
                                 <button type="submit" class="unfav-button"><span class="mouseout"><i class="fas fa-heart"></i></span><span class="mousein"><i class="far fa-heart"></i></span></button>
                             </form>
                         </div>

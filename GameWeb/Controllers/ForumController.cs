@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,17 +13,18 @@ namespace GameWeb.Controllers
     public class ForumController : Controller
     {
         private readonly ApplicationDbContext _db;
-        private readonly UserManager<ApplicationUser> userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
         public ForumController(ApplicationDbContext db, UserManager<ApplicationUser> userManager)
         {
             _db = db;
-            this.userManager = userManager;
+            _userManager = userManager;
         }
 
+        #region GET
         public IActionResult Index(int? gameId)
         {
-            if(gameId == null)
+            if (gameId == null)
             {
                 return NotFound();
             }
@@ -47,7 +47,7 @@ namespace GameWeb.Controllers
 
         public IActionResult Thread(int? id)
         {
-            if(id == null)
+            if (id == null)
             {
                 return NotFound();
             }
@@ -59,7 +59,7 @@ namespace GameWeb.Controllers
                 comment.Author = _db.ApplicationUser.Find(comment.AuthorID);
             }
 
-            CommentCreateViewModel obj = new CommentCreateViewModel
+            CommentCreateViewModel obj = new()
             {
                 Comments = comments,
                 Thread = _db.GameCommentThread.Find(id),
@@ -76,10 +76,18 @@ namespace GameWeb.Controllers
         [Authorize]
         public IActionResult Create(int gameId)
         {
-            ThreadCreateViewModel thread = new() { GameId = gameId, Game = _db.Game.Find(gameId) };
+            ThreadCreateViewModel thread = new()
+            {
+                GameId = gameId,
+                Game = _db.Game.Find(gameId)
+            };
 
             return View(thread);
         }
+
+        #endregion
+
+        #region POST
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -88,16 +96,16 @@ namespace GameWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await userManager.FindByNameAsync(User.Identity.Name);
+                var user = await _userManager.FindByNameAsync(User.Identity.Name);
 
-                GameCommentThread thread = new GameCommentThread
+                GameCommentThread thread = new()
                 {
                     Name = obj.Name,
                     GameId = obj.GameId,
                     Game = _db.Game.Find(obj.GameId),
                 };
 
-                GameComment comment = new GameComment
+                GameComment comment = new()
                 {
                     Date = DateTime.Now,
                     Body = obj.Comment.Body,
@@ -118,13 +126,13 @@ namespace GameWeb.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> AddCommentPost(CommentCreateViewModel obj)
+        public async Task<IActionResult> AddComment(CommentCreateViewModel obj)
         {
             if (ModelState.IsValid)
             {
-                var user = await userManager.FindByNameAsync(User.Identity.Name);
+                var user = await _userManager.FindByNameAsync(User.Identity.Name);
 
-                GameComment comment = new GameComment
+                GameComment comment = new()
                 {
                     Date = DateTime.Now,
                     Body = obj.NewComment.Body,
@@ -140,5 +148,7 @@ namespace GameWeb.Controllers
             }
             return View(obj);
         }
+
+        #endregion
     }
 }

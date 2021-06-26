@@ -17,21 +17,22 @@ namespace GameWeb.Controllers
     public class UsersManagementController : Controller
     {
         private readonly ApplicationDbContext _db;
-        private readonly UserManager<ApplicationUser> userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
         public UsersManagementController(ApplicationDbContext db, UserManager<ApplicationUser> userManager)
         {
             _db = db;
-            this.userManager = userManager;
+            _userManager = userManager;
         }
 
+        #region GET
         public async Task<IActionResult> Index()
         {
-            var list = userManager.Users;
+            var list = _userManager.Users;
 
             foreach (var user in list)
             {
-                var role = await userManager.GetRolesAsync(user);
+                var role = await _userManager.GetRolesAsync(user);
                 user.Role = role.FirstOrDefault();
             }
 
@@ -55,11 +56,53 @@ namespace GameWeb.Controllers
             return View(obj);
         }
 
+        public async Task<IActionResult> Edit(string? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var obj = _db.ApplicationUser.Find(id);
+
+            if (obj == null)
+            {
+                return NotFound();
+            }
+
+            var objViewModel = new UserEditViewModel
+            {
+                Id = obj.Id,
+                UserName = obj.UserName,
+                Email = obj.Email,
+                BirthDate = obj.BirthDate,
+                Description = obj.Description,
+                RoleList = RolesList()
+            };
+
+            var userRole = await _userManager.GetRolesAsync(obj);
+
+            if (userRole.Count == 0)
+            {
+                objViewModel.SelectedRole = "0";
+            }
+            else
+            {
+                objViewModel.SelectedRole = userRole[0];
+            }
+
+            return View(objViewModel);
+        }
+
+        #endregion
+
+        #region POST
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteUser(string id)
         {
-            var currentUser = await userManager.FindByNameAsync(User.Identity.Name);
+            var currentUser = await _userManager.FindByNameAsync(User.Identity.Name);
 
             var user = _db.ApplicationUser.Find(id);
 
@@ -90,7 +133,7 @@ namespace GameWeb.Controllers
                     n.AuthorID = null;
                 }
 
-                var result = await userManager.DeleteAsync(user);
+                var result = await _userManager.DeleteAsync(user);
 
                 if (result.Succeeded)
                 {
@@ -106,80 +149,25 @@ namespace GameWeb.Controllers
             }
         }
 
-        public async Task<IActionResult> Edit(string? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var obj = _db.ApplicationUser.Find(id);
-
-            if (obj == null)
-            {
-                return NotFound();
-            }
-
-            var objViewModel = new UserEditViewModel
-            {
-                Id = obj.Id,
-                UserName = obj.UserName,
-                Email = obj.Email,
-                BirthDate = obj.BirthDate,
-                Description = obj.Description,
-            };
-
-            objViewModel.RoleList = new List<SelectListItem>
-            {
-                new SelectListItem {Text = "Brak roli",
-                    Value = "0"},
-                new SelectListItem {Text = RoleNames.GamePublisherRole,
-                    Value = "1"},
-                new SelectListItem {Text = RoleNames.NewsCreatorRole,
-                    Value = "2"},
-                new SelectListItem {Text = RoleNames.AdminRole,
-                    Value = "3"},
-            };
-
-            var userRole = await userManager.GetRolesAsync(obj);
-
-            if (userRole.Count == 0)
-            {
-                objViewModel.SelectedRole = "0";
-            }
-            else if (userRole[0] == RoleNames.GamePublisherRole)
-            {
-                objViewModel.SelectedRole = "1";
-            }
-            else if (userRole[0] == RoleNames.NewsCreatorRole)
-            {
-                objViewModel.SelectedRole = "2";
-            }
-            else if (userRole[0] == RoleNames.AdminRole)
-            {
-                objViewModel.SelectedRole = "3";
-            }
-
-            return View(objViewModel);
-        }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(UserEditViewModel obj)
         {
             if (ModelState.IsValid)
             {
-                var user = await userManager.FindByIdAsync(obj.Id);
+                var user = await _userManager.FindByIdAsync(obj.Id);
 
                 if (_db.ApplicationUser.Any(u => u.NormalizedUserName == obj.UserName.ToUpper()) && _db.ApplicationUser.FirstOrDefault(u => u.NormalizedUserName == obj.UserName.ToUpper()).Id != obj.Id)
                 {
                     ModelState.AddModelError(string.Empty, "Istnieje już użytkownik o takiej nazwie");
+                    obj.RoleList = RolesList();
                     return View(obj);
                 }
 
                 if (_db.ApplicationUser.Any(u => u.NormalizedEmail == obj.Email.ToUpper()) && _db.ApplicationUser.FirstOrDefault(u => u.NormalizedEmail == obj.Email.ToUpper()).Id != obj.Id)
                 {
                     ModelState.AddModelError(string.Empty, "Istnieje już użytkownik o takim adresie email");
+                    obj.RoleList = RolesList();
                     return View(obj);
                 }
 
@@ -192,11 +180,11 @@ namespace GameWeb.Controllers
                 {
                     List<string> errors = new List<string>();
 
-                    var passwordValidators = userManager.PasswordValidators;
+                    var passwordValidators = _userManager.PasswordValidators;
 
                     foreach (var validator in passwordValidators)
                     {
-                        var result = await validator.ValidateAsync(userManager, null, obj.Password);
+                        var result = await validator.ValidateAsync(_userManager, null, obj.Password);
 
                         if (!result.Succeeded)
                         {
@@ -211,38 +199,62 @@ namespace GameWeb.Controllers
                     {
                         var message = String.Join(" ", errors.ToArray());
                         ModelState.AddModelError(string.Empty, message);
+                        obj.RoleList = RolesList();
                         return View(obj);
                     }
 
-                    await userManager.RemovePasswordAsync(user);
-                    await userManager.AddPasswordAsync(user, obj.Password);
+                    await _userManager.RemovePasswordAsync(user);
+                    await _userManager.AddPasswordAsync(user, obj.Password);
                 }
 
-                var userRole = await userManager.GetRolesAsync(user);
+                var userRole = await _userManager.GetRolesAsync(user);
 
                 if (userRole.Count > 0)
                 {
-                    await userManager.RemoveFromRoleAsync(user, userRole[0]);
+                    await _userManager.RemoveFromRoleAsync(user, userRole[0]);
                 }
 
-                switch (obj.SelectedRole)
+                if (obj.SelectedRole != "0")
                 {
-                    case "1":
-                        await userManager.AddToRoleAsync(user, RoleNames.GamePublisherRole);
-                        break;
-                    case "2":
-                        await userManager.AddToRoleAsync(user, RoleNames.NewsCreatorRole);
-                        break;
-                    case "3":
-                        await userManager.AddToRoleAsync(user, RoleNames.AdminRole);
-                        break;
+                    await _userManager.AddToRoleAsync(user, obj.SelectedRole);
                 }
 
-                await userManager.UpdateAsync(user);
+                await _userManager.UpdateAsync(user);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(obj);
         }
+
+        #endregion
+
+        #region helperMethods
+        private List<SelectListItem> RolesList()
+        {
+            return new List<SelectListItem>
+            {
+                new SelectListItem
+                {
+                    Text = "Brak roli",
+                    Value = "0"},
+                new SelectListItem
+                {
+                    Text = RoleNames.GamePublisherRole,
+                    Value = RoleNames.GamePublisherRole
+                },
+                new SelectListItem
+                {
+                    Text = RoleNames.NewsCreatorRole,
+                    Value = RoleNames.NewsCreatorRole
+                },
+                new SelectListItem
+                {
+                    Text = RoleNames.AdminRole,
+                    Value = RoleNames.AdminRole
+                },
+            };
+        }
+
+        #endregion
     }
 }

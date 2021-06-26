@@ -17,15 +17,17 @@ namespace GameWeb.Controllers
     public class NewsController : Controller
     {
         private readonly ApplicationDbContext _db;
-        private readonly IWebHostEnvironment webHostEnvironment;
-        private readonly UserManager<ApplicationUser> userManager;
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly UserManager<ApplicationUser> _userManager;
 
         public NewsController(ApplicationDbContext db, IWebHostEnvironment hostEnvironment, UserManager<ApplicationUser> userManager)
         {
             _db = db;
-            webHostEnvironment = hostEnvironment;
-            this.userManager = userManager;
+            _webHostEnvironment = hostEnvironment;
+            _userManager = userManager;
         }
+
+        #region GET
 
         [Authorize(Roles = RoleNames.AdminRole + "," + RoleNames.NewsCreatorRole)]
         public IActionResult Index()
@@ -106,7 +108,7 @@ namespace GameWeb.Controllers
 
                 var tags = obj.Tags.Split(",");
 
-                foreach(var tag in tags)
+                foreach (var tag in tags)
                 {
                     tagsList.Add(tag.Trim());
                 }
@@ -122,34 +124,6 @@ namespace GameWeb.Controllers
         public IActionResult Create()
         {
             return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Authorize(Roles = RoleNames.AdminRole + "," + RoleNames.NewsCreatorRole)]
-        public async Task<IActionResult> Create(NewsCreateViewModel obj)
-        {
-            if (ModelState.IsValid)
-            {
-                string uniqueFileName = UploadedFile(obj);
-                var user = await userManager.FindByNameAsync(User.Identity.Name);
-
-                News news = new News
-                {
-                    Title = obj.Title,
-                    Content = obj.Content,
-                    PublicationDate = DateTime.Now,
-                    AuthorID = user.Id,
-                    Tags = obj.Tags,
-                    ImagePath = uniqueFileName,
-                };
-
-                _db.News.Add(news);
-                _db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(obj);
         }
 
         [Authorize(Roles = RoleNames.AdminRole + "," + RoleNames.NewsCreatorRole)]
@@ -181,6 +155,54 @@ namespace GameWeb.Controllers
             return View(objViewModel);
         }
 
+        [Authorize(Roles = RoleNames.AdminRole + "," + RoleNames.NewsCreatorRole)]
+        public IActionResult Delete(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            var obj = _db.News.Find(id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+
+            return View(obj);
+        }
+
+        #endregion
+
+        #region POST
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleNames.AdminRole + "," + RoleNames.NewsCreatorRole)]
+        public async Task<IActionResult> Create(NewsCreateViewModel obj)
+        {
+            if (ModelState.IsValid)
+            {
+                string uniqueFileName = UploadedFile(obj);
+                var user = await _userManager.FindByNameAsync(User.Identity.Name);
+
+                News news = new News
+                {
+                    Title = obj.Title,
+                    Content = obj.Content,
+                    PublicationDate = DateTime.Now,
+                    AuthorID = user.Id,
+                    Tags = obj.Tags,
+                    ImagePath = uniqueFileName,
+                };
+
+                _db.News.Add(news);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View(obj);
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = RoleNames.AdminRole + "," + RoleNames.NewsCreatorRole)]
@@ -210,22 +232,6 @@ namespace GameWeb.Controllers
             }
             return View(obj);
         }
-        
-        [Authorize(Roles = RoleNames.AdminRole + "," + RoleNames.NewsCreatorRole)]
-        public IActionResult Delete(int? id)
-        {
-            if (id == null || id == 0)
-            {
-                return NotFound();
-            }
-            var obj = _db.News.Find(id);
-            if (obj == null)
-            {
-                return NotFound();
-            }
-
-            return View(obj);
-        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -242,14 +248,16 @@ namespace GameWeb.Controllers
             return RedirectToAction("Index");
         }
 
+        #endregion
 
+        #region helperMethods
         private string UploadedFile(NewsViewModel model)
         {
             string uniqueFileName = null;
 
             if (model.ImageFile != null)
             {
-                string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "images", "NewsImages");
+                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images", "NewsImages");
                 uniqueFileName = Guid.NewGuid().ToString() + "_" + model.ImageFile.FileName;
                 string filePath = Path.Combine(uploadsFolder, uniqueFileName);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
@@ -259,5 +267,7 @@ namespace GameWeb.Controllers
             }
             return uniqueFileName;
         }
+
+        #endregion
     }
 }

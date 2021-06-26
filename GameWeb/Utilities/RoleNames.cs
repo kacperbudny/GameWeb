@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace GameWeb.Utilities
+﻿namespace GameWeb.Utilities
 {
     public static class RoleNames
     {
