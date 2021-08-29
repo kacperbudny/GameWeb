@@ -1,0 +1,25 @@
+﻿@media screen and (max-width: 1300px) {
+    .logo-text {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 1150px) {
+    header {
+        height: auto;
+    }
+    nav {
+        flex-wrap: wrap;
+    }
+    nav ul {
+        order: 2;
+    }
+
+    .search-bar {
+        width: 100%;
+    }
+
+    nav ul {
+        order: 3;
+    }
+}

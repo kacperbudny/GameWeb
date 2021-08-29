@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="~/css/manage-account.css" />
     <link rel="stylesheet" href="~/css/home.css" />
     <link rel="stylesheet" href="~/css/news.css" />
+    <link rel="stylesheet" href="~/css/media-queries.css" />
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Blinker:wght@200;400&family=Montserrat&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/4bcc385cef.js" crossorigin="anonymous"></script>
@@ -21,40 +22,36 @@
     <div id="menu-overlay"></div>
     <header>
         <nav>
-            <div class="header-left">
-                <a class="logo" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/images/logo-45px.png" alt="Site logo" />GameWeb</a>
-                <ul>
+            <a class="logo" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/images/logo-45px.png" alt="Site logo" /><span class="logo-text">GameWeb</span></a>
+            <ul>
+                <li>
+                    <a class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Home" ? "active" : "")" asp-area="" asp-controller="Home" asp-action="Index">Strona główna</a>
+                </li>
+                <li>
+                    <a class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Game" ? "active" : "")" asp-area="" asp-controller="Game" asp-action="Index">Gry</a>
+                </li>
+                @if (User.IsInRole(GameWeb.Utilities.RoleNames.AdminRole))
+                {
                     <li>
-                        <a class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Home" ? "active" : "")" asp-area="" asp-controller="Home" asp-action="Index">Strona główna</a>
+                        <a class="@(ViewContext.RouteData.Values["Controller"].ToString() == "UsersManagement" ? "active" : "")" asp-controller="UsersManagement" asp-action="Index">Lista użytkowników</a>
                     </li>
+                }
+                @if (User.IsInRole(GameWeb.Utilities.RoleNames.AdminRole) || User.IsInRole(GameWeb.Utilities.RoleNames.NewsCreatorRole))
+                {
                     <li>
-                        <a class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Game" ? "active" : "")" asp-area="" asp-controller="Game" asp-action="Index">Gry</a>
+                        <a class="@(ViewContext.RouteData.Values["Controller"].ToString() == "News" ? "active" : "")" asp-controller="News" asp-action="Index">Newsy</a>
                     </li>
-                    @if (User.IsInRole(GameWeb.Utilities.RoleNames.AdminRole))
-                    {
-                        <li>
-                            <a class="@(ViewContext.RouteData.Values["Controller"].ToString() == "UsersManagement" ? "active" : "")" asp-controller="UsersManagement" asp-action="Index">Lista użytkowników</a>
-                        </li>
-                    }
-                    @if (User.IsInRole(GameWeb.Utilities.RoleNames.AdminRole) || User.IsInRole(GameWeb.Utilities.RoleNames.NewsCreatorRole))
-                    {
-                        <li>
-                            <a class="@(ViewContext.RouteData.Values["Controller"].ToString() == "News" ? "active" : "")" asp-controller="News" asp-action="Index">Newsy</a>
-                        </li>
-                    }
-                </ul>
-            </div>
-            <div class="header-right">
+                }
+            </ul>
 
-                <form asp-controller="Game" asp-action="Index" method="get" autocomplete="off">
-                    <div class="search-container">
-                        <i class="fas fa-search search-icon"></i>
-                        <input type="text" name="searchString" class="search-bar" placeholder="Wyszukaj grę..."/>
-                    </div>
-                </form>
+            <form asp-controller="Game" asp-action="Index" method="get" autocomplete="off">
+                <div class="search-container">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" name="searchString" class="search-bar" placeholder="Wyszukaj grę..." />
+                </div>
+            </form>
 
-                @await Html.PartialAsync("_LoginPartial")
-            </div>
+            @await Html.PartialAsync("_LoginPartial")
         </nav>
     </header>
     <div class="container">
