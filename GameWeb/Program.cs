@@ -22,9 +22,8 @@ namespace GameWeb
                 try
                 {
                     var context = services.GetRequiredService<ApplicationDbContext>();
-                    var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
                     context.Database.Migrate();
-                    SeedData.SeedDb(services).Wait();
+                    //SeedData.SeedDb(services).Wait();
                 }
                 catch (Exception ex)
                 {

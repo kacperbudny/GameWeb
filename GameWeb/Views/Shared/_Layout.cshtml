@@ -25,21 +25,21 @@
             <a class="logo" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/images/logo-45px.png" alt="Site logo" /><span class="logo-text">GameWeb</span></a>
             <ul class="navigation-links">
                 <li>
-                    <a class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Home" ? "active" : "")" asp-area="" asp-controller="Home" asp-action="Index">Strona główna</a>
+                    <a class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Home" ? "active" : "") menu-url" asp-area="" asp-controller="Home" asp-action="Index">Strona główna</a>
                 </li>
                 <li>
-                    <a class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Game" ? "active" : "")" asp-area="" asp-controller="Game" asp-action="Index">Gry</a>
+                    <a class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Game" ? "active" : "") menu-url" asp-area="" asp-controller="Game" asp-action="Index">Gry</a>
                 </li>
                 @if (User.IsInRole(GameWeb.Utilities.RoleNames.AdminRole))
                 {
                     <li>
-                        <a class="@(ViewContext.RouteData.Values["Controller"].ToString() == "UsersManagement" ? "active" : "")" asp-controller="UsersManagement" asp-action="Index">Lista użytkowników</a>
+                        <a class="@(ViewContext.RouteData.Values["Controller"].ToString() == "UsersManagement" ? "active" : "") menu-url" asp-controller="UsersManagement" asp-action="Index">Lista użytkowników</a>
                     </li>
                 }
                 @if (User.IsInRole(GameWeb.Utilities.RoleNames.AdminRole) || User.IsInRole(GameWeb.Utilities.RoleNames.NewsCreatorRole))
                 {
                     <li>
-                        <a class="@(ViewContext.RouteData.Values["Controller"].ToString() == "News" ? "active" : "")" asp-controller="News" asp-action="Index">Newsy</a>
+                        <a class="@(ViewContext.RouteData.Values["Controller"].ToString() == "News" ? "active" : "") menu-url" asp-controller="News" asp-action="Index">Newsy</a>
                     </li>
                 }
             </ul>
@@ -58,7 +58,11 @@
             </div>
         </nav>
     </header>
+    <div class="container">
+        <main role="main" class="pb-3">
             @RenderBody()
+        </main>
+    </div>
 
     <footer class="footer">
         <div class="text-center small">
