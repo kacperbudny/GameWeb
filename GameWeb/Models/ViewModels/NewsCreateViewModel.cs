@@ -9,5 +9,7 @@ namespace GameWeb.Models.ViewModels
         [Required(ErrorMessage = "Proszę umieścić zdjęcie.")]
         [DisplayName("Zdjęcie")]
         public override IFormFile ImageFile { get; set; }
+        new public string? AuthorID { get; set; }
+        new public ApplicationUser? Author { get; set; }
     }
 }

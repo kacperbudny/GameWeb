@@ -70,4 +70,59 @@
     .active:after {
         top: 51px;
     }
+
+    .game-card-info {
+        padding: 10px;
+        font-size: 1rem;
+
+    }
+
+    .game-card-info h3 {
+        font-size: 1.2rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+    }
+
+    .release-date {
+        display: none;
+    }
+
+    .games-actions {
+        min-width: 50px;
+    }
+
+    .platforms {
+        display: none
+    }
+
+    .two-column-grid {
+        grid-template-columns: 100%;
+    }
+
+    h1 {
+        font-size: 1.6rem;
+    }
+
+    .table-container {
+        overflow-x: scroll;
+        font-size: 0.9rem;
+        margin-top: 20px;
+    }
+
+    table {
+        margin: 0
+    }
+
+    th {
+        font-size: 0.9rem;
+        padding: 8px 20px;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 8px;
+    }
 }

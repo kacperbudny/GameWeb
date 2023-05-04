@@ -65,8 +65,8 @@ namespace GameWeb.Data
                 .WithMany(u => u.WishlistGames)
                 .HasForeignKey(wg => wg.UserId);
 
-            //builder.Entity<GameRating>()
-            //    .HasKey(gr => new { gr.GameId, gr.UserId });
+            builder.Entity<GameRating>()
+                .HasKey(gr => new { gr.GameId, gr.UserId });
 
             builder.Entity<GameRating>()
                 .HasOne(gr => gr.Game)
