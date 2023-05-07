@@ -33,31 +33,33 @@
             </div>
         </div>
 
-        @if (Model.IsInCurrentUsersWishlist)
-        {
-            <form asp-controller="Game" asp-action="WishlistDeleteGame" asp-route-id="@Model.Id" style="width: 100%;">
-                <button type="submit" class="action-button wishlist-button"><i class="fas fa-eye"></i> Nie chcę zagrać</button>
-            </form>
-        }
-        else
-        {
-            <form asp-controller="Game" asp-action="WishlistAddGame" asp-route-id="@Model.Id" style="width: 100%;">
-                <button type="submit" class="action-button wishlist-button"><i class="far fa-eye"></i> Chcę zagrać</button>
-            </form>
-        }
+        <div class="buttons-wrapper">
+            @if (Model.IsInCurrentUsersWishlist)
+            {
+                <form asp-controller="Game" asp-action="WishlistDeleteGame" asp-route-id="@Model.Id" class="form-wrapper">
+                    <button type="submit" class="action-button wishlist-button"><i class="fas fa-eye"></i> <span class="button-text">Nie chcę zagrać</span></button>
+                </form>
+            }
+            else
+            {
+                <form asp-controller="Game" asp-action="WishlistAddGame" asp-route-id="@Model.Id" class="form-wrapper">
+                    <button type="submit" class="action-button wishlist-button"><i class="far fa-eye"></i> <span class="button-text">Chcę zagrać</span></button>
+                </form>
+            }
 
-        @if (Model.IsCurrentUsersFavourite)
-        {
-            <form asp-controller="Game" asp-action="UnfavGame" asp-route-id="@Model.Id" style="width:100%">
-                <button type="submit" class="action-button favourite-button"><i class="fas fa-heart"></i> Usuń z ulubionych</button>
-            </form>
-        }
-        else
-        {
-            <form asp-controller="Game" asp-action="FavGame" asp-route-id="@Model.Id" style="width:100%">
-                <button type="submit" class="action-button favourite-button"><i class="far fa-heart"></i> Dodaj do ulubionych</button>
-            </form>
-        }
+            @if (Model.IsCurrentUsersFavourite)
+            {
+                <form asp-controller="Game" asp-action="UnfavGame" asp-route-id="@Model.Id" class="form-wrapper">
+                    <button type="submit" class="action-button favourite-button"><i class="fas fa-heart"></i> <span class="button-text">Usuń z ulubionych</span></button>
+                </form>
+            }
+            else
+            {
+                <form asp-controller="Game" asp-action="FavGame" asp-route-id="@Model.Id" class="form-wrapper">
+                    <button type="submit" class="action-button favourite-button"><i class="far fa-heart"></i> <span class="button-text">Dodaj do ulubionych</span></button>
+                </form>
+            }
+        </div>
     }
 </div>
 

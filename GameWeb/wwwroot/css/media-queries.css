@@ -125,4 +125,53 @@
         display: flex;
         gap: 8px;
     }
+
+    .game-rating-box {
+        position: fixed;
+        bottom: 0px;
+        left: 0;
+        right: unset;
+        top: initial;
+        padding: 8px;
+        width: 100vw;
+        transform: translate(0, 0);
+        border-radius: 0;
+    }
+
+    .buttons-wrapper {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+
+    .button-text {
+        display: none;
+    }
+
+    .rating-box {
+        margin: 16px;
+    }
+
+    .wishlist-button {
+        padding: 8px;
+        margin-bottom: 0;
+    }
+
+    .favourite-button {
+        padding: 8px;
+        margin-bottom: 0;
+    }
+
+    .rating-header {
+        font-size: 1.2rem;
+        margin-bottom: 4px;
+    }
+
+    .average-rating {
+        font-size: 2rem;
+        margin-bottom: 0;
+    }
+
+    #cover-overlay {
+        background-color: rgba(0,0,0,0.5); padding: 100px;
+    }
 }

@@ -23,7 +23,7 @@ namespace GameWeb
                 {
                     var context = services.GetRequiredService<ApplicationDbContext>();
                     context.Database.Migrate();
-                    //SeedData.SeedDb(services).Wait();
+                    SeedData.SeedDb(services).Wait();
                 }
                 catch (Exception ex)
                 {
