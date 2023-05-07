@@ -172,6 +172,6 @@
     }
 
     #cover-overlay {
-        background-color: rgba(0,0,0,0.5); padding: 100px;
+        padding: 16px;
     }
 }
