@@ -9,8 +9,10 @@ namespace GameWeb.Models.ViewModels
         [Required(ErrorMessage = "Proszę wprowadzić nazwę wątku.")]
         [DisplayName("Nazwa wątku")]
         public string Name { get; set; }
+        [Required(ErrorMessage = "Proszę wprowadzić treść wiadomości.")]
+        [DisplayName("Treść wiadomości")]
+        public string Content { get; set; }
         public int GameId { get; set; }
-        public Game Game { get; set; }
-        public GameComment Comment { get; set; }
+        public string GameName { get; set; }
     }
 }

@@ -174,4 +174,46 @@
     #cover-overlay {
         padding: 16px;
     }
+
+    .game-page {
+        margin-bottom: 200px;
+    }
+
+    .game-header {
+        flex-direction: column;
+    }
+
+    .game-header-info {
+        max-width: 100%;
+        text-align: justify;
+    }
+
+    .game-section {
+        margin-bottom: 40px;
+        text-align: center;
+    }
+
+    .game-info-grid {
+        grid-template-columns: 100%;
+    }
+
+    .add-thread-text {
+        display: none;
+    }
+
+    .forum-add-button i {
+        margin: 6px;
+    }
+
+    .forum-thread {
+        display: flex;
+    }
+
+    .forum-user-info {
+        display: none;
+    }
+
+    .forum-post-info {
+        width: 100%;
+    }
 }

@@ -79,7 +79,7 @@ namespace GameWeb.Controllers
             ThreadCreateViewModel thread = new()
             {
                 GameId = gameId,
-                Game = _db.Game.Find(gameId)
+                GameName = _db.Game.Find(gameId).Name
             };
 
             return View(thread);
@@ -108,7 +108,7 @@ namespace GameWeb.Controllers
                 GameComment comment = new()
                 {
                     Date = DateTime.Now,
-                    Body = obj.Comment.Body,
+                    Body = obj.Content,
                     AuthorID = user.Id,
                     Author = user,
                     ThreadId = thread.Id,

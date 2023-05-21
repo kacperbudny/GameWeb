@@ -102,7 +102,7 @@
         </div>
         <div class="game-section">
             <h3>Wymagania sprzętowe</h3>
-            <div>
+            <div class="game-section">
                 <h4>Minimalne</h4>
                 <div class="game-info-grid">
                     <div>
@@ -189,7 +189,7 @@
                 <h3>Komentarze</h3>
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <a asp-controller="Forum" asp-action="Create" asp-route-gameId="@Model.Id" class="action-button add-button forum-add-button"><i class="fas fa-plus"></i> Dodaj nowy wątek</a>
+                    <a asp-controller="Forum" asp-action="Create" asp-route-gameId="@Model.Id" class="action-button add-button forum-add-button"><i class="fas fa-plus"></i> <span class="add-thread-text">Dodaj nowy wątek</span></a>
                 }
             </div>
             @if (Model.CommentThreads.Count > 0)
