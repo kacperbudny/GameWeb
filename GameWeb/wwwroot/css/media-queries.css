@@ -188,6 +188,10 @@
         text-align: justify;
     }
 
+    .game-header-container {
+        text-align:start;
+    }
+
     .game-section {
         margin-bottom: 40px;
         text-align: center;
@@ -215,5 +219,18 @@
 
     .forum-post-info {
         width: 100%;
+    }
+
+    .forum-upper-row {
+        flex-direction: column-reverse;
+        align-items: flex-start;
+    }
+
+    .four-news-grid {
+        grid-template-columns: repeat(2, 50%);
+    }
+
+    .grid-news-card .img-container {
+        height: 16vh;
     }
 }

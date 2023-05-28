@@ -143,10 +143,8 @@ namespace GameWeb.Controllers
 
                 _db.GameComment.Add(comment);
                 _db.SaveChanges();
-
-                return RedirectToAction("Thread", "Forum", new { id = comment.ThreadId });
             }
-            return View(obj);
+            return RedirectToAction("Thread", "Forum", new { id = obj.Thread.Id });
         }
 
         #endregion

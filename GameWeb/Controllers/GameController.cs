@@ -5,6 +5,7 @@ using GameWeb.Utilities;
 using GameWeb.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -176,7 +177,7 @@ namespace GameWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                string uniqueFileName = UploadedFile(obj);
+                string uniqueFileName = UploadedFile(obj.ImageFile);
 
                 Game game = new Game
                 {
@@ -319,7 +320,7 @@ namespace GameWeb.Controllers
             {
                 string fileName;
 
-                if (obj.ImageFile != null) fileName = UploadedFile(obj);
+                if (obj.ImageFile != null) fileName = UploadedFile(obj.ImageFile);
                 else fileName = obj.Image;
 
                 Game game = new Game
@@ -349,18 +350,18 @@ namespace GameWeb.Controllers
         #endregion
 
         #region helperMethods
-        private string UploadedFile(GameViewModel model)
+        private string UploadedFile(IFormFile file)
         {
             string uniqueFileName = null;
 
-            if (model.ImageFile != null)
+            if (file != null)
             {
                 string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images", "GameCovers");
-                uniqueFileName = Guid.NewGuid().ToString() + "_" + model.ImageFile.FileName;
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
                 string filePath = Path.Combine(uploadsFolder, uniqueFileName);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
-                    model.ImageFile.CopyTo(fileStream);
+                    file.CopyTo(fileStream);
                 }
             }
             return uniqueFileName;

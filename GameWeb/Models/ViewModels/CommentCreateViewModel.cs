@@ -4,7 +4,7 @@ namespace GameWeb.Models.ViewModels
 {
     public class CommentCreateViewModel
     {
-        public GameCommentThread Thread { get; set; }
+        public int ThreadId { get; set; }
         public IEnumerable<GameComment> Comments { get; set; }
         public GameComment NewComment { get; set; }
 
