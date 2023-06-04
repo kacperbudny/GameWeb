@@ -1,4 +1,4 @@
-using System.ComponentModel.DataAnnotations;
+ï»¿using System.ComponentModel.DataAnnotations;
 
 namespace GameWeb.ViewModels
 {
@@ -10,10 +10,10 @@ namespace GameWeb.ViewModels
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Has³o")]
+        [Display(Name = "HasÅ‚o")]
         public string Password { get; set; }
 
-        [Display(Name = "Zapamiêtaj mnie")]
+        [Display(Name = "ZapamiÄ™taj mnie")]
         public bool RememberMe { get; set; }
     }
 }

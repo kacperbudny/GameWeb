@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -59,7 +61,7 @@ namespace GameWeb.Controllers
                 comment.Author = _db.ApplicationUser.Find(comment.AuthorID);
             }
 
-            CommentCreateViewModel obj = new()
+            ThreadViewModel obj = new()
             {
                 Comments = comments,
                 Thread = _db.GameCommentThread.Find(id),
@@ -126,25 +128,32 @@ namespace GameWeb.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> AddComment(CommentCreateViewModel obj)
+        public async Task<IActionResult> AddComment(ThreadViewModel obj)
         {
-            if (ModelState.IsValid)
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+
+            GameComment comment = new()
             {
-                var user = await _userManager.FindByNameAsync(User.Identity.Name);
+                Date = DateTime.Now,
+                Body = obj.NewComment.Body,
+                AuthorID = user.Id,
+                Author = user,
+                ThreadId = obj.Thread.Id,
+            };
 
-                GameComment comment = new()
-                {
-                    Date = DateTime.Now,
-                    Body = obj.NewComment.Body,
-                    AuthorID = user.Id,
-                    Author = user,
-                    ThreadId = obj.Thread.Id,
-                };
+            var context = new ValidationContext(comment, serviceProvider: null, items: null);
+            var validationResults = new List<ValidationResult>();
+            bool isValid = Validator.TryValidateObject(comment, context, validationResults, true);
 
+            if (isValid)
+            {
                 _db.GameComment.Add(comment);
                 _db.SaveChanges();
+
+                return RedirectToAction("Thread", "Forum", new { id = obj.Thread.Id });
             }
-            return RedirectToAction("Thread", "Forum", new { id = obj.Thread.Id });
+
+            return View(obj);
         }
 
         #endregion

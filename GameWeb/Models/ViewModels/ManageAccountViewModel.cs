@@ -8,7 +8,6 @@ namespace GameWeb.Models.ViewModels
 {
     public class ManageAccountViewModel
     {
-        public string Id { get; set; }
 
         [Display(Name = "Nazwa użytkownika")]
         public string UserName { get; set; }
@@ -19,17 +18,17 @@ namespace GameWeb.Models.ViewModels
 
         [DataType(DataType.Password)]
         [Display(Name = "Obecne hasło")]
-        public string CurrentPassword { get; set; }
+        public string? CurrentPassword { get; set; }
 
         [DataType(DataType.Password)]
         [Display(Name = "Nowe hasło")]
-        public string NewPassword { get; set; }
+        public string? NewPassword { get; set; }
 
         [DataType(DataType.Password)]
         [Display(Name = "Potwierdź nowe hasło")]
         [Compare("NewPassword",
             ErrorMessage = "Hasła się nie zgadzają.")]
-        public string ConfirmNewPassword { get; set; }
+        public string? ConfirmNewPassword { get; set; }
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
@@ -38,9 +37,5 @@ namespace GameWeb.Models.ViewModels
 
         [DisplayName("Opis")]
         public string Description { get; set; }
-
-        public string SelectedRole { get; set; }
-
-        public IEnumerable<SelectListItem> RoleList { get; set; }
     }
 }

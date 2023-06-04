@@ -82,7 +82,6 @@ namespace GameWeb.Controllers
 
             var objViewModel = new ManageAccountViewModel
             {
-                Id = user.Id,
                 UserName = user.UserName,
                 Email = user.Email,
                 BirthDate = user.BirthDate,

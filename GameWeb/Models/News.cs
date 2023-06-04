@@ -14,8 +14,7 @@ namespace GameWeb.Models
         public string Content { get; set; }
         [Required]
         public DateTime PublicationDate { get; set; }
-        [Required]
-        public string AuthorID { get; set; }
+        public string? AuthorID { get; set; }
         public ApplicationUser Author { get; set; }
         public string Tags { get; set; }
         [Required(ErrorMessage = "Proszę umieścić zdjęcie.")]

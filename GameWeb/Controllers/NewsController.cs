@@ -182,7 +182,7 @@ namespace GameWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                string uniqueFileName = UploadedFile(obj);
+                string uniqueFileName = FileUploadHelpers.UploadedFile(_webHostEnvironment, obj.ImageFile, "NewsImages");
                 var user = await _userManager.FindByNameAsync(User.Identity.Name);
 
                 News news = new News
@@ -212,7 +212,7 @@ namespace GameWeb.Controllers
             {
                 string fileName;
 
-                if (obj.ImageFile != null) fileName = UploadedFile(obj);
+                if (obj.ImageFile != null) fileName = FileUploadHelpers.UploadedFile(_webHostEnvironment, obj.ImageFile, "NewsImages");
                 else fileName = obj.Image;
 
                 News news = new News
@@ -246,26 +246,6 @@ namespace GameWeb.Controllers
             _db.News.Remove(obj);
             _db.SaveChanges();
             return RedirectToAction("Index");
-        }
-
-        #endregion
-
-        #region helperMethods
-        private string UploadedFile(NewsViewModel model)
-        {
-            string uniqueFileName = null;
-
-            if (model.ImageFile != null)
-            {
-                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images", "NewsImages");
-                uniqueFileName = Guid.NewGuid().ToString() + "_" + model.ImageFile.FileName;
-                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    model.ImageFile.CopyTo(fileStream);
-                }
-            }
-            return uniqueFileName;
         }
 
         #endregion

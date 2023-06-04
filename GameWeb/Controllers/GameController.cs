@@ -177,7 +177,7 @@ namespace GameWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                string uniqueFileName = UploadedFile(obj.ImageFile);
+                string uniqueFileName = FileUploadHelpers.UploadedFile(_webHostEnvironment, obj.ImageFile, "GameImages");
 
                 Game game = new Game
                 {
@@ -320,7 +320,7 @@ namespace GameWeb.Controllers
             {
                 string fileName;
 
-                if (obj.ImageFile != null) fileName = UploadedFile(obj.ImageFile);
+                if (obj.ImageFile != null) fileName = FileUploadHelpers.UploadedFile(_webHostEnvironment, obj.ImageFile, "GameImages");
                 else fileName = obj.Image;
 
                 Game game = new Game
@@ -345,26 +345,6 @@ namespace GameWeb.Controllers
                 return RedirectToAction("Index");
             }
             return View(obj);
-        }
-
-        #endregion
-
-        #region helperMethods
-        private string UploadedFile(IFormFile file)
-        {
-            string uniqueFileName = null;
-
-            if (file != null)
-            {
-                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images", "GameCovers");
-                uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
-                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    file.CopyTo(fileStream);
-                }
-            }
-            return uniqueFileName;
         }
 
         #endregion
