@@ -166,7 +166,7 @@ namespace GameWeb.Data
                 };
 
             await context.Requirement.AddRangeAsync(requirements);
-            var dupa = await context.SaveChangesAsync();
+            await context.SaveChangesAsync();
 
             var games = new List<Game>
                 {
