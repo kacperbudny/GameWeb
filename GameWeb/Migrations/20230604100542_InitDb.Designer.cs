@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GameWeb.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210518210831_AddGameCommentsAndThreads")]
-    partial class AddGameCommentsAndThreads
+    [Migration("20230604100542_InitDb")]
+    partial class InitDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,21 @@ namespace GameWeb.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.4")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("GameWeb.Models.FavouriteGame", b =>
+                {
+                    b.Property<int>("GameId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("GameId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("FavouriteGame");
+                });
 
             modelBuilder.Entity("GameWeb.Models.Game", b =>
                 {
@@ -44,7 +59,7 @@ namespace GameWeb.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("MinimalRequirementsId")
+                    b.Property<int?>("MinimalRequirementsId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -59,7 +74,7 @@ namespace GameWeb.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RecommendedRequirementsId")
+                    b.Property<int?>("RecommendedRequirementsId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("ReleaseDate")
@@ -72,50 +87,6 @@ namespace GameWeb.Migrations
                     b.HasIndex("RecommendedRequirementsId");
 
                     b.ToTable("Game");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ut mattis dolor. Curabitur accumsan sapien quam, vel volutpat lacus euismod eget. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis eget ornare quam, nec lobortis nunc. Ut dui ex, faucibus ut finibus dictum, pretium in elit. Aliquam ac molestie sem. Morbi dictum nisl in justo venenatis, id ultricies elit porta.",
-                            Developer = "Mojang",
-                            Genre = "Sandbox",
-                            Image = "1.jpg",
-                            MinimalRequirementsId = 1,
-                            Name = "Minecraft",
-                            Platform = "PC, Xbox, PlayStation, Android",
-                            Publisher = "Mojang",
-                            RecommendedRequirementsId = 2,
-                            ReleaseDate = new DateTime(2011, 11, 18, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Description = "Aliquam molestie mollis sagittis. Curabitur a nibh eu tortor dapibus sodales. Proin a aliquet turpis. Proin augue massa, posuere ac interdum at, aliquam sed sem. Donec felis turpis, viverra eget elit ut, facilisis auctor risus. Donec aliquam augue urna, et accumsan nisi lobortis in. Ut sagittis nunc feugiat nibh venenatis tempor. Sed rutrum ullamcorper sapien et eleifend. \n\nInteger et odio tincidunt, luctus felis non, eleifend libero. Etiam a vulputate enim. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. In ac ante iaculis, scelerisque orci varius, ornare ligula. Donec nec faucibus eros. Phasellus lacinia elit arcu, condimentum sodales libero pretium sed. In ut commodo orci. Sed sagittis viverra ante, id dignissim metus mollis ut.",
-                            Developer = "Ubisoft",
-                            Genre = "Platformówki",
-                            Image = "2.jpg",
-                            MinimalRequirementsId = 3,
-                            Name = "Rayman 3: Hoodlum Havoc",
-                            Platform = "PC, Xbox, PlayStation",
-                            Publisher = "Ubisoft",
-                            RecommendedRequirementsId = 4,
-                            ReleaseDate = new DateTime(2003, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Description = "Donec vehicula ornare elit, nec tempor ante ornare a. In hac habitasse platea dictumst. Etiam rhoncus ornare vestibulum. Quisque id odio pellentesque, maximus massa in, aliquam quam. Donec lacus sem, lobortis a dolor vel, condimentum pellentesque orci. Aenean nunc ipsum, cursus a blandit at, pellentesque id purus. Quisque tincidunt urna vel sem maximus, a efficitur urna suscipit.",
-                            Developer = "Bugbear Entertainment",
-                            Genre = "Wyścigi",
-                            Image = "3.jpg",
-                            MinimalRequirementsId = 5,
-                            Name = "FlatOut 2",
-                            Platform = "PC, Xbox, PlayStation",
-                            Publisher = "Empire Interactive",
-                            RecommendedRequirementsId = 6,
-                            ReleaseDate = new DateTime(2006, 6, 30, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        });
                 });
 
             modelBuilder.Entity("GameWeb.Models.GameComment", b =>
@@ -125,7 +96,11 @@ namespace GameWeb.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("AuthorID")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Body")
+                        .IsRequired()
                         .HasColumnType("ntext");
 
                     b.Property<DateTime>("Date")
@@ -134,10 +109,9 @@ namespace GameWeb.Migrations
                     b.Property<int>("ThreadId")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserID")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("AuthorID");
 
                     b.HasIndex("ThreadId");
 
@@ -155,6 +129,7 @@ namespace GameWeb.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -162,6 +137,61 @@ namespace GameWeb.Migrations
                     b.HasIndex("GameId");
 
                     b.ToTable("GameCommentThread");
+                });
+
+            modelBuilder.Entity("GameWeb.Models.GameRating", b =>
+                {
+                    b.Property<int>("GameId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
+
+                    b.HasKey("GameId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("GameRating");
+                });
+
+            modelBuilder.Entity("GameWeb.Models.News", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AuthorID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImagePath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("PublicationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Tags")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorID");
+
+                    b.ToTable("News");
                 });
 
             modelBuilder.Entity("GameWeb.Models.Requirement", b =>
@@ -197,62 +227,21 @@ namespace GameWeb.Migrations
                     b.HasIndex("GameId");
 
                     b.ToTable("Requirement");
+                });
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CPU = "Intel Core i3 3210 / AMD A8 7600 APU",
-                            DriveSize = 180,
-                            GPU = "NVIDIA GeForce 400 Series / AMD Radeon HD 7000 series",
-                            OS = "64-bit Windows 7",
-                            RAM = 4.0
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CPU = "Intel Core i5 4690 / AMD A10 7800",
-                            DriveSize = 4000,
-                            GPU = "NVIDIA GeForce 700 Series / AMD Radeon Rx 200 Series",
-                            OS = "64-bit Windows 10",
-                            RAM = 8.0
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CPU = "Pentium III 600 MHz / AMD Athlon 600 MHz",
-                            DriveSize = 800,
-                            GPU = "Kompatybilna z DirectX 8.1",
-                            OS = "Windows XP",
-                            RAM = 0.25600000000000001
-                        },
-                        new
-                        {
-                            Id = 4,
-                            CPU = "Pentium III 1 GHz / AMD Athlon 1 Ghz",
-                            DriveSize = 800,
-                            GPU = "Kompatybilna z DirectX 9",
-                            OS = "Windows XP",
-                            RAM = 0.51200000000000001
-                        },
-                        new
-                        {
-                            Id = 5,
-                            CPU = "Intel Pentium 4 2.0GHz / AMD Athlon XP 2000+",
-                            DriveSize = 3500,
-                            GPU = "AMD Radeon HD 4350 / NVIDIA GeForce 6600 GT",
-                            OS = "32-bit Windows XP",
-                            RAM = 0.25600000000000001
-                        },
-                        new
-                        {
-                            Id = 6,
-                            CPU = "Intel Pentium 4 2.0GHz / AMD Athlon XP 2500+",
-                            DriveSize = 4000,
-                            GPU = "AMD Radeon 9600 Series / NVIDIA GeForce 6600",
-                            OS = "32-bit Windows XP",
-                            RAM = 0.51200000000000001
-                        });
+            modelBuilder.Entity("GameWeb.Models.WishlistGame", b =>
+                {
+                    b.Property<int>("GameId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("GameId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("WishlistGame");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -404,12 +393,10 @@ namespace GameWeb.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderKey")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -446,12 +433,10 @@ namespace GameWeb.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -469,9 +454,29 @@ namespace GameWeb.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
+                });
+
+            modelBuilder.Entity("GameWeb.Models.FavouriteGame", b =>
+                {
+                    b.HasOne("GameWeb.Models.Game", "Game")
+                        .WithMany("FavouriteGames")
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GameWeb.Models.ApplicationUser", "User")
+                        .WithMany("FavouriteGames")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Game");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("GameWeb.Models.Game", b =>
@@ -479,14 +484,12 @@ namespace GameWeb.Migrations
                     b.HasOne("GameWeb.Models.Requirement", "MinimalRequirements")
                         .WithMany()
                         .HasForeignKey("MinimalRequirementsId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("GameWeb.Models.Requirement", "RecommendedRequirements")
                         .WithMany()
                         .HasForeignKey("RecommendedRequirementsId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("MinimalRequirements");
 
@@ -495,11 +498,17 @@ namespace GameWeb.Migrations
 
             modelBuilder.Entity("GameWeb.Models.GameComment", b =>
                 {
+                    b.HasOne("GameWeb.Models.ApplicationUser", "Author")
+                        .WithMany()
+                        .HasForeignKey("AuthorID");
+
                     b.HasOne("GameWeb.Models.GameCommentThread", "Thread")
                         .WithMany("Comments")
                         .HasForeignKey("ThreadId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Author");
 
                     b.Navigation("Thread");
                 });
@@ -515,6 +524,36 @@ namespace GameWeb.Migrations
                     b.Navigation("Game");
                 });
 
+            modelBuilder.Entity("GameWeb.Models.GameRating", b =>
+                {
+                    b.HasOne("GameWeb.Models.Game", "Game")
+                        .WithMany("GameRates")
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GameWeb.Models.ApplicationUser", "User")
+                        .WithMany("GameRates")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Game");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("GameWeb.Models.News", b =>
+                {
+                    b.HasOne("GameWeb.Models.ApplicationUser", "Author")
+                        .WithMany("News")
+                        .HasForeignKey("AuthorID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Author");
+                });
+
             modelBuilder.Entity("GameWeb.Models.Requirement", b =>
                 {
                     b.HasOne("GameWeb.Models.Game", "Game")
@@ -523,6 +562,25 @@ namespace GameWeb.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Game");
+                });
+
+            modelBuilder.Entity("GameWeb.Models.WishlistGame", b =>
+                {
+                    b.HasOne("GameWeb.Models.Game", "Game")
+                        .WithMany("WishlistGames")
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GameWeb.Models.ApplicationUser", "User")
+                        .WithMany("WishlistGames")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Game");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -579,11 +637,28 @@ namespace GameWeb.Migrations
             modelBuilder.Entity("GameWeb.Models.Game", b =>
                 {
                     b.Navigation("CommentThreads");
+
+                    b.Navigation("FavouriteGames");
+
+                    b.Navigation("GameRates");
+
+                    b.Navigation("WishlistGames");
                 });
 
             modelBuilder.Entity("GameWeb.Models.GameCommentThread", b =>
                 {
                     b.Navigation("Comments");
+                });
+
+            modelBuilder.Entity("GameWeb.Models.ApplicationUser", b =>
+                {
+                    b.Navigation("FavouriteGames");
+
+                    b.Navigation("GameRates");
+
+                    b.Navigation("News");
+
+                    b.Navigation("WishlistGames");
                 });
 #pragma warning restore 612, 618
         }
