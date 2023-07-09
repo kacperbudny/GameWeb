@@ -144,42 +144,57 @@ namespace GameWeb.Data
                             OS = "64-bit Windows 10",
                             RAM = 8,
                         },
-                        CommentThreads = new List<GameCommentThread> { new GameCommentThread {
-                            Name = "Najlepsze sposoby na przetrwanie pierwszej nocy w Minecraft",
-                            Comments = new List<GameComment>
-                            {
-                                new GameComment
+                        CommentThreads = new List<GameCommentThread> { 
+                            new GameCommentThread {
+                                Name = "Najlepsze sposoby na przetrwanie pierwszej nocy w Minecraft",
+                                Comments = new List<GameComment>
                                 {
-                                    Author = users[0],
-                                    Date = DateTime.Now,
-                                    Body = "Cześć wszystkim!\r\n\r\nDziś chciałbym podzielić się moimi sprawdzonymi sposobami na przetrwanie pierwszej nocy w Minecraft. Rozumiem, że dla nowych graczy może to być naprawdę trudne, dlatego postanowiłem podzielić się kilkoma wskazówkami.\r\n\r\nPo pierwsze, zacznij od zbierania surowców, takich jak drewno, które pozwoli ci na zbudowanie narzędzi i schronienia. Następnie szybko wykop dół w ziemi i zbuduj sobie prowizoryczne schronienie, aby uniknąć potworów w nocy. Pamiętaj, że musisz być gotowy na ataki, więc warto również wykuć sobie miecz i tarczę.\r\n\r\nJeśli możecie, zbudujcie również prosty piec, aby móc przygotować jedzenie. Nie zapomnijcie zbierać surowców, takich jak węgiel, który będzie potrzebny do utrzymania ognia w piecu.\r\n\r\nMam nadzieję, że te porady pomogą wam przetrwać pierwszą noc w Minecraft. Jeśli macie jeszcze jakieś pytania, śmiało pytajcie!\r\n\r\nPowodzenia i miłej gry!\r\n\r\n"
-                                },
-                                new GameComment
-                                {
-                                    Author = users[1],
-                                    Date = DateTime.Now,
-                                    Body = "Cześć!\r\n\r\nDzięki za udostępnienie tych wskazówek na przetrwanie pierwszej nocy w Minecraft. To zawsze jest trudne dla nowych graczy, więc każda pomoc jest mile widziana! Mam tylko jedno pytanie: czy zalecałbyś budowanie schronienia na drzewie? Słyszałem, że to może być skuteczna metoda ochrony przed potworami. Jakie są twoje doświadczenia w tej kwestii?\r\n\r\nPozdrawiam i dziękuję jeszcze raz za udostępnienie tych porad!"
-                                },
-                                new GameComment
-                                {
-                                    Author = users[2],
-                                    Date = DateTime.Now,
-                                    Body = "Witam!\r\n\r\nDzięki za wskazówki dotyczące przetrwania pierwszej nocy w Minecraft. Moje pierwsze doświadczenia były dość chaotyczne, ale teraz, dzięki twoim poradom, mam nadzieję, że sobie poradzę. Mam jeszcze jedno pytanie: czy zalecałbyś szukanie jaskiń lub kopalni podczas pierwszej nocy? Słyszałem, że można tam znaleźć cenne surowce, ale nie wiem, czy to jest bezpieczne w tak wczesnym etapie gry. Czy miałeś jakieś doświadczenia w tym zakresie?\r\n\r\nDziękuję jeszcze raz i pozdrawiam!\r\n\r\n\r\n\r\n\r\n"
+                                    new GameComment
+                                    {
+                                        Author = users[0],
+                                        Date = DateTime.Now,
+                                        Body = "Cześć wszystkim!\r\n\r\nDziś chciałbym podzielić się moimi sprawdzonymi sposobami na przetrwanie pierwszej nocy w Minecraft. Rozumiem, że dla nowych graczy może to być naprawdę trudne, dlatego postanowiłem podzielić się kilkoma wskazówkami.\r\n\r\nPo pierwsze, zacznij od zbierania surowców, takich jak drewno, które pozwoli ci na zbudowanie narzędzi i schronienia. Następnie szybko wykop dół w ziemi i zbuduj sobie prowizoryczne schronienie, aby uniknąć potworów w nocy. Pamiętaj, że musisz być gotowy na ataki, więc warto również wykuć sobie miecz i tarczę.\r\n\r\nJeśli możecie, zbudujcie również prosty piec, aby móc przygotować jedzenie. Nie zapomnijcie zbierać surowców, takich jak węgiel, który będzie potrzebny do utrzymania ognia w piecu.\r\n\r\nMam nadzieję, że te porady pomogą wam przetrwać pierwszą noc w Minecraft. Jeśli macie jeszcze jakieś pytania, śmiało pytajcie!\r\n\r\nPowodzenia i miłej gry!\r\n\r\n"
+                                    },
+                                    new GameComment
+                                    {
+                                        Author = users[1],
+                                        Date = DateTime.Now,
+                                        Body = "Cześć!\r\n\r\nDzięki za udostępnienie tych wskazówek na przetrwanie pierwszej nocy w Minecraft. To zawsze jest trudne dla nowych graczy, więc każda pomoc jest mile widziana! Mam tylko jedno pytanie: czy zalecałbyś budowanie schronienia na drzewie? Słyszałem, że to może być skuteczna metoda ochrony przed potworami. Jakie są twoje doświadczenia w tej kwestii?\r\n\r\nPozdrawiam i dziękuję jeszcze raz za udostępnienie tych porad!"
+                                    },
+                                    new GameComment
+                                    {
+                                        Author = users[2],
+                                        Date = DateTime.Now,
+                                        Body = "Witam!\r\n\r\nDzięki za wskazówki dotyczące przetrwania pierwszej nocy w Minecraft. Moje pierwsze doświadczenia były dość chaotyczne, ale teraz, dzięki twoim poradom, mam nadzieję, że sobie poradzę. Mam jeszcze jedno pytanie: czy zalecałbyś szukanie jaskiń lub kopalni podczas pierwszej nocy? Słyszałem, że można tam znaleźć cenne surowce, ale nie wiem, czy to jest bezpieczne w tak wczesnym etapie gry. Czy miałeś jakieś doświadczenia w tym zakresie?\r\n\r\nDziękuję jeszcze raz i pozdrawiam!\r\n\r\n\r\n\r\n\r\n"
+                                    }
                                 }
-                            }
+                            },
+                            new GameCommentThread {
+                                Name = "Witajcie w mojej epickiej wiosce! Zapraszam do zwiedzania!",
+                                Comments = new List<GameComment>
+                                {
+                                    new GameComment
+                                    {
+                                        Author = users[1],
+                                        Date = DateTime.Now,
+                                        Body = "Hej wszystkim!\r\n\r\nDzisiaj chciałbym podzielić się z wami moim najnowszym projektem w Minecraft - epicką wioską, którą udało mi się zbudować. Spędziłem wiele godzin planując i budując różnorodne budowle, a teraz jestem dumny z efektów mojej pracy.\r\n\r\nW mojej wiosce znajdziecie imponujące zamki, kolorowe ogrody, unikalne domy i wiele innych fascynujących miejsc. Każdy szczegół został starannie zaprojektowany, aby stworzyć przyjemne i wciągające otoczenie.\r\n\r\nZapraszam was serdecznie do zwiedzenia mojej wioski! Wybierzcie się na wirtualną podróż i odkrywajcie jej zakamarki. Będę wdzięczny za wszelkie uwagi i sugestie dotyczące mojej pracy. Może też jesteście ciekawi, jakie materiały i techniki budowania zastosowałem?\r\n\r\nNie mogę się doczekać, aby podzielić się z wami moim projektem i usłyszeć wasze opinie. Mam nadzieję, że spędzicie miło czas w mojej epickiej wiosce!\r\n\r\nŻyczę wam fantastycznej przygody!"
+                                    }
+                                }
+                            } 
                         },
-                        new GameCommentThread {
-                            Name = "Witajcie w mojej epickiej wiosce! Zapraszam do zwiedzania!",
-                            Comments = new List<GameComment>
+                        GameRates = new List<GameRating>
+                        {
+                            new GameRating
                             {
-                                new GameComment
-                                {
-                                    Author = users[1],
-                                    Date = DateTime.Now,
-                                    Body = "Hej wszystkim!\r\n\r\nDzisiaj chciałbym podzielić się z wami moim najnowszym projektem w Minecraft - epicką wioską, którą udało mi się zbudować. Spędziłem wiele godzin planując i budując różnorodne budowle, a teraz jestem dumny z efektów mojej pracy.\r\n\r\nW mojej wiosce znajdziecie imponujące zamki, kolorowe ogrody, unikalne domy i wiele innych fascynujących miejsc. Każdy szczegół został starannie zaprojektowany, aby stworzyć przyjemne i wciągające otoczenie.\r\n\r\nZapraszam was serdecznie do zwiedzenia mojej wioski! Wybierzcie się na wirtualną podróż i odkrywajcie jej zakamarki. Będę wdzięczny za wszelkie uwagi i sugestie dotyczące mojej pracy. Może też jesteście ciekawi, jakie materiały i techniki budowania zastosowałem?\r\n\r\nNie mogę się doczekać, aby podzielić się z wami moim projektem i usłyszeć wasze opinie. Mam nadzieję, że spędzicie miło czas w mojej epickiej wiosce!\r\n\r\nŻyczę wam fantastycznej przygody!"
-                                }
+                                User = users[0],
+                                Rating = 10
+                            },
+                            new GameRating
+                            {
+                                User = users[1],
+                                Rating = 7
                             }
-                        } },
+                        }
                     },
                     new Game
                     {
@@ -212,6 +227,19 @@ namespace GameWeb.Data
                             GPU = "Kompatybilna z DirectX 9",
                             OS = "Windows XP",
                             RAM = 0.512,
+                        }
+                        GameRates = new List<GameRating>
+                        {
+                            new GameRating
+                            {
+                                User = users[0],
+                                Rating = 10
+                            },
+                            new GameRating
+                            {
+                                User = users[1],
+                                Rating = 9
+                            }
                         }
                     },
                     new Game
