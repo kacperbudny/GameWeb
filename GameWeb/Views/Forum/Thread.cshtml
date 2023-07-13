@@ -1,7 +1,7 @@
-﻿@model GameWeb.Models.ViewModels.CommentCreateViewModel
+﻿@model GameWeb.Models.ViewModels.ThreadViewModel
 
 <div class="thread-container">
-    <div class="upper-row">
+    <div class="upper-row forum-upper-row">
         <h2>@Model.Thread.Name</h2>
         <h4><a asp-controller="Forum" asp-route-gameId="@Model.Thread.GameId" asp-action="Index">Forum gry @Model.Thread.Game.Name</a></h4>
     </div>
@@ -48,7 +48,7 @@
 
         @if (User.Identity.IsAuthenticated)
         {
-            <form method="post" asp-action="AddCommentPost" enctype="multipart/form-data">
+            <form method="post" asp-controller="Forum" asp-action="AddComment" enctype="multipart/form-data">
                 <input asp-for="@Model.Thread.Id" hidden />
                 <div asp-validation-summary="ModelOnly"></div>
                 <div class="upper-row">

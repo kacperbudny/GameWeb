@@ -7,7 +7,7 @@
     <input asp-for="GameId" hidden />
     <div asp-validation-summary="ModelOnly"></div>
     <div class="upper-row">
-        <h2>Nowy wątek - @Model.Game.Name</h2>
+        <h2>Nowy wątek - @Model.GameName</h2>
     </div>
     <div class="default-form">
         <div class="form-input-set">
@@ -16,10 +16,11 @@
             <span class="validation-error-span" asp-validation-for="Name" />
         </div>
         <div class="form-input-set">
-            <label asp-for="Comment.Body"></label>
-            <textarea class="text-input" rows="6" asp-for="Comment.Body"></textarea>
-            <span class="validation-error-span" asp-validation-for="Comment.Body" />
+            <label asp-for="Content"></label>
+            <textarea class="text-input" rows="6" asp-for="Content"></textarea>
+            <span class="validation-error-span" asp-validation-for="Content" />
         </div>
+        <input type="hidden" asp-for="GameName" />
     </div>
     <div class="form-buttons-row">
         <input type="submit" value="Dodaj" class="action-button add-button" />

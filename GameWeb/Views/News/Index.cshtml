@@ -47,8 +47,10 @@
                         </td>
                     }
                     <td>
-                        <a asp-controller="News" asp-action="Edit" asp-route-id="@news.Id" class="btn btn-info"><i class="fas fa-edit"></i></a>
-                        <a asp-controller="News" asp-action="Delete" asp-route-id="@news.Id" class="btn btn-danger"><i class="far fa-trash-alt"></i></a>
+                        <div class="action-buttons">
+                            <a asp-controller="News" asp-action="Edit" asp-route-id="@news.Id" class="btn btn-info"><i class="fas fa-edit"></i></a>
+                            <a asp-controller="News" asp-action="Delete" asp-route-id="@news.Id" class="btn btn-danger"><i class="far fa-trash-alt"></i></a>
+                        </div>
                     </td>
                 </tr>
             }

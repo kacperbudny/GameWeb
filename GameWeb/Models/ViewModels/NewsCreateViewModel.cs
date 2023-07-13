@@ -1,10 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace GameWeb.Models.ViewModels
 {
@@ -13,5 +9,7 @@ namespace GameWeb.Models.ViewModels
         [Required(ErrorMessage = "Proszę umieścić zdjęcie.")]
         [DisplayName("Zdjęcie")]
         public override IFormFile ImageFile { get; set; }
+        new public string? AuthorID { get; set; }
+        new public ApplicationUser? Author { get; set; }
     }
 }

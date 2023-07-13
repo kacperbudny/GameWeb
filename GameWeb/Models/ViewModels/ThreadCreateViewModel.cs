@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace GameWeb.Models.ViewModels
 {
@@ -13,8 +9,10 @@ namespace GameWeb.Models.ViewModels
         [Required(ErrorMessage = "Proszę wprowadzić nazwę wątku.")]
         [DisplayName("Nazwa wątku")]
         public string Name { get; set; }
+        [Required(ErrorMessage = "Proszę wprowadzić treść wiadomości.")]
+        [DisplayName("Treść wiadomości")]
+        public string Content { get; set; }
         public int GameId { get; set; }
-        public Game Game { get; set; }
-        public GameComment Comment { get; set; }
+        public string GameName { get; set; }
     }
 }

@@ -1,11 +1,8 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
 
 namespace GameWeb.Models
 {
@@ -13,42 +10,42 @@ namespace GameWeb.Models
     {
         [Key]
         public int Id { get; set; }
-        [Required(ErrorMessage = "Proszê wprowadziæ nazwê.")]
+        [Required(ErrorMessage = "ProszÄ™ wprowadziÄ‡ nazwÄ™.")]
         [DisplayName("Nazwa")]
         public string Name { get; set; }
-        [Required(ErrorMessage = "Proszê wprowadziæ datê.")]
+        [Required(ErrorMessage = "ProszÄ™ wprowadziÄ‡ datÄ™.")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DisplayName("Data wydania")]
         public DateTime ReleaseDate { get; set; }
-        [Required(ErrorMessage = "Proszê wprowadziæ platformy.")]
+        [Required(ErrorMessage = "ProszÄ™ wprowadziÄ‡ platformy.")]
         [DisplayName("Platformy")]
         public string Platform { get; set; }
-        [Required(ErrorMessage = "Proszê wprowadziæ wydawcê.")]
+        [Required(ErrorMessage = "ProszÄ™ wprowadziÄ‡ wydawcÄ™.")]
         [DisplayName("Wydawca")]
         public string Publisher { get; set; }
-        [Required(ErrorMessage = "Proszê wprowadziæ dewelopera.")]
+        [Required(ErrorMessage = "ProszÄ™ wprowadziÄ‡ dewelopera.")]
         [DisplayName("Deweloper")]
         public string Developer { get; set; }
-        [Required(ErrorMessage = "Proszê wprowadziæ gatunek.")]
+        [Required(ErrorMessage = "ProszÄ™ wprowadziÄ‡ gatunek.")]
         [DisplayName("Gatunek")]
         public string Genre { get; set; }
-        [Required(ErrorMessage = "Proszê wprowadziæ opis.")]
+        [Required(ErrorMessage = "ProszÄ™ wprowadziÄ‡ opis.")]
         [DisplayName("Opis")]
         public string Description { get; set; }
-        [Required(ErrorMessage = "Proszê umieœciæ zdjêcie.")]
-        [DisplayName("Zdjêcie")]
+        [Required(ErrorMessage = "ProszÄ™ umieÅ›ciÄ‡ zdjÄ™cie.")]
+        [DisplayName("ZdjÄ™cie")]
         public string Image { get; set; }
-        public int MinimalRequirementsId { get; set; }
+        public int? MinimalRequirementsId { get; set; }
         [ForeignKey("MinimalRequirementsId")]
-        public Requirement MinimalRequirements { get; set; }
-        public int RecommendedRequirementsId { get; set; }
+        public Requirement? MinimalRequirements { get; set; }
+        public int? RecommendedRequirementsId { get; set; }
         [ForeignKey("RecommendedRequirementsId")]
-        public Requirement RecommendedRequirements { get; set; }
-        public List<GameCommentThread> CommentThreads { get; set; }
-        public ICollection<FavouriteGame> FavouriteGames { get; set; }
-        public ICollection<WishlistGame> WishlistGames { get; set; }
-        public ICollection<GameRating> GameRates { get; set; }
+        public Requirement? RecommendedRequirements { get; set; }
+        public List<GameCommentThread>? CommentThreads { get; set; }
+        public ICollection<FavouriteGame>? FavouriteGames { get; set; }
+        public ICollection<WishlistGame>? WishlistGames { get; set; }
+        public ICollection<GameRating>? GameRates { get; set; }
         [NotMapped]
         public bool IsCurrentUsersFavourite { get; set; }
         [NotMapped]

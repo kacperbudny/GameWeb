@@ -5,7 +5,7 @@
         <h2>Forum gry <a asp-controller="Game" asp-route-id="@Model.FirstOrDefault().GameId" asp-action="Details">@Model.FirstOrDefault().Game.Name</a></h2>
         @if (User.Identity.IsAuthenticated)
         {
-            <a asp-controller="Forum" asp-action="Create" asp-route-gameId="@Model.FirstOrDefault().GameId" class="action-button add-button forum-add-button"><i class="fas fa-plus"></i> Dodaj nowy wątek</a>
+            <a asp-controller="Forum" asp-action="Create" asp-route-gameId="@Model.FirstOrDefault().GameId" class="action-button add-button forum-add-button"><i class="fas fa-plus"></i><span class="add-thread-text">Dodaj nowy wątek</span></a>
         }
     </div>
 

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,17 +15,18 @@ namespace GameWeb.Controllers
     public class ForumController : Controller
     {
         private readonly ApplicationDbContext _db;
-        private readonly UserManager<ApplicationUser> userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
         public ForumController(ApplicationDbContext db, UserManager<ApplicationUser> userManager)
         {
             _db = db;
-            this.userManager = userManager;
+            _userManager = userManager;
         }
 
+        #region GET
         public IActionResult Index(int? gameId)
         {
-            if(gameId == null)
+            if (gameId == null)
             {
                 return NotFound();
             }
@@ -47,7 +49,7 @@ namespace GameWeb.Controllers
 
         public IActionResult Thread(int? id)
         {
-            if(id == null)
+            if (id == null)
             {
                 return NotFound();
             }
@@ -59,7 +61,7 @@ namespace GameWeb.Controllers
                 comment.Author = _db.ApplicationUser.Find(comment.AuthorID);
             }
 
-            CommentCreateViewModel obj = new CommentCreateViewModel
+            ThreadViewModel obj = new()
             {
                 Comments = comments,
                 Thread = _db.GameCommentThread.Find(id),
@@ -76,10 +78,18 @@ namespace GameWeb.Controllers
         [Authorize]
         public IActionResult Create(int gameId)
         {
-            ThreadCreateViewModel thread = new() { GameId = gameId, Game = _db.Game.Find(gameId) };
+            ThreadCreateViewModel thread = new()
+            {
+                GameId = gameId,
+                GameName = _db.Game.Find(gameId).Name
+            };
 
             return View(thread);
         }
+
+        #endregion
+
+        #region POST
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -88,19 +98,19 @@ namespace GameWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await userManager.FindByNameAsync(User.Identity.Name);
+                var user = await _userManager.FindByNameAsync(User.Identity.Name);
 
-                GameCommentThread thread = new GameCommentThread
+                GameCommentThread thread = new()
                 {
                     Name = obj.Name,
                     GameId = obj.GameId,
                     Game = _db.Game.Find(obj.GameId),
                 };
 
-                GameComment comment = new GameComment
+                GameComment comment = new()
                 {
                     Date = DateTime.Now,
-                    Body = obj.Comment.Body,
+                    Body = obj.Content,
                     AuthorID = user.Id,
                     Author = user,
                     ThreadId = thread.Id,
@@ -118,27 +128,34 @@ namespace GameWeb.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> AddCommentPost(CommentCreateViewModel obj)
+        public async Task<IActionResult> AddComment(ThreadViewModel obj)
         {
-            if (ModelState.IsValid)
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+
+            GameComment comment = new()
             {
-                var user = await userManager.FindByNameAsync(User.Identity.Name);
+                Date = DateTime.Now,
+                Body = obj.NewComment.Body,
+                AuthorID = user.Id,
+                Author = user,
+                ThreadId = obj.Thread.Id,
+            };
 
-                GameComment comment = new GameComment
-                {
-                    Date = DateTime.Now,
-                    Body = obj.NewComment.Body,
-                    AuthorID = user.Id,
-                    Author = user,
-                    ThreadId = obj.Thread.Id,
-                };
+            var context = new ValidationContext(comment, serviceProvider: null, items: null);
+            var validationResults = new List<ValidationResult>();
+            bool isValid = Validator.TryValidateObject(comment, context, validationResults, true);
 
+            if (isValid)
+            {
                 _db.GameComment.Add(comment);
                 _db.SaveChanges();
 
-                return RedirectToAction("Thread", "Forum", new { id = comment.ThreadId });
+                return RedirectToAction("Thread", "Forum", new { id = obj.Thread.Id });
             }
+
             return View(obj);
         }
+
+        #endregion
     }
 }
