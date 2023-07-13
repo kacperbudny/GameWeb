@@ -227,7 +227,7 @@ namespace GameWeb.Data
                             GPU = "Kompatybilna z DirectX 9",
                             OS = "Windows XP",
                             RAM = 0.512,
-                        }
+                        },
                         GameRates = new List<GameRating>
                         {
                             new GameRating
