@@ -19,9 +19,13 @@ GameWeb is a website for gamers, where they can read the latest news about the w
 ## Screenshots
 
 ![Main page with news](screenshots/mainpage.png)
+
 ![Page with game details](screenshots/gamepage.png)
+
 ![Forum thread](screenshots/forum.png)
+
 ![Games list - mobile view](screenshots/gamesmobile.png)
+
 ![User's favourites - mobile view](screenshots/favouritesmobile.png)
 
 ## Features per role
